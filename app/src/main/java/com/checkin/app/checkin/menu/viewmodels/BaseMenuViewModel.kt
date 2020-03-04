@@ -18,7 +18,8 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
     protected val mMenuData = createNetworkLiveData<MenuModel>()
     private val mOriginalMenuGroups = createNetworkLiveData<List<MenuGroupModel>>()
     private val mMenuGroups = MediatorLiveData<Resource<List<MenuGroupModel>>>()
-    private val mMenuItems = createNetworkLiveData<List<MenuItemModel>>()
+    private val mMenuItems =
+            createNetworkLiveData<List<MenuItemModel>>()
 
     private val mCurrentItem = MutableLiveData<OrderedItemModel>()
     private val mFilteredString = MutableLiveData<String>()

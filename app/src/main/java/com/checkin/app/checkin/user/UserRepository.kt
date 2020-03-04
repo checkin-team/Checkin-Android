@@ -10,6 +10,7 @@ import com.checkin.app.checkin.data.network.RetrofitLiveData
 import com.checkin.app.checkin.data.network.WebApiService
 import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.home.model.CityLocationModel
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.user.models.ShopCustomerModel
 import com.checkin.app.checkin.user.models.UserLocationModel
@@ -59,6 +60,17 @@ class UserRepository private constructor(context: Context) : BaseRepository() {
                 } else {
                     RetrofitLiveData(mWebService.getNonPersonalUser(userPk))
                 }
+            }
+        }.asLiveData
+    }
+
+    fun getCities(query: String): LiveData<Resource<List<CityLocationModel>>> {
+        return object : NetworkBoundResource<List<CityLocationModel>, List<CityLocationModel>>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<List<CityLocationModel>>> {
+                val call = mWebService.getCities(query)
+                return RetrofitLiveData(call)
             }
         }.asLiveData
     }

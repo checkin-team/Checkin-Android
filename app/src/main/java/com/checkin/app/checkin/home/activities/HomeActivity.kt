@@ -39,6 +39,7 @@ import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.fragments.UserHomeFragment
+import com.checkin.app.checkin.home.fragments.UserLocationSwitchFragment
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.location.UserCurrentLocationService
@@ -72,6 +73,8 @@ class HomeActivity : BaseAccountActivity() {
     internal lateinit var tvCartRestaurant: TextView
     @BindView(R.id.im_home_cart_restaurant)
     internal lateinit var imCartRestaurant: ImageView
+    @BindView(R.id.im_checkin_logo)
+    internal lateinit var imCheckinLogo: ImageView
 
     var imTabUserIcon: ImageView? = null
     private val mViewModel: HomeViewModel by viewModels()
@@ -148,6 +151,12 @@ class HomeActivity : BaseAccountActivity() {
         supportFragmentManager.inTransaction {
             add(R.id.frg_container_activity, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
         }
+
+        imCheckinLogo
+                .setOnClickListener {
+                    val fragment: UserLocationSwitchFragment = UserLocationSwitchFragment()
+                    fragment.show(supportFragmentManager, "switch_location")
+                }
     }
 
     private fun requestEnableLocation() {

@@ -18,6 +18,7 @@ import com.checkin.app.checkin.Waiter.Model.*
 import com.checkin.app.checkin.accounts.AccountModel
 import com.checkin.app.checkin.auth.AuthResultModel
 import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.CityLocationModel
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.manager.models.*
@@ -429,4 +430,11 @@ interface WebApiService {
     fun postCustomerReview(@Path("session_id") sessionId: Long, @Body review: NewReviewModel): Call<ObjectNode>
 
     // endregion
+
+    //region LOCATION
+
+    @GET("location/cities/")
+    fun getCities(@Query("q") query: String): Call<List<CityLocationModel>>
+
+    //endregion
 }
