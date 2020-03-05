@@ -7,34 +7,36 @@
     
     <ImageView
         android:id="@+id/im_user_location"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:src="@drawable/ic_location_marker_red"
+        android:layout_width="@dimen/size_small_icon"
+        android:layout_height="@dimen/size_small_icon"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginBottom="@dimen/spacing_tiny"
+        android:src="@drawable/ic_location_marker_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     
     <TextView
         android:id="@+id/tv_user_location_city"
+        style="@style/GreyTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_small"
         android:text="Bangalore"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/im_user_location"
+        android:textColor="@color/brownish_grey"
+        app:layout_constraintStart_toEndOf="@id/im_user_location"
         app:layout_constraintTop_toTopOf="parent" />
     
     <TextView
         android:id="@+id/tv_user_location_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/spacing_small"
         android:text="Karnataka India"
+        android:textColor="@color/pinkish_grey"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_user_location_city"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user_location_city" />
+        app:layout_constraintStart_toStartOf="@id/tv_user_location_city"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_location_city" />
 </androidx.constraintlayout.widget.ConstraintLayout>

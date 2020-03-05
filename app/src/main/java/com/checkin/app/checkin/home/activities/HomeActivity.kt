@@ -39,7 +39,7 @@ import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.fragments.UserHomeFragment
-import com.checkin.app.checkin.home.fragments.UserLocationSwitchFragment
+import com.checkin.app.checkin.home.fragments.UserLocationFragment
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.location.UserCurrentLocationService
@@ -154,7 +154,7 @@ class HomeActivity : BaseAccountActivity() {
 
         imCheckinLogo
                 .setOnClickListener {
-                    val fragment: UserLocationSwitchFragment = UserLocationSwitchFragment()
+                    val fragment: UserLocationFragment = UserLocationFragment()
                     supportFragmentManager.inTransaction {
                         add(R.id.frg_container_activity, fragment)
                         addToBackStack(null)
