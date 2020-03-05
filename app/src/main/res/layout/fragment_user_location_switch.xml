@@ -61,8 +61,8 @@
                 android:padding="@dimen/spacing_extra_small"
                 android:textColor="@color/pinkish_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/im_user_location_cross"
-                app:layout_constraintStart_toEndOf="@+id/im_user_location_search"
+                app:layout_constraintEnd_toStartOf="@id/im_user_location_cross"
+                app:layout_constraintStart_toEndOf="@id/im_user_location_search"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Beng" />
         
@@ -82,9 +82,9 @@
     </androidx.cardview.widget.CardView>
     
     <com.airbnb.epoxy.EpoxyRecyclerView
-        android:layout_margin="@dimen/spacing_extra_small"
         android:id="@+id/epoxy_rv_user_location"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/spacing_extra_small" />
 
 </LinearLayout>
