@@ -155,7 +155,10 @@ class HomeActivity : BaseAccountActivity() {
         imCheckinLogo
                 .setOnClickListener {
                     val fragment: UserLocationSwitchFragment = UserLocationSwitchFragment()
-                    fragment.show(supportFragmentManager, "switch_location")
+                    supportFragmentManager.inTransaction {
+                        add(R.id.frg_container_activity, fragment)
+                        addToBackStack(null)
+                    }
                 }
     }
 

@@ -1,53 +1,52 @@
 package com.checkin.app.checkin.home.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.home.HomeRepository
 import com.checkin.app.checkin.home.model.CityLocationModel
 import com.checkin.app.checkin.menu.viewmodels.BaseMenuViewModel
-import com.checkin.app.checkin.user.UserRepository
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class UserLocationViewModel(application: Application) : BaseMenuViewModel(application) {
 
-    val repository = UserRepository.getInstance(application)
+    val repository = HomeRepository.getInstance(application)
 
 
-    val locationsData by lazy {
-        createNetworkLiveData<List<CityLocationModel>>()
+    private val mAllLocationsData =
+            createNetworkLiveData<List<CityLocationModel>>()
+
+
+    private val allLocationsData: LiveData<Resource<List<CityLocationModel>>> = mAllLocationsData
+
+    private val mLocationData = createNetworkLiveData<List<CityLocationModel>>()
+
+    val locationData: LiveData<Resource<List<CityLocationModel>>> = mLocationData
+
+    fun fetchData() {
+        mAllLocationsData.addSource(repository.getAllCities, mAllLocationsData::setValue)
+        mLocationData.addSource(allLocationsData, mLocationData::setValue)
     }
 
     fun searchCities(query: String) {
-        viewModelScope.launch {
-            delay(500)
-            val resourceLiveData = repository.getCities(query)
-            locationsData.addSource(resourceLiveData) {
-                locationsData.removeSource(resourceLiveData)
-                locationsData.value = it
-            }
-        }
+        internalSearchCities(query)
+
     }
 
-    private suspend fun internalSearchCities(query: String) =
-            withContext(viewModelScope.coroutineContext) {
-                val resourceLiveData: LiveData<Resource<List<CityLocationModel>>> = Transformations.map(locationsData) { input ->
-                    if (input?.data == null) {
-                        return@map null
-                    }
-                    val items = input.data.filter {
-                        it.name.contains(query, ignoreCase = false)
-                    }
-                    if (items.isEmpty()) return@map Resource.errorNotFound<List<CityLocationModel>>("No such city")
-                    Resource.cloneResource(input, items)
-                }
-                locationsData.addSource(resourceLiveData) {
-                    locationsData.removeSource(resourceLiveData)
-                    locationsData.value = it
-                }
+    private fun internalSearchCities(query: String) {
+        val resourceLiveData = Transformations.map(allLocationsData) { input ->
+            val items = input.data?.filter {
+                it.name.contains(query, ignoreCase = true)
             }
-
+            Log.d("Bruh", query)
+            Log.d("bruh", items.toString())
+            Log.d("bruh", input.data.toString())
+            if (items?.isEmpty() == true) return@map Resource.errorNotFound<List<CityLocationModel>>("No Such City Found.")
+            Resource.cloneResource(input, items)
+        }
+        mLocationData.addSource(resourceLiveData) {
+            mLocationData.value = it
+        }
+    }
 }

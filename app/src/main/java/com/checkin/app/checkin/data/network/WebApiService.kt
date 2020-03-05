@@ -433,8 +433,8 @@ interface WebApiService {
 
     //region LOCATION
 
-    @GET("location/cities/")
-    fun getCities(@Query("q") query: String): Call<List<CityLocationModel>>
+    @get:GET("location/cities/")
+    val getCities: Call<List<CityLocationModel>>
 
     //endregion
 }

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.home.epoxy
 
+import android.view.View
 import android.widget.TextView
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
@@ -15,8 +16,13 @@ abstract class CityLocationModelHolder : EpoxyModelWithHolder<CityLocationModelH
     @EpoxyAttribute
     internal lateinit var data: CityLocationModel
 
+    @EpoxyAttribute
+    internal lateinit var listener: View.OnClickListener
+
     override fun bind(holder: Holder) {
         holder.bindData(data)
+        if (::listener.isInitialized)
+            holder.itemView.setOnClickListener(listener)
     }
 
     class Holder : BaseEpoxyHolder<CityLocationModel>() {
@@ -26,6 +32,7 @@ abstract class CityLocationModelHolder : EpoxyModelWithHolder<CityLocationModelH
 
         @BindView(R.id.tv_user_location_state)
         internal lateinit var tvStateLocation: TextView
+
 
         override fun bindData(data: CityLocationModel) {
             tvCityLocation.text = data.name
