@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.home.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.data.resource.Resource
@@ -39,9 +38,6 @@ class UserLocationViewModel(application: Application) : BaseMenuViewModel(applic
             val items = input.data?.filter {
                 it.name.contains(query, ignoreCase = true)
             }
-            Log.d("Bruh", query)
-            Log.d("bruh", items.toString())
-            Log.d("bruh", input.data.toString())
             if (items?.isEmpty() == true) return@map Resource.errorNotFound<List<CityLocationModel>>("No Such City Found.")
             Resource.cloneResource(input, items)
         }

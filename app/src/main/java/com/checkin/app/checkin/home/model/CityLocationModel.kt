@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class CityLocationModel(
-        val id: String,
+        val id: Int,
         val name: String,
         val state: String,
         val country: String

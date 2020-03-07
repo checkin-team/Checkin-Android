@@ -73,8 +73,8 @@ class HomeActivity : BaseAccountActivity() {
     internal lateinit var tvCartRestaurant: TextView
     @BindView(R.id.im_home_cart_restaurant)
     internal lateinit var imCartRestaurant: ImageView
-    @BindView(R.id.im_checkin_logo)
-    internal lateinit var imCheckinLogo: ImageView
+    @BindView(R.id.tv_checkin_location)
+    internal lateinit var tvCityLocation: TextView
 
     var imTabUserIcon: ImageView? = null
     private val mViewModel: HomeViewModel by viewModels()
@@ -151,15 +151,6 @@ class HomeActivity : BaseAccountActivity() {
         supportFragmentManager.inTransaction {
             add(R.id.frg_container_activity, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
         }
-
-        imCheckinLogo
-                .setOnClickListener {
-                    val fragment: UserLocationFragment = UserLocationFragment()
-                    supportFragmentManager.inTransaction {
-                        add(R.id.frg_container_activity, fragment)
-                        addToBackStack(null)
-                    }
-                }
     }
 
     private fun requestEnableLocation() {
@@ -254,10 +245,22 @@ class HomeActivity : BaseAccountActivity() {
                 containerCart.visibility = View.GONE
             }
         })
+
+        mViewModel.cityId.observe(this, Observer {
+            val preferences = getSharedPreferences(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
+            tvCityLocation.text = preferences.getString(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_NAME, "Select a City")
+        })
         liveViewModel.clearCartData.observe(this, Observer { })
+
+        mViewModel.setCityId(getCityId())
         mViewModel.fetchSessionStatus()
         mViewModel.fetchNearbyRestaurants()
         liveViewModel.fetchCartStatus()
+    }
+
+    private fun getCityId(): Int {
+        val preferences = getSharedPreferences(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
+        return preferences.getInt(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_ID, 0)
     }
 
     private fun resetUserIcon() {
@@ -381,6 +384,15 @@ class HomeActivity : BaseAccountActivity() {
     @OnClick(R.id.container_home_cart)
     fun onClickCart() {
         liveViewModel.cartStatus.value?.data?.let { openPublicRestaurantProfile(it.restaurant.targetId, it.pk, true) }
+    }
+
+    @OnClick(R.id.cl_checkin_location)
+    fun onCLickLocation() {
+        val fragment: UserLocationFragment = UserLocationFragment()
+        supportFragmentManager.inTransaction {
+            add(R.id.frg_container_activity, fragment)
+            addToBackStack(null)
+        }
     }
 
     private inner class HomeFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {

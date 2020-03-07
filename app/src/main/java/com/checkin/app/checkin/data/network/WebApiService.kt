@@ -198,8 +198,8 @@ interface WebApiService {
     @GET("/restaurants/{restaurant_id}/profile/")
     fun getRestaurantProfile(@Path("restaurant_id") restaurantId: Long): Call<RestaurantModel>
 
-    @get:GET("restaurants/nearby/")
-    val nearbyRestaurants: Call<List<NearbyRestaurantModel>>
+    @GET("restaurants/nearby/")
+    fun nearbyRestaurants(@Query("city_id") cityId: Int): Call<List<NearbyRestaurantModel>>
 
     @GET("restaurants/{restaurant_id}/brief/")
     fun getRestaurantBriefDetail(@Path("restaurant_id") restaurantId: Long): Call<RestaurantServiceModel>

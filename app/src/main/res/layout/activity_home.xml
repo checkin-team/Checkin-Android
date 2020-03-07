@@ -22,15 +22,44 @@
                 android:id="@+id/toolbar_home"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
-
-                <ImageView
-                    android:id="@+id/im_checkin_logo"
-                    android:layout_width="@dimen/width_checkin_logo_icon"
-                    android:layout_height="@dimen/height_checkin_logo_icon"
-                    android:layout_gravity="center"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/check_in_logo_no_background" />
-
+                
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_checkin_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    
+                    <ImageView
+                        android:id="@+id/im_checkin_logo"
+                        android:layout_width="@dimen/width_checkin_logo_icon"
+                        android:layout_height="@dimen/height_checkin_logo_icon"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/check_in_logo_no_background"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    
+                    <TextView
+                        android:id="@+id/tv_checkin_location_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:text="location"
+                        android:textSize="@dimen/font_extra_small"
+                        app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
+                        app:layout_constraintTop_toTopOf="@id/im_checkin_logo" />
+                    
+                    <TextView
+                        android:id="@+id/tv_checkin_location"
+                        style="@style/TealBlueTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bengaluru"
+                        android:textSize="@dimen/font_normal"
+                        android:translationY="6dp"
+                        app:layout_constraintBottom_toBottomOf="@id/im_checkin_logo"
+                        app:layout_constraintStart_toStartOf="@id/tv_checkin_location_heading" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>

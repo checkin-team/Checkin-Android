@@ -27,16 +27,16 @@ import java.io.File
 class ShopRepository private constructor(context: Context) : BaseRepository() {
     private val mWebService: WebApiService = ApiClient.getApiService(context)
 
-    val nearbyRestaurants: LiveData<Resource<List<NearbyRestaurantModel>>>
-        get() = object : NetworkBoundResource<List<NearbyRestaurantModel>, List<NearbyRestaurantModel>>() {
-            override fun shouldUseLocalDb(): Boolean {
-                return false
-            }
+    fun nearbyRestaurants(id: Int): LiveData<Resource<List<NearbyRestaurantModel>>> =
+            object : NetworkBoundResource<List<NearbyRestaurantModel>, List<NearbyRestaurantModel>>() {
+                override fun shouldUseLocalDb(): Boolean {
+                    return false
+                }
 
-            override fun createCall(): LiveData<ApiResponse<List<NearbyRestaurantModel>>> {
-                return RetrofitLiveData(mWebService.nearbyRestaurants)
-            }
-        }.asLiveData
+                override fun createCall(): LiveData<ApiResponse<List<NearbyRestaurantModel>>> {
+                    return RetrofitLiveData(mWebService.nearbyRestaurants(id))
+                }
+            }.asLiveData
 
     fun registerShop(model: ShopJoinModel): LiveData<Resource<GenericDetailModel>> {
         return object : NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {

@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
@@ -15,6 +16,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.epoxy.cityLocationModelHolder
+import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.UserLocationViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.holders.textModelHolder
@@ -23,7 +25,7 @@ import com.checkin.app.checkin.utility.Constants
 class UserLocationFragment : BaseFragment() {
     override val rootLayout = R.layout.fragment_user_location_switch
     val viewModel: UserLocationViewModel by viewModels()
-
+    val homeViewModel: HomeViewModel by activityViewModels()
     @BindView(R.id.et_user_location)
     internal lateinit var etUserLocation: EditText
 
@@ -70,8 +72,11 @@ class UserLocationFragment : BaseFragment() {
                     listener { _ ->
                         val preferences = requireActivity().getSharedPreferences(Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
                         with(preferences.edit()) {
-                            putString(Constants.LOCATION_CITY_ID, model.id)
+                            putInt(Constants.LOCATION_CITY_ID, model.id)
+                            putString(Constants.LOCATION_CITY_NAME, model.name)
+                            commit()
                         }
+                        homeViewModel.setCityId(model.id)
                         requireActivity().supportFragmentManager.popBackStack()
                     }
                 }
