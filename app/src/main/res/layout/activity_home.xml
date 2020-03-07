@@ -38,13 +38,15 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    
+    
                     <TextView
                         android:id="@+id/tv_checkin_location_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_small"
-                        android:text="location"
+                        android:layout_marginTop="@dimen/spacing_unit"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="Location"
                         android:textSize="@dimen/font_extra_small"
                         app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
                         app:layout_constraintTop_toTopOf="@id/im_checkin_logo" />
@@ -54,9 +56,10 @@
                         style="@style/TealBlueTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_unit"
                         android:text="Bengaluru"
-                        android:textSize="@dimen/font_normal"
-                        android:translationY="6dp"
+                        android:fontFamily="@font/josefinsans_semibold"
+                        android:textSize="@dimen/font_large"
                         app:layout_constraintBottom_toBottomOf="@id/im_checkin_logo"
                         app:layout_constraintStart_toStartOf="@id/tv_checkin_location_heading" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,7 +34,7 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
                 }
 
                 override fun createCall(): LiveData<ApiResponse<List<NearbyRestaurantModel>>> {
-                    return RetrofitLiveData(mWebService.nearbyRestaurants(id))
+                    return RetrofitLiveData(mWebService.nearbyRestaurants(if (id == 0) null else id))
                 }
             }.asLiveData
 

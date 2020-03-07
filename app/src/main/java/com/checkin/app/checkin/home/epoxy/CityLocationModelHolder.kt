@@ -17,12 +17,12 @@ abstract class CityLocationModelHolder : EpoxyModelWithHolder<CityLocationModelH
     internal lateinit var data: CityLocationModel
 
     @EpoxyAttribute
-    internal lateinit var listener: View.OnClickListener
+    internal lateinit var cityListener: View.OnClickListener
 
     override fun bind(holder: Holder) {
         holder.bindData(data)
-        if (::listener.isInitialized)
-            holder.itemView.setOnClickListener(listener)
+        if (::cityListener.isInitialized)
+            holder.itemView.setOnClickListener(cityListener)
     }
 
     class Holder : BaseEpoxyHolder<CityLocationModel>() {

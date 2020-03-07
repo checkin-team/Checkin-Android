@@ -16,6 +16,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.epoxy.cityLocationModelHolder
+import com.checkin.app.checkin.home.epoxy.currentLocationModelHolder
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.UserLocationViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
@@ -65,11 +66,13 @@ class UserLocationFragment : BaseFragment() {
                     text("Sorry not available in your city.")
                 }
             }
+
+
             viewModel.locationData.value?.data?.forEachIndexed { index, model ->
                 cityLocationModelHolder {
-                    id(id)
+                    id(model.id)
                     data(model)
-                    listener { _ ->
+                    cityListener { _ ->
                         val preferences = requireActivity().getSharedPreferences(Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
                         with(preferences.edit()) {
                             putInt(Constants.LOCATION_CITY_ID, model.id)
@@ -79,6 +82,20 @@ class UserLocationFragment : BaseFragment() {
                         homeViewModel.setCityId(model.id)
                         requireActivity().supportFragmentManager.popBackStack()
                     }
+                }
+            }
+
+            currentLocationModelHolder {
+                id("present.location")
+                currentListener { _ ->
+                    val preferences = requireActivity().getSharedPreferences(Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
+                    with(preferences.edit()) {
+                        putInt(Constants.LOCATION_CITY_ID, 0)
+                        putString(Constants.LOCATION_CITY_NAME, "Current Location")
+                        commit()
+                    }
+                    homeViewModel.setCityId(0)
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
             }
         }
