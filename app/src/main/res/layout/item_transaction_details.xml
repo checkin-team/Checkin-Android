@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_small"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/card_corner_radius_small">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <TextView
+            android:id="@+id/tv_transaction_restaurant"
+            style="@style/TealLargeBoldTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text="Dr cafe - VIMS"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+        <TextView
+            android:id="@+id/tv_transaction_id"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            app:layout_constraintStart_toStartOf="@id/tv_transaction_restaurant"
+            app:layout_constraintTop_toBottomOf="@id/tv_transaction_restaurant"
+            tools:text="Order ID: 54647478848" />
+        
+        <TextView
+            android:id="@+id/tv_transaction_timings"
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_transaction_id"
+            app:layout_constraintTop_toBottomOf="@id/tv_transaction_id"
+            tools:text="Dec 05, 2018 10:34 AM | 3 Item" />
+        
+        <ImageView
+            android:id="@+id/im_transaction_count"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/spacing_extra_tiny"
+            android:src="@drawable/ic_human"
+            app:layout_constraintBottom_toBottomOf="@id/tv_transaction_count"
+            app:layout_constraintEnd_toStartOf="@id/tv_transaction_count"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/tv_transaction_id"
+            app:layout_constraintStart_toStartOf="@id/tv_transaction_amount"
+            app:layout_constraintTop_toTopOf="@id/tv_transaction_count" />
+        
+        <TextView
+            android:id="@+id/tv_transaction_count"
+            style="@style/GreyLargeBoldTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_transaction_amount"
+            app:layout_constraintEnd_toEndOf="@id/tv_transaction_amount"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/im_transaction_count"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2" />
+        
+        <TextView
+            android:id="@+id/tv_transaction_amount"
+            style="@style/TealBlueTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:text="₹ 26445.65"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/vertical_line"
+            app:layout_constraintTop_toBottomOf="@id/tv_transaction_count" />
+        
+        <View
+            android:id="@+id/vertical_line"
+            android:layout_width="@dimen/spacing_unit"
+            android:layout_height="0dp"
+            android:layout_marginEnd="125dp"
+            android:background="@color/pinkish_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

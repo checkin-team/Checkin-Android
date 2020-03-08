@@ -123,6 +123,8 @@ interface WebApiService {
     @POST("sessions/active/pay/paytm/")
     fun postPaytmRequest(): Call<PaytmModel>
 
+    @get:GET("/sessions/customer/closed/")
+    val customerPastTransactions: Call<List<CustomerPastSessionModel>>
     // endregion
 
     // region SCHEDULED_SESSION

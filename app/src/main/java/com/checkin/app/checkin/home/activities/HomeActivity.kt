@@ -27,6 +27,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
+import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import com.checkin.app.checkin.BuildConfig
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
@@ -263,6 +264,18 @@ class HomeActivity : BaseAccountActivity() {
 
     override fun setupDrawerItems(builder: DrawerBuilderKt) = builder.run {
         selectedItem = -1
+        primaryItem {
+            name = "My Transactions"
+            enabled = true
+            icon = R.drawable.ic_order_summary
+            textColorRes = R.color.brownish_grey
+            onClick { _ ->
+                val intent = PaymentTransactionActivity.withIntent(this@HomeActivity)
+                startActivity(intent)
+                false
+            }
+        }
+
         pass
     }
 
