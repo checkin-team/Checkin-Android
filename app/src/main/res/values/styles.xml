@@ -240,7 +240,11 @@
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
-
+    
+    <style name="GreyLargeBoldTextStyle" parent="GreyTextStyle">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+    </style>
     <style name="WhiteTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/opensans</item>
@@ -284,9 +288,14 @@
     <style name="GreyBoldTextStyle" parent="GreyTextStyle">
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
-
-    <style name="PinkishGreySmallTextStyle" parent="GreyTextStyle">
+    
+    <style name="PinkishGreyTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/pinkish_grey</item>
+        <item name="android:fontFamily">@font/opensans</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+    
+    <style name="PinkishGreySmallTextStyle" parent="PinkishGreyTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
 
@@ -330,6 +339,11 @@
 
     <style name="AquaBlueSmallTextStyle" parent="TealBlueTextStyle">
         <item name="android:textSize">@dimen/font_small</item>
+    </style>
+    
+    <style name="TealLargeBoldTextStyle" parent="TealBlueTextStyle">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
     </style>
 
     <!--<style name="WhiteCardStyle" parent="CardView">

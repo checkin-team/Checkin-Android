@@ -1,0 +1,60 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+    
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:theme="@style/AppThemeWhiteActionBar.ActionBar">
+        
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_payment_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/spacing_extra_small"
+                android:paddingBottom="@dimen/spacing_extra_small"
+                tools:ignore="RtlSymmetry">
+                
+                <TextView
+                    android:id="@+id/tv_payment_details_header_restaurant"
+                    style="@style/TealBlueTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_semibold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_payment_details_header_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Grey Orange " />
+                
+                <TextView
+                    android:id="@+id/tv_payment_details_header_address"
+                    style="@style/PinkishGreySmallTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:gravity="bottom|start"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_payment_details_header_restaurant"
+                    tools:text="Lavel Road- Bengaluru" />
+            
+            
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    
+    <include layout="@layout/incl_activity_base">
+    
+    </include>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
