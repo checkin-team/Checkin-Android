@@ -11,33 +11,32 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.fragments.PaymentDetailsFragment
-import com.checkin.app.checkin.home.model.PastSessionDetailsModel
-import com.checkin.app.checkin.home.viewmodels.PaymentDetailsViewModel
+import com.checkin.app.checkin.home.fragments.ClosedSessionDetailFragment
+import com.checkin.app.checkin.home.model.ClosedSessionDetailsModel
+import com.checkin.app.checkin.home.viewmodels.ClosedSessionViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.utility.inTransaction
-import com.checkin.app.checkin.utility.navigateBackToHome
 
-class PaymentDetailsActivity : BaseActivity() {
-    @BindView(R.id.toolbar_payment_details)
+class ClosedSessionDetailsActivity : BaseActivity() {
+    @BindView(R.id.toolbar_closed_session_details)
     internal lateinit var toolbar: Toolbar
-    @BindView(R.id.tv_payment_details_header_restaurant)
+    @BindView(R.id.tv_closed_session_restaurant)
     internal lateinit var tvRestaurantName: TextView
-    @BindView(R.id.tv_payment_details_header_address)
+    @BindView(R.id.tv_closed_session_address)
     internal lateinit var tvAddress: TextView
 
     private val networkFragment = NetworkBlockingFragment()
-    private val mainFragment = PaymentDetailsFragment()
+    private val mainFragment = ClosedSessionDetailFragment()
 
     val networkViewModel: BlockingNetworkViewModel by viewModels()
-    val viewModel: PaymentDetailsViewModel by viewModels()
+    val viewModel: ClosedSessionViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_payment_details)
+        setContentView(R.layout.activity_closed_session_details)
         ButterKnife.bind(this)
 
         initUI()
@@ -67,11 +66,11 @@ class PaymentDetailsActivity : BaseActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        navigateBackToHome()
+        finish()
         return true
     }
 
-    private fun setupHeader(data: PastSessionDetailsModel) {
+    private fun setupHeader(data: ClosedSessionDetailsModel) {
         tvRestaurantName.text = data.restaurant.name
         tvAddress.text = data.restaurant.formatAddress
     }
@@ -79,7 +78,7 @@ class PaymentDetailsActivity : BaseActivity() {
     companion object {
         private const val KEY_SESSION_ID = "payment.details.session.id"
 
-        fun withSessionIntent(context: Context, sessionId: Long) = Intent(context, PaymentDetailsActivity::class.java).apply {
+        fun withSessionIntent(context: Context, sessionId: Long) = Intent(context, ClosedSessionDetailsActivity::class.java).apply {
             putExtra(KEY_SESSION_ID, sessionId)
         }
     }

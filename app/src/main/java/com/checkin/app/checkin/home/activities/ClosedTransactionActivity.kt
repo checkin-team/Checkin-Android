@@ -12,25 +12,30 @@ import butterknife.ButterKnife
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.epoxy.pastTransactionModelHolder
-import com.checkin.app.checkin.home.viewmodels.PastTransactionViewModel
+import com.checkin.app.checkin.home.epoxy.closedTransactionModelHolder
+import com.checkin.app.checkin.home.viewmodels.ClosedTransactionViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 
 
-class PaymentTransactionActivity : BaseActivity() {
+class ClosedTransactionActivity : BaseActivity() {
 
-    @BindView(R.id.epoxy_transaction_details)
+    @BindView(R.id.epoxy_closed_transaction)
     internal lateinit var epoxyTransactionDetails: EpoxyRecyclerView
+    @BindView(R.id.toolbar_closed)
+    internal lateinit var toolbar: Toolbar
 
-    val model: PastTransactionViewModel by viewModels()
+    val model: ClosedTransactionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_payment_transaction)
+        setContentView(R.layout.activity_closed_transaction)
         ButterKnife.bind(this)
-        initRefreshScreen(R.id.sr_transaction)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar_transaction)
+        initUI()
+        setupObservers()
+    }
+
+    private fun initUI() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -38,27 +43,18 @@ class PaymentTransactionActivity : BaseActivity() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-
         epoxyTransactionDetails.withModels {
-            model.customerPastTransaction.value?.data?.forEachIndexed { index, item ->
-                pastTransactionModelHolder {
+            model.customerClosedTransaction.value?.data?.forEachIndexed { index, item ->
+                closedTransactionModelHolder {
                     id(index)
                     data(item)
-                    listener { _ ->
-                        val intent = PaymentDetailsActivity.withSessionIntent(this@PaymentTransactionActivity, item.pk)
-                        startActivity(intent)
-                    }
-
                 }
             }
         }
-
-        setupObservers()
     }
 
-
     private fun setupObservers() {
-        model.customerPastTransaction.observe(this, Observer {
+        model.customerClosedTransaction.observe(this, Observer {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     epoxyTransactionDetails.requestModelBuild()
@@ -73,16 +69,11 @@ class PaymentTransactionActivity : BaseActivity() {
     }
 
     companion object {
-        fun withIntent(context: Context) = Intent(context, PaymentTransactionActivity::class.java)
+        fun withIntent(context: Context) = Intent(context, ClosedTransactionActivity::class.java)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
-    }
-
-    override fun updateScreen() {
-        super.updateScreen()
-        model.updateResults()
     }
 }

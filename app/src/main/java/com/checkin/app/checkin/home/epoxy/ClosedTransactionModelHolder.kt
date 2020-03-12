@@ -1,32 +1,27 @@
 package com.checkin.app.checkin.home.epoxy
 
-import android.view.View
 import android.widget.TextView
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.home.activities.ClosedSessionDetailsActivity
+import com.checkin.app.checkin.home.model.CustomerClosedSessionModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
-import com.checkin.app.checkin.session.models.CustomerPastSessionModel
 
 @EpoxyModelClass(layout = R.layout.item_transaction_details)
-abstract class PastTransactionModelHolder : EpoxyModelWithHolder<PastTransactionModelHolder.Holder>() {
+abstract class ClosedTransactionModelHolder : EpoxyModelWithHolder<ClosedTransactionModelHolder.Holder>() {
 
     @EpoxyAttribute
-    internal lateinit var data: CustomerPastSessionModel
+    internal lateinit var data: CustomerClosedSessionModel
 
-    @EpoxyAttribute
-    internal lateinit var listener: View.OnClickListener
 
     override fun bind(holder: Holder) {
         holder.bindData(data)
-        if(::listener.isInitialized) {
-            holder.itemView.setOnClickListener(listener)
-        }
     }
 
-    class Holder : BaseEpoxyHolder<CustomerPastSessionModel>() {
+    class Holder : BaseEpoxyHolder<CustomerClosedSessionModel>() {
         @BindView(R.id.tv_transaction_restaurant)
         internal lateinit var tvTransactionRestaurant: TextView
 
@@ -43,12 +38,17 @@ abstract class PastTransactionModelHolder : EpoxyModelWithHolder<PastTransaction
         internal lateinit var tvTransactionAmount: TextView
 
 
-        override fun bindData(data: CustomerPastSessionModel) {
+        override fun bindData(data: CustomerClosedSessionModel) {
             tvTransactionRestaurant.text = data.restaurant.displayName
             tvTransactionId.text = data.formatId()
             tvTransactionTimings.text = data.formatTimings()
             tvTransactionCount.text = data.countCustomers.toString()
             tvTransactionAmount.text = data.formatAmount()
+
+            itemView.setOnClickListener { _ ->
+                val intent = ClosedSessionDetailsActivity.withSessionIntent(context, data.pk)
+                context.startActivity(intent)
+            }
 
 
         }

@@ -33,8 +33,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity android:name=".home.activities.PaymentTransactionActivity"></activity>
-        <activity android:name=".home.activities.PaymentDetailsActivity" />
+        <activity android:name=".home.activities.ClosedTransactionActivity" />
+        <activity android:name=".home.activities.ClosedSessionDetailsActivity" />
         <activity
             android:name=".home.activities.AboutUsActivity"
             android:theme="@style/AppThemeWhiteActionBar" />

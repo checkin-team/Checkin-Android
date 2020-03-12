@@ -270,7 +270,7 @@ class HomeActivity : BaseAccountActivity() {
             icon = R.drawable.ic_order_summary
             textColorRes = R.color.brownish_grey
             onClick { _ ->
-                val intent = PaymentTransactionActivity.withIntent(this@HomeActivity)
+                val intent = ClosedTransactionActivity.withIntent(this@HomeActivity)
                 startActivity(intent)
                 false
             }

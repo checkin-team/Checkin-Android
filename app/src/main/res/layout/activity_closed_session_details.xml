@@ -14,7 +14,7 @@
         android:theme="@style/AppThemeWhiteActionBar.ActionBar">
         
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_payment_details"
+            android:id="@+id/toolbar_closed_session_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             
@@ -26,18 +26,18 @@
                 tools:ignore="RtlSymmetry">
                 
                 <TextView
-                    android:id="@+id/tv_payment_details_header_restaurant"
+                    android:id="@+id/tv_closed_session_restaurant"
                     style="@style/TealBlueTextStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/josefinsans_semibold"
-                    app:layout_constraintEnd_toEndOf="@id/tv_payment_details_header_address"
+                    app:layout_constraintEnd_toEndOf="@id/tv_closed_session_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Grey Orange " />
                 
                 <TextView
-                    android:id="@+id/tv_payment_details_header_address"
+                    android:id="@+id/tv_closed_session_address"
                     style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_payment_details_header_restaurant"
+                    app:layout_constraintTop_toBottomOf="@id/tv_closed_session_restaurant"
                     tools:text="Lavel Road- Bengaluru" />
             
             
