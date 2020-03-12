@@ -44,6 +44,11 @@ class PaymentTransactionActivity : BaseActivity() {
                 pastTransactionModelHolder {
                     id(index)
                     data(item)
+                    listener { _ ->
+                        val intent = PaymentDetailsActivity.withSessionIntent(this@PaymentTransactionActivity, item.pk)
+                        startActivity(intent)
+                    }
+
                 }
             }
         }

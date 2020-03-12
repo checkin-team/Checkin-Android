@@ -1,39 +1,37 @@
-package com.checkin.app.checkin.session.scheduled.fragments
+package com.checkin.app.checkin.home.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import butterknife.BindView
-import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.fragments.BaseOrderDetailFragment
-import com.checkin.app.checkin.menu.holders.invoiceOrderModelHolder
-import com.checkin.app.checkin.misc.BillHolder
-import com.checkin.app.checkin.misc.fragments.BaseFragment
-import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
-import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
+import com.checkin.app.checkin.home.epoxy.invoiceClosedOrderModelHolder
+import com.checkin.app.checkin.home.model.PastSessionDetailsModel
+import com.checkin.app.checkin.home.viewmodels.PaymentDetailsViewModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.isNotEmpty
 
-class CommonOrderDetailFragment : BaseOrderDetailFragment() {
+
+class ClosedOrderDetailsFragment : BaseOrderDetailFragment() {
 
 
-    val viewModel: ScheduledSessionDetailViewModel by activityViewModels()
+    val viewModel: PaymentDetailsViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         epoxyRvOrders.withModels {
-            viewModel.ordersData.value?.data?.takeIf { it.isNotEmpty() }?.forEach {
-                invoiceOrderModelHolder {
+            viewModel.ordersData.value?.data.takeIf { it.isNotEmpty() }?.forEach {
+                invoiceClosedOrderModelHolder {
                     id(it.pk)
                     orderData(it)
+                    Log.d("Bruh", "okay cool")
                 }
             }
         }
+
+
         viewModel.ordersData.observe(this, Observer {
             if (it.status == Resource.Status.SUCCESS && it.data != null) epoxyRvOrders.requestModelBuild()
         })
@@ -46,9 +44,8 @@ class CommonOrderDetailFragment : BaseOrderDetailFragment() {
         })
     }
 
-    private fun setupData(data: CustomerScheduledSessionDetailModel) {
+    private fun setupData(data: PastSessionDetailsModel) {
         billHolder.bind(data.bill)
-        tvRemarks.text = data.scheduled.remarks ?: ""
         tvTotal.text = Utils.formatCurrencyAmount(requireContext(), data.bill.total)
     }
 }

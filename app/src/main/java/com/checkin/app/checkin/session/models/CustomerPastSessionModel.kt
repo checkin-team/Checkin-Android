@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class CustomerPastSessionModel(
-        val pk: Int,
+        val pk: Long,
         @JsonProperty("hash_id") val hashId: String,
         @JsonProperty("checkedin_time") val checkinTime: Date,
         @JsonProperty("count_orders") val countOrders: Int,

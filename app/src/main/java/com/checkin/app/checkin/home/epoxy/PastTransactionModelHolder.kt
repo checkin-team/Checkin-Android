@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.home.epoxy
 
+import android.view.View
 import android.widget.TextView
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
@@ -15,8 +16,14 @@ abstract class PastTransactionModelHolder : EpoxyModelWithHolder<PastTransaction
     @EpoxyAttribute
     internal lateinit var data: CustomerPastSessionModel
 
+    @EpoxyAttribute
+    internal lateinit var listener: View.OnClickListener
+
     override fun bind(holder: Holder) {
         holder.bindData(data)
+        if(::listener.isInitialized) {
+            holder.itemView.setOnClickListener(listener)
+        }
     }
 
     class Holder : BaseEpoxyHolder<CustomerPastSessionModel>() {
