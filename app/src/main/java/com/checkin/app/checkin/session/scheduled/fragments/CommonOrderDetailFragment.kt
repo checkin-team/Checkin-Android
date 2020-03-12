@@ -2,17 +2,11 @@ package com.checkin.app.checkin.session.scheduled.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import butterknife.BindView
-import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.fragments.BaseOrderDetailFragment
 import com.checkin.app.checkin.menu.holders.invoiceOrderModelHolder
-import com.checkin.app.checkin.misc.BillHolder
-import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.misc.fragments.BaseOrderDetailFragment
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 import com.checkin.app.checkin.utility.Utils
@@ -34,10 +28,10 @@ class CommonOrderDetailFragment : BaseOrderDetailFragment() {
                 }
             }
         }
-        viewModel.ordersData.observe(this, Observer {
+        viewModel.ordersData.observe(viewLifecycleOwner, Observer {
             if (it.status == Resource.Status.SUCCESS && it.data != null) epoxyRvOrders.requestModelBuild()
         })
-        viewModel.sessionData.observe(this, Observer {
+        viewModel.sessionData.observe(viewLifecycleOwner, Observer {
             if (it.status == Resource.Status.SUCCESS && it.data != null) {
                 setupData(it.data)
             } else if (it.status == Resource.Status.LOADING) {

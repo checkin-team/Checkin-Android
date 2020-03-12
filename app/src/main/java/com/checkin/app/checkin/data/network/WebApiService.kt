@@ -17,11 +17,7 @@ import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
 import com.checkin.app.checkin.Waiter.Model.*
 import com.checkin.app.checkin.accounts.AccountModel
 import com.checkin.app.checkin.auth.AuthResultModel
-import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
-import com.checkin.app.checkin.home.model.CityLocationModel
-import com.checkin.app.checkin.home.model.NearbyRestaurantModel
-import com.checkin.app.checkin.home.model.PastSessionDetailsModel
-import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.*
 import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
@@ -126,10 +122,10 @@ interface WebApiService {
     fun postPaytmRequest(): Call<PaytmModel>
 
     @get:GET("/sessions/customer/closed/")
-    val customerPastTransactions: Call<List<CustomerPastSessionModel>>
+    val customerClosedTransactions: Call<List<CustomerClosedSessionModel>>
 
     @GET("/sessions/customer/closed/{session_id}")
-    fun getCustomerPastSessionDetails(@Path("session_id") sessionId: Long): Call<PastSessionDetailsModel>
+    fun getCustomerClosedSessionDetails(@Path("session_id") sessionId: Long): Call<ClosedSessionDetailsModel>
     // endregion
 
     // region SCHEDULED_SESSION

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.home.fragments
+package com.checkin.app.checkin.misc.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,6 @@ import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.BillHolder
-import com.checkin.app.checkin.misc.fragments.BaseFragment
 
 abstract class BaseOrderDetailFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_user_scheduled_detail_orders_common

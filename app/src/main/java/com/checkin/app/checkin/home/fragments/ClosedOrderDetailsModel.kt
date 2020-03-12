@@ -9,20 +9,20 @@ import butterknife.BindView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.accounts.AccountUtil
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.viewmodels.PaymentDetailsViewModel
+import com.checkin.app.checkin.home.viewmodels.ClosedSessionViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 
-class ClosedOrderedDetailsModel : BaseFragment() {
-    override val rootLayout: Int = R.layout.fragment_closed_ordered_details
+class ClosedOrderDetailsModel : BaseFragment() {
+    override val rootLayout: Int = R.layout.fragment_closed_order_details
 
-    @BindView(R.id.tv_transaction_detail_confirmation_guest_name)
+    @BindView(R.id.tv_closed_order_confirmation_guest_name)
     internal lateinit var tvGuestName: TextView
-    @BindView(R.id.tv_transaction_detail_confirmation_due)
+    @BindView(R.id.tv_closed_order_confirmation_due)
     internal lateinit var tvConfirmationDate: TextView
-    @BindView(R.id.tv_transaction_detail_confirmation_order_id)
+    @BindView(R.id.tv_closed_order_confirmation_order_id)
     internal lateinit var tvOrderId: TextView
 
-    val model: PaymentDetailsViewModel by activityViewModels()
+    val model: ClosedSessionViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         model.sessionData.observe(viewLifecycleOwner, Observer {

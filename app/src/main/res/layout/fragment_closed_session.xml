@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
@@ -11,24 +10,24 @@
         android:orientation="vertical">
         
         <TextView
-            android:id="@+id/tv_payment_details_order"
+            android:id="@+id/tv_closed_session_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/spacing_normal"
             android:fontFamily="@font/josefinsans_semibold"
-            android:text="Order Summary"
+            android:text="@string/order_summary"
             android:textColor="@color/greenish_teal"
             android:textSize="@dimen/font_large"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintBottom_toBottomOf="@id/im_closed_session_summary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+            app:layout_constraintTop_toTopOf="@id/im_closed_session_summary" />
         
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/im_closed_session_summary"
             android:layout_width="@dimen/size_logo_small"
             android:layout_height="@dimen/size_logo_small"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_normal"
             android:src="@drawable/ic_order_summary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,29 +36,28 @@
             android:id="@+id/horizontal_line"
             android:layout_width="0dp"
             android:layout_height="@dimen/spacing_unit"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:background="@color/pinkish_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@id/im_closed_session_summary" />
     
         <com.checkin.app.checkin.misc.views.CollapsibleSectionView
-            android:id="@+id/csv_preorder_detail_billing"
+            android:id="@+id/csv_closed_session_billing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/horizontal_line"
-            app:sectionText="@string/title_bill_details"
-            />
+            app:layout_constraintTop_toTopOf="@id/horizontal_line"
+            app:sectionText="@string/title_bill_details" />
         
         <com.checkin.app.checkin.misc.views.CollapsibleSectionView
-            android:id="@+id/csv_preorder_detail_order"
+            android:id="@+id/csv_closed_session_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/csv_preorder_detail_billing"
+            app:layout_constraintTop_toBottomOf="@id/csv_closed_session_billing"
             app:sectionText="@string/title_order_details" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -286,4 +286,6 @@
     
     <string name="url_app_terms_conditions">https://check-in.in/terms</string>
     <string name="url_app_refund">https://check-in.in/refund</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="past_transaction">Past Transaction</string>
 </resources>
