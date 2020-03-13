@@ -7,7 +7,7 @@ import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.HomeRepository
 import com.checkin.app.checkin.home.model.ClosedSessionDetailsModel
-import com.checkin.app.checkin.home.model.SessionOrderItemModel
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 
 class ClosedSessionViewModel(application: Application) : BaseViewModel(application) {
 
@@ -15,13 +15,13 @@ class ClosedSessionViewModel(application: Application) : BaseViewModel(applicati
 
     private val mSessionData = createNetworkLiveData<ClosedSessionDetailsModel>()
 
-    val ordersData: LiveData<Resource<List<SessionOrderItemModel>>> = Transformations.map(mSessionData) {
+    val ordersData: LiveData<Resource<List<SessionOrderedItemModel>>> = Transformations.map(mSessionData) {
         it?.data?.let { data ->
             Resource.cloneResource(it, data.orderedItems)
-        } ?: Resource.cloneResource(it, emptyList<SessionOrderItemModel>())
+        } ?: Resource.cloneResource(it, emptyList<SessionOrderedItemModel>())
     }
 
-    val sessionData = mSessionData
+    val sessionData: LiveData<Resource<ClosedSessionDetailsModel>> = mSessionData
 
     private val PaymentDetailsViewModel = HomeRepository.getInstance(application)
 

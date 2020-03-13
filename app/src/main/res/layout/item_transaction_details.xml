@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginTop="@dimen/spacing_tiny"
-            android:text="Dr cafe - VIMS"
+            tools:text="Dr cafe - VIMS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         
