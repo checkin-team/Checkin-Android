@@ -15,7 +15,6 @@ import com.checkin.app.checkin.utility.isNotEmpty
 
 class CommonClosedOrderDetailsFragment : BaseOrderDetailFragment() {
 
-
     val viewModel: ClosedSessionViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

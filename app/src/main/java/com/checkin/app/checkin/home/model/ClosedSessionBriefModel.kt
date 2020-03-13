@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class CustomerClosedSessionModel(
+data class ClosedSessionBriefModel(
         val pk: Long,
         @JsonProperty("hash_id") val hashId: String,
         @JsonProperty("checkedin_time") val checkinTime: Date,
@@ -20,8 +20,10 @@ data class CustomerClosedSessionModel(
 
     fun formatTimings(): String {
         val format = SimpleDateFormat("MMM dd, YYYY hh:mm a", Locale.getDefault())
-        return "${format.format(checkinTime)} | $countOrders item"
+        return "${format.format(checkinTime)} | ${formatCountOrder()}"
     }
 
     fun formatAmount() = "₹${String.format("%.2f", total)}"
+
+    fun formatCountOrder() = if (countOrders == 1) "$countOrders item" else "$countOrders items"
 }

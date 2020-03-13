@@ -18,7 +18,7 @@ class CommonOrderDetailFragment : BaseOrderDetailFragment() {
     val viewModel: ScheduledSessionDetailViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         epoxyRvOrders.withModels {
             viewModel.ordersData.value?.data?.takeIf { it.isNotEmpty() }?.forEach {
