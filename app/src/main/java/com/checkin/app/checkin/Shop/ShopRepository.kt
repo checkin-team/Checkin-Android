@@ -27,14 +27,14 @@ import java.io.File
 class ShopRepository private constructor(context: Context) : BaseRepository() {
     private val mWebService: WebApiService = ApiClient.getApiService(context)
 
-    fun nearbyRestaurants(id: Int): LiveData<Resource<List<NearbyRestaurantModel>>> =
+    fun getNearbyRestaurants(id: Int): LiveData<Resource<List<NearbyRestaurantModel>>> =
             object : NetworkBoundResource<List<NearbyRestaurantModel>, List<NearbyRestaurantModel>>() {
                 override fun shouldUseLocalDb(): Boolean {
                     return false
                 }
 
                 override fun createCall(): LiveData<ApiResponse<List<NearbyRestaurantModel>>> {
-                    return RetrofitLiveData(mWebService.nearbyRestaurants(if (id == 0) null else id))
+                    return RetrofitLiveData(mWebService.getNearbyRestaurants(if (id == 0) null else id))
                 }
             }.asLiveData
 

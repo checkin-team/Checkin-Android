@@ -66,7 +66,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun fetchNearbyRestaurants() {
-        mNearbyRestaurants.addSource(mShopRepository.nearbyRestaurants(cityId.value
+        mNearbyRestaurants.addSource(mShopRepository.getNearbyRestaurants(cityId.value
                 ?: 0), mNearbyRestaurants::setValue)
     }
 }

@@ -36,13 +36,11 @@ class UserLocationViewModel(application: Application) : BaseMenuViewModel(applic
     private fun internalSearchCities(query: String) {
         val resourceLiveData = Transformations.map(allLocationsData) { input ->
             val items = input.data?.filter {
-                it.name.contains(query, ignoreCase = true)
+                it.name.contains(query, ignoreCase = true) || it.state.contains(query, ignoreCase = true)
             }
             if (items?.isEmpty() == true) return@map Resource.errorNotFound<List<CityLocationModel>>("No Such City Found.")
             Resource.cloneResource(input, items)
         }
-        mLocationData.addSource(resourceLiveData) {
-            mLocationData.value = it
-        }
+        mLocationData.addSource(resourceLiveData, mLocationData::setValue)
     }
 }

@@ -55,6 +55,9 @@ import com.checkin.app.checkin.user.fragments.UserPrivateProfileFragment
 import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.checkin.app.checkin.utility.*
+import com.checkin.app.checkin.utility.Constants.LOCATION_CITY_FILE
+import com.checkin.app.checkin.utility.Constants.LOCATION_CITY_ID
+import com.checkin.app.checkin.utility.Constants.LOCATION_CITY_NAME
 import com.checkin.app.checkin.utility.OnBoardingUtils.OnBoardingModel
 import com.golovin.fluentstackbar.FluentSnackbar
 import com.google.android.material.snackbar.Snackbar
@@ -140,7 +143,7 @@ class HomeActivity : BaseAccountActivity() {
             }
         })
 
-        setupUserLocationTracker()
+
         setupObserver()
         explainQr()
 
@@ -247,20 +250,22 @@ class HomeActivity : BaseAccountActivity() {
         })
 
         mViewModel.cityId.observe(this, Observer {
-            val preferences = getSharedPreferences(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
-            tvCityLocation.text = preferences.getString(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_NAME, "Select a City")
+            val preferences = getSharedPreferences(LOCATION_CITY_FILE, Context.MODE_PRIVATE)
+            tvCityLocation.text = preferences.getString(LOCATION_CITY_NAME, "Current Location")
+            if (it == 0) {
+                setupUserLocationTracker()
+            }
         })
         liveViewModel.clearCartData.observe(this, Observer { })
 
         mViewModel.setCityId(getCityId())
         mViewModel.fetchSessionStatus()
-        mViewModel.fetchNearbyRestaurants()
         liveViewModel.fetchCartStatus()
     }
 
     private fun getCityId(): Int {
-        val preferences = getSharedPreferences(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
-        return preferences.getInt(com.checkin.app.checkin.utility.Constants.LOCATION_CITY_ID, 0)
+        val preferences = getSharedPreferences(LOCATION_CITY_FILE, Context.MODE_PRIVATE)
+        return preferences.getInt(LOCATION_CITY_ID, 0)
     }
 
     private fun resetUserIcon() {
