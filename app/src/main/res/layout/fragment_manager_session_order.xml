@@ -8,7 +8,10 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/sr_manager_session_orders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginBottom="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,6 +21,8 @@
                 android:id="@+id/nested_sv_ms_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/rl_container_generate_bill"
+                android:layout_alignParentTop="true"
                 android:fillViewport="true"
                 android:scrollbars="none">
 
@@ -100,10 +105,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="@color/brownish_grey"
-                android:paddingTop="@dimen/spacing_small"
-                android:paddingBottom="@dimen/spacing_small"
                 android:paddingStart="@dimen/spacing_large"
-                android:paddingEnd="@dimen/spacing_large">
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_large"
+                android:paddingBottom="@dimen/spacing_small">
 
                 <ImageView
                     android:id="@+id/iv_cash"
@@ -114,14 +119,14 @@
                     android:src="@drawable/ic_cash_white" />
 
                 <TextView
-                    android:textSize="@dimen/font_normal"
                     style="@style/WhiteTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_toEndOf="@+id/iv_cash"
-                    android:text="Generate Bill" />
+                    android:text="Generate Bill"
+                    android:textSize="@dimen/font_normal" />
 
                 <ImageView
                     android:id="@+id/iv_generate_bill"
