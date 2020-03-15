@@ -17,15 +17,16 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.epoxy.cityLocationModelHolder
 import com.checkin.app.checkin.home.epoxy.currentLocationModelHolder
+import com.checkin.app.checkin.home.listeners.LocationSelectedListener
+import com.checkin.app.checkin.home.model.CityLocationModel
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.UserLocationViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.utility.Constants
 
-class UserLocationFragment : BaseFragment() {
+class UserLocationFragment : BaseFragment(), LocationSelectedListener {
     override val rootLayout = R.layout.fragment_user_location_switch
-    val viewModel: UserLocationViewModel by viewModels()
-    val homeViewModel: HomeViewModel by activityViewModels()
+
     @BindView(R.id.et_user_location)
     internal lateinit var etUserLocation: EditText
 
@@ -35,21 +36,13 @@ class UserLocationFragment : BaseFragment() {
     @BindView(R.id.im_user_location_cross)
     internal lateinit var imUserCross: ImageView
 
+    val viewModel: UserLocationViewModel by viewModels()
+    val homeViewModel: HomeViewModel by activityViewModels()
+
 
     @OnTextChanged(R.id.et_user_location, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     fun onTextChanged(et: Editable?) {
-        if (et.toString().isEmpty()) {
-            imUserCross.visibility = View.INVISIBLE
-        } else {
-            imUserCross.visibility = View.VISIBLE
-        }
         viewModel.searchCities(et.toString())
-    }
-
-
-    @OnClick(R.id.im_user_location_cross)
-    fun onTextCrossed() {
-        etUserLocation.text.clear()
     }
 
     @OnClick(R.id.im_user_location_back)
@@ -62,16 +55,7 @@ class UserLocationFragment : BaseFragment() {
             if (etUserLocation.text.isEmpty() || viewModel.locationData.value?.inError == true) {
                 currentLocationModelHolder {
                     id("present.location")
-                    locationSelected {
-                        val preferences = requireActivity().getSharedPreferences(Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
-                        with(preferences.edit()) {
-                            putInt(Constants.LOCATION_CITY_ID, 0)
-                            putString(Constants.LOCATION_CITY_NAME, "Current Location")
-                            commit()
-                        }
-                        homeViewModel.setCityId(0)
-                        requireActivity().supportFragmentManager.popBackStack()
-                    }
+                    locationSelectedListener(this@UserLocationFragment)
                 }
             }
 
@@ -80,16 +64,7 @@ class UserLocationFragment : BaseFragment() {
                 cityLocationModelHolder {
                     id(model.id)
                     data(model)
-                    locationSelected {
-                        val preferences = requireActivity().getSharedPreferences(Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
-                        with(preferences.edit()) {
-                            putInt(Constants.LOCATION_CITY_ID, model.id)
-                            putString(Constants.LOCATION_CITY_NAME, model.name)
-                            commit()
-                        }
-                        homeViewModel.setCityId(model.id)
-                        requireActivity().supportFragmentManager.popBackStack()
-                    }
+                    locationSelectedListener(this@UserLocationFragment)
                 }
             }
         }
@@ -109,6 +84,26 @@ class UserLocationFragment : BaseFragment() {
 
     companion object {
         val TAG = UserLocationFragment::class.simpleName
+    }
+
+    override fun onLocationSelected(data: CityLocationModel?) {
+        var id = 0
+        var name = "Current Location"
+
+        if (data != null) {
+            id = data.id
+            name = data.name
+        }
+
+        val preferences = requireContext().getSharedPreferences(Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
+        with(preferences.edit()) {
+            putInt(Constants.LOCATION_CITY_ID, id)
+            putString(Constants.LOCATION_CITY_NAME, name)
+            commit()
+        }
+
+        homeViewModel.setCityId(id)
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
 }
