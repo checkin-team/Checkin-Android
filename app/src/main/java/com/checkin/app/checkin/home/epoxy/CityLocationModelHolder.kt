@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.home.epoxy
 
+import android.view.View
 import android.widget.TextView
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
@@ -16,32 +17,29 @@ abstract class CityLocationModelHolder : EpoxyModelWithHolder<CityLocationModelH
     internal lateinit var data: CityLocationModel
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
-    internal lateinit var locationSelectedListener: LocationSelectedListener
+    internal lateinit var listener: LocationSelectedListener
 
-    override fun createNewHolder() = Holder(locationSelectedListener)
+    override fun createNewHolder() = Holder(listener)
 
-    override fun bind(holder: Holder) {
-        holder.bindData(data)
+    override fun bind(holder: Holder) = holder.bindData(data)
 
-    }
-
-    class Holder(val locationSelectedListener: LocationSelectedListener) : BaseEpoxyHolder<CityLocationModel>() {
-
+    class Holder(val listener: LocationSelectedListener) : BaseEpoxyHolder<CityLocationModel>() {
         @BindView(R.id.tv_user_location_city)
         internal lateinit var tvCityLocation: TextView
-
         @BindView(R.id.tv_user_location_state)
         internal lateinit var tvStateLocation: TextView
 
+        private lateinit var mData: CityLocationModel
+
+        override fun bindView(itemView: View) {
+            super.bindView(itemView)
+            itemView.setOnClickListener { listener.onLocationSelected(mData) }
+        }
 
         override fun bindData(data: CityLocationModel) {
+            mData = data
             tvCityLocation.text = data.name
             tvStateLocation.text = "${data.state} ${data.country}"
-
-            itemView.setOnClickListener {
-                locationSelectedListener.onLocationSelected(data)
-            }
-
         }
     }
 }

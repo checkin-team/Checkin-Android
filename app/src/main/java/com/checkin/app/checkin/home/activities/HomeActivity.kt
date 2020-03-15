@@ -252,9 +252,7 @@ class HomeActivity : BaseAccountActivity() {
         mViewModel.cityId.observe(this, Observer {
             val preferences = getSharedPreferences(LOCATION_CITY_FILE, Context.MODE_PRIVATE)
             tvCityLocation.text = preferences.getString(LOCATION_CITY_NAME, "Current Location")
-            if (it == 0) {
-                setupUserLocationTracker()
-            }
+            if (it == 0) setupUserLocationTracker()
         })
         liveViewModel.clearCartData.observe(this, Observer { })
 

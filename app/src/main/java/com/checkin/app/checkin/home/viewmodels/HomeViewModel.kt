@@ -57,12 +57,12 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun setCityId(id: Int) {
-        if (mCityId.value == id) {
-            return
-        }
+        if (mCityId.value == id) return
 
         mCityId.value = id
-        fetchNearbyRestaurants()
+        if (mCityId.value != 0)
+        // Fetch restaurants if not current location
+            fetchNearbyRestaurants()
     }
 
     fun fetchNearbyRestaurants() {

@@ -30,7 +30,6 @@ class UserLocationViewModel(application: Application) : BaseMenuViewModel(applic
 
     fun searchCities(query: String) {
         internalSearchCities(query)
-
     }
 
     private fun internalSearchCities(query: String) {

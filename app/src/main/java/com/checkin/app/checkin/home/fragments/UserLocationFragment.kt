@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -29,16 +28,40 @@ class UserLocationFragment : BaseFragment(), LocationSelectedListener {
 
     @BindView(R.id.et_user_location)
     internal lateinit var etUserLocation: EditText
-
     @BindView(R.id.epoxy_rv_user_location)
     internal lateinit var epoxyUserLocation: EpoxyRecyclerView
-
-    @BindView(R.id.im_user_location_cross)
-    internal lateinit var imUserCross: ImageView
 
     val viewModel: UserLocationViewModel by viewModels()
     val homeViewModel: HomeViewModel by activityViewModels()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        epoxyUserLocation.withModels {
+            if (etUserLocation.text.isEmpty() || viewModel.locationData.value?.inError == true) {
+                currentLocationModelHolder {
+                    id("present.location")
+                    listener(this@UserLocationFragment)
+                }
+            }
+
+
+            viewModel.locationData.value?.data?.forEachIndexed { index, model ->
+                cityLocationModelHolder {
+                    id(model.id)
+                    data(model)
+                    listener(this@UserLocationFragment)
+                }
+            }
+        }
+
+        viewModel.locationData.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Resource.Status.SUCCESS, Resource.Status.ERROR_NOT_FOUND -> {
+                    epoxyUserLocation.requestModelBuild()
+                }
+            }
+        })
+        viewModel.fetchData()
+    }
 
     @OnTextChanged(R.id.et_user_location, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     fun onTextChanged(et: Editable?) {
@@ -48,42 +71,6 @@ class UserLocationFragment : BaseFragment(), LocationSelectedListener {
     @OnClick(R.id.im_user_location_back)
     fun onBack() {
         requireActivity().supportFragmentManager.popBackStack()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        epoxyUserLocation.withModels {
-            if (etUserLocation.text.isEmpty() || viewModel.locationData.value?.inError == true) {
-                currentLocationModelHolder {
-                    id("present.location")
-                    locationSelectedListener(this@UserLocationFragment)
-                }
-            }
-
-
-            viewModel.locationData.value?.data?.forEachIndexed { index, model ->
-                cityLocationModelHolder {
-                    id(model.id)
-                    data(model)
-                    locationSelectedListener(this@UserLocationFragment)
-                }
-            }
-        }
-
-        viewModel.locationData.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                Resource.Status.SUCCESS -> {
-                    epoxyUserLocation.requestModelBuild()
-                }
-                Resource.Status.ERROR_NOT_FOUND -> {
-                    epoxyUserLocation.requestModelBuild()
-                }
-            }
-        })
-        viewModel.fetchData()
-    }
-
-    companion object {
-        val TAG = UserLocationFragment::class.simpleName
     }
 
     override fun onLocationSelected(data: CityLocationModel?) {
@@ -99,11 +86,14 @@ class UserLocationFragment : BaseFragment(), LocationSelectedListener {
         with(preferences.edit()) {
             putInt(Constants.LOCATION_CITY_ID, id)
             putString(Constants.LOCATION_CITY_NAME, name)
-            commit()
+            apply()
         }
 
         homeViewModel.setCityId(id)
         requireActivity().supportFragmentManager.popBackStack()
     }
 
+    companion object {
+        val TAG = UserLocationFragment::class.simpleName
+    }
 }
