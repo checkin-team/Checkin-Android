@@ -47,7 +47,7 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
         }.asLiveData
 
     val allPromoCodes: LiveData<Resource<List<PromoDetailModel>>>
-        get() =  object : NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
+        get() = object : NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
             override fun shouldUseLocalDb(): Boolean {
                 return false
             }
@@ -188,15 +188,15 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
         }.asLiveData
     }
 
-    val customerClosedSessionList: LiveData<Resource<List<ClosedSessionBriefModel>>> =
-            object : NetworkBoundResource<List<ClosedSessionBriefModel>, List<ClosedSessionBriefModel>>() {
-                override fun shouldUseLocalDb(): Boolean = false
+    val customerClosedSessionList: LiveData<Resource<List<ClosedSessionBriefModel>>>
+        get() = object : NetworkBoundResource<List<ClosedSessionBriefModel>, List<ClosedSessionBriefModel>>() {
+            override fun shouldUseLocalDb(): Boolean = false
 
-                override fun createCall(): LiveData<ApiResponse<List<ClosedSessionBriefModel>>> {
-                    return RetrofitLiveData(mWebService.customerClosedTransactions)
-                }
+            override fun createCall(): LiveData<ApiResponse<List<ClosedSessionBriefModel>>> {
+                return RetrofitLiveData(mWebService.customerClosedTransactions)
+            }
 
-            }.asLiveData
+        }.asLiveData
 
     fun getCustomerClosedSessionDetails(sessionId: Long): LiveData<Resource<ClosedSessionDetailsModel>> =
             object : NetworkBoundResource<ClosedSessionDetailsModel, ClosedSessionDetailsModel>() {
@@ -207,7 +207,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
                 }
 
             }.asLiveData
-
 
 
     companion object : SingletonHolder<SessionRepository, Application>({ SessionRepository(it.applicationContext) })

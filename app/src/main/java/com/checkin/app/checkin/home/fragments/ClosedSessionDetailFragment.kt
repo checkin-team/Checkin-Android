@@ -43,7 +43,7 @@ class ClosedSessionDetailFragment : BaseFragment() {
     }
 
     private fun setupData(data: ClosedSessionDetailsModel) {
-        tvServingTime.text = Utils.formatTimeTaken(data.servingTime)
-        tvSessionTime.text = Utils.formatTimeTaken(data.sessionTime)
+        tvServingTime.text = Utils.formatDueTime(data.servingTime)
+        tvSessionTime.text = Utils.formatDueTime(data.sessionTime)
     }
 }
