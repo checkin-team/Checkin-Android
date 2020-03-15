@@ -297,27 +297,6 @@ public final class Utils {
         return "0 Sec";
     }
 
-    public static String formatTimeTaken(long milliSec) {
-        long secondsInMilli = 1000;
-        long minutesInMilli = secondsInMilli * 60;
-        long hoursInMilli = minutesInMilli * 60;
-
-        long elapsedHours = milliSec / hoursInMilli;
-        milliSec = milliSec % hoursInMilli;
-        long elapsedMinutes = milliSec / minutesInMilli;
-        milliSec = milliSec % minutesInMilli;
-        long elapsedSeconds = milliSec / secondsInMilli;
-        milliSec = milliSec % secondsInMilli;
-
-        if (elapsedHours > 0)
-            return String.format(Locale.ENGLISH, "%d Hours", elapsedHours);
-        if (elapsedMinutes > 0)
-            return String.format(Locale.ENGLISH, "%d Minutes", elapsedMinutes);
-        if (elapsedSeconds > 0)
-            return String.format(Locale.ENGLISH, "%d Seconds", elapsedSeconds);
-        return "0 Second";
-    }
-
     public static String formatElapsedTime(@NonNull Date eventTime) {
         return formatElapsedTime(eventTime, Calendar.getInstance().getTime());
     }
@@ -337,6 +316,21 @@ public final class Utils {
         return "Now";
     }
 
+    public static String formatDueTime(long diffTime) {
+        Pair<TimeUnit, Long> pair = getTimeDifference(diffTime);
+        long value = pair.getSecond();
+        String suffix = value > 1 ? "s " : " ";
+        switch (pair.getFirst()) {
+            case DAYS:
+                return String.format(Locale.getDefault(), "%d day%s", value, suffix);
+            case HOURS:
+                return String.format(Locale.getDefault(), "%d hour%s", value, suffix);
+            case MINUTES:
+                return String.format(Locale.getDefault(), "%d min%s", value, suffix);
+        }
+        return "Under 1 min";
+    }
+
     public static String formatDueTime(@NonNull Date startTime, @NonNull Date endTime) {
         Pair<TimeUnit, Long> pair = getTimeDifference(startTime, endTime);
         long value = pair.getSecond();
@@ -352,8 +346,13 @@ public final class Utils {
         return "Under 1 min";
     }
 
+
     public static Pair<TimeUnit, Long> getTimeDifference(@NonNull Date start, @NonNull Date end) {
         long diffTime = end.getTime() - start.getTime();
+        return getTimeDifference(diffTime);
+    }
+
+    public static Pair<TimeUnit, Long> getTimeDifference(long diffTime) {
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
