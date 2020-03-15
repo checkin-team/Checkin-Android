@@ -26,4 +26,7 @@ data class ClosedSessionDetailsModel(
 
     val formatId = "#$hashId"
 
+    val formatServingTIme: String = "Serving Time: ${Utils.formatDueTime(servingTime)}"
+
+    val formatSessionTime: String = "Session Time: ${Utils.formatDueTime(sessionTime)}"
 }

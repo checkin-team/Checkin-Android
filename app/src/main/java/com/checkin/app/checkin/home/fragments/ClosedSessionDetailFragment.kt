@@ -12,7 +12,6 @@ import com.checkin.app.checkin.home.model.ClosedSessionDetailsModel
 import com.checkin.app.checkin.home.viewmodels.ClosedSessionViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.views.CollapsibleSectionView
-import com.checkin.app.checkin.utility.Utils
 
 class ClosedSessionDetailFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_closed_session
@@ -43,7 +42,7 @@ class ClosedSessionDetailFragment : BaseFragment() {
     }
 
     private fun setupData(data: ClosedSessionDetailsModel) {
-        tvServingTime.text = Utils.formatDueTime(data.servingTime)
-        tvSessionTime.text = Utils.formatDueTime(data.sessionTime)
+        tvServingTime.text = data.formatServingTIme
+        tvSessionTime.text = data.formatSessionTime
     }
 }
