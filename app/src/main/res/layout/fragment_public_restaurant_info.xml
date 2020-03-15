@@ -79,8 +79,6 @@ Gurugram, Haryana 122004
 			android:src="@drawable/ic_forward_arrow" />
 	</LinearLayout>
 	
-	<include layout="@layout/incl_horizontal_line" />
-	
 	<TextView
 		style="@style/GreyHeadingStyle"
 		android:layout_width="wrap_content"
