@@ -290,6 +290,11 @@
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
 
+    <style name="PinkishGreyTextStyle" parent="GreyTextStyle">
+        <item name="android:textColor">@color/pinkish_grey</item>
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
     <style name="GreyLinkStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_small</item>
@@ -326,6 +331,10 @@
 
     <style name="TealBlueTextStyle" parent="GreyTextStyle">
         <item name="android:textColor">@color/teal_blue</item>
+    </style>
+
+    <style name="TealBlueLargeTextStyle" parent="TealBlueTextStyle">
+        <item name="android:textSize">@dimen/font_large</item>
     </style>
 
     <style name="AquaBlueSmallTextStyle" parent="TealBlueTextStyle">
