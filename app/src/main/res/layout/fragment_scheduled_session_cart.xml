@@ -1,209 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
-	
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
-		
-		<LinearLayout
-			android:id="@+id/container_cart_header_topbar"
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_cart_header_topbar"
-			android:layout_gravity="top"
-			android:background="@color/greenish_teal"
-			android:gravity="center_vertical"
-			android:orientation="horizontal">
-			
-			<ImageView
-				android:layout_width="wrap_content"
-				android:layout_height="@dimen/size_extra_small_icon"
-				android:layout_marginStart="@dimen/spacing_extra_small"
-				android:src="@drawable/ic_cart_white" />
-			
-			<TextView
-				android:id="@+id/tv_cart_header_item_count"
-				style="@style/WhiteSmallTextStyle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_tiny"
-				tools:text="4 items" />
-			
-			<TextView
-				style="@style/WhiteTextStyle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text=" | " />
-			
-			<TextView
-				android:id="@+id/tv_cart_header_amount"
-				style="@style/WhiteSmallTextStyle"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				tools:text="$ 123" />
-			
-			<TextView
-				style="@style/WhiteTextStyle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginEnd="@dimen/spacing_tiny"
-				android:fontFamily="@font/opensans_bold"
-				android:paddingBottom="@dimen/spacing_extra_tiny"
-				android:text="Continue" />
-			
-			<ImageView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginEnd="@dimen/spacing_extra_small"
-				android:src="@drawable/ic_fast_forward" />
-		</LinearLayout>
-		
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
-			
-			<TextView
-				android:id="@+id/tv_cart_header_restaurant_name"
-				style="@style/TealBlueTextStyle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_small"
-				android:layout_marginTop="@dimen/spacing_normal"
-				android:layout_marginBottom="@dimen/spacing_small"
-				android:text="Restaurant Name"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
-		
-		</androidx.constraintlayout.widget.ConstraintLayout>
-		
-		<FrameLayout
-			android:id="@+id/container_cart_header_time_switcher"
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_cart_header_topbar"
-			android:layout_gravity="top"
-			android:background="@color/black"
-			android:paddingStart="@dimen/spacing_small"
-			android:paddingTop="@dimen/spacing_tiny"
-			android:paddingEnd="@dimen/spacing_small"
-			android:paddingBottom="@dimen/spacing_tiny">
-			
-			<TextView
-				android:id="@+id/tv_cart_header_planned_time"
-				style="@style/WhiteExtraSmallTextStyle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical|start"
-				android:text=" - "
-				tools:text="30 Sep, 11:30 AM, Table for 1" />
-			
-			<ImageView
-				android:layout_width="wrap_content"
-				android:layout_height="@dimen/size_extra_small_icon"
-				android:layout_gravity="center_vertical|end"
-				android:src="@drawable/ic_edit_pencil_white"
-				android:tint="@color/white" />
-		</FrameLayout>
-		
-		<androidx.core.widget.NestedScrollView
-			android:id="@+id/nested_sv_cart"
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1">
-			
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:background="@color/white"
-				android:orientation="vertical"
-				android:padding="@dimen/spacing_small">
-				
-				<com.airbnb.epoxy.EpoxyRecyclerView
-					android:id="@+id/epoxy_rv_scheduled_cart_orders"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_marginBottom="@dimen/spacing_small" />
-				
-				<include layout="@layout/incl_horizontal_line" />
-				
-				<EditText
-					android:id="@+id/et_cart_scheduled_remarks"
-					style="@style/PinkishGreySmallTextStyle"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/spacing_small"
-					android:layout_marginTop="@dimen/spacing_normal"
-					android:layout_marginBottom="@dimen/spacing_normal"
-					android:background="@color/transparent"
-					android:drawableStart="@drawable/ic_session_scheduled_remarks"
-					android:drawablePadding="@dimen/spacing_tiny"
-					android:hint="Write Special Instructions"
-					android:inputType="textAutoComplete|textAutoCorrect"
-					android:textColor="@color/aqua_blue" />
-				
-				<include layout="@layout/incl_horizontal_line" />
-				
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:background="@color/white"
-					android:orientation="vertical"
-					android:padding="@dimen/spacing_small"
-					android:visibility="gone">
-					
-					<TextView
-						style="@style/GreyTextStyle"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="Guest Details" />
-					
-					<TextView
-						android:id="@+id/tv_cart_guest_detail_name"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="@dimen/spacing_extra_small"
-						tools:text="Ishu Darshan" />
-				</LinearLayout>
-				
-				<include layout="@layout/incl_cart_promo_card" />
-				
-				<include layout="@layout/incl_session_invoice" />
-				
-				<include layout="@layout/incl_horizontal_line" />
-				
-				<FrameLayout
-					android:id="@+id/container_invoice_total"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="@dimen/spacing_small">
-					
-					<TextView
-						style="@style/TealBlueRoundedHeadingStyle"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_gravity="center_vertical|start"
-						android:text="Grand Total" />
-					
-					<TextView
-						android:id="@+id/tv_cart_invoice_total"
-						style="@style/TealBlueRoundedHeadingStyle"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_gravity="center_vertical|end"
-						tools:text="54" />
-				</FrameLayout>
-			</LinearLayout>
-		</androidx.core.widget.NestedScrollView>
-		
-		<include
-			layout="@layout/incl_session_cart_footer"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_gravity="bottom" />
-	</LinearLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/container_cart_header_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_cart_header_topbar"
+            android:layout_gravity="top"
+            android:background="@color/greenish_teal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_extra_small_icon"
+                android:layout_marginStart="@dimen/spacing_extra_small"
+                android:src="@drawable/ic_cart_white" />
+
+            <TextView
+                android:id="@+id/tv_cart_header_item_count"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                tools:text="4 items" />
+
+            <TextView
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | " />
+
+            <TextView
+                android:id="@+id/tv_cart_header_amount"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="$ 123" />
+
+            <TextView
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:fontFamily="@font/opensans_bold"
+                android:paddingBottom="@dimen/spacing_extra_tiny"
+                android:text="Continue" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:src="@drawable/ic_fast_forward" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_cart_header_restaurant_name"
+                style="@style/TealBlueLargeTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:fontFamily="@font/josefinsans_semibold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Grey Orange" />
+
+            <TextView
+                android:id="@+id/tv_cart_header_restaurant_locality"
+                style="@style/PinkishGreyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:fontFamily="@font/josefinsans_regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_cart_header_restaurant_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_cart_header_restaurant_name"
+                tools:text="Lavel Road - Bengaluru" />
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/GreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:background="@drawable/ic_round_chip_orange"
+                android:fontFamily="@font/josefinsans_regular"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingTop="@dimen/spacing_extra_tiny"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_extra_tiny"
+                android:text="Booking Summary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_cart_header_restaurant_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/container_cart_header_time_switcher"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_cart_header_topbar"
+            android:layout_gravity="top"
+            android:background="@color/black"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_tiny">
+
+            <TextView
+                android:id="@+id/tv_cart_header_planned_time"
+                style="@style/WhiteExtraSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:text=" - "
+                tools:text="30 Sep, 11:30 AM, Table for 1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_extra_small_icon"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/ic_edit_pencil_white"
+                android:tint="@color/white" />
+        </FrameLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_sv_cart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_small">
+
+                <com.airbnb.epoxy.EpoxyRecyclerView
+                    android:id="@+id/epoxy_rv_scheduled_cart_orders"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/spacing_small" />
+
+                <include layout="@layout/incl_horizontal_line" />
+
+                <EditText
+                    android:id="@+id/et_cart_scheduled_remarks"
+                    style="@style/PinkishGreySmallTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:background="@color/transparent"
+                    android:drawableStart="@drawable/ic_session_scheduled_remarks"
+                    android:drawablePadding="@dimen/spacing_tiny"
+                    android:hint="Write Special Instructions"
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:textColor="@color/aqua_blue" />
+
+                <include layout="@layout/incl_horizontal_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_small"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/GreyTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guest Details" />
+
+                    <TextView
+                        android:id="@+id/tv_cart_guest_detail_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        tools:text="Ishu Darshan" />
+                </LinearLayout>
+
+                <include layout="@layout/incl_cart_promo_card" />
+
+                <include layout="@layout/incl_session_invoice" />
+
+                <include layout="@layout/incl_horizontal_line" />
+
+                <FrameLayout
+                    android:id="@+id/container_invoice_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small">
+
+                    <TextView
+                        style="@style/TealBlueRoundedHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:text="Grand Total" />
+
+                    <TextView
+                        android:id="@+id/tv_cart_invoice_total"
+                        style="@style/TealBlueRoundedHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        tools:text="54" />
+                </FrameLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            layout="@layout/incl_session_cart_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+    </LinearLayout>
 </merge>
