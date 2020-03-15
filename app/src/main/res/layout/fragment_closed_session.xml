@@ -1,66 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_closed_session_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:fontFamily="@font/josefinsans_semibold"
+                android:text="@string/order_summary"
+                android:textColor="@color/greenish_teal"
+                android:textSize="@dimen/font_large"
+                app:layout_constraintBottom_toBottomOf="@id/im_closed_session_summary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/im_closed_session_summary" />
+
+            <ImageView
+                android:id="@+id/im_closed_session_summary"
+                android:layout_width="@dimen/size_logo_small"
+                android:layout_height="@dimen/size_logo_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:src="@drawable/ic_order_summary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/horizontal_line"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_unit"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:background="@color/pinkish_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/im_closed_session_summary" />
+
+            <com.checkin.app.checkin.misc.views.CollapsibleSectionView
+                android:id="@+id/csv_closed_session_billing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/horizontal_line"
+                app:sectionText="@string/title_bill_details" />
+
+            <com.checkin.app.checkin.misc.views.CollapsibleSectionView
+                android:id="@+id/csv_closed_session_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/csv_closed_session_billing"
+                app:sectionText="@string/title_order_details" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        
-        <TextView
-            android:id="@+id/tv_closed_session_order"
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/white_two"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nestedScrollView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_serving_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:fontFamily="@font/josefinsans_semibold"
-            android:text="@string/order_summary"
-            android:textColor="@color/greenish_teal"
-            android:textSize="@dimen/font_large"
-            app:layout_constraintBottom_toBottomOf="@id/im_closed_session_summary"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:background="@drawable/background_rounded_borders"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cl_session_time"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/im_closed_session_summary" />
-        
-        <ImageView
-            android:id="@+id/im_closed_session_summary"
-            android:layout_width="@dimen/size_logo_small"
-            android:layout_height="@dimen/size_logo_small"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginEnd="@dimen/spacing_normal"
-            android:src="@drawable/ic_order_summary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        
-        <View
-            android:id="@+id/horizontal_line"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_unit"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:background="@color/pinkish_grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/im_closed_session_summary" />
-    
-        <com.checkin.app.checkin.misc.views.CollapsibleSectionView
-            android:id="@+id/csv_closed_session_billing"
-            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/im_serving_image"
+                android:layout_width="@dimen/size_logo_extra_small"
+                android:layout_height="@dimen/size_logo_extra_small"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:background="@drawable/gradient_hourglass"
+                android:src="@drawable/ic_hourglass_transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_serving_time"
+                style="@style/GreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/josefinsans_semibold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/im_serving_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Serving Time 10 minutes" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_session_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:background="@drawable/background_rounded_borders"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/horizontal_line"
-            app:sectionText="@string/title_bill_details" />
-        
-        <com.checkin.app.checkin.misc.views.CollapsibleSectionView
-            android:id="@+id/csv_closed_session_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/csv_closed_session_billing"
-            app:sectionText="@string/title_order_details" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/cl_serving_time"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/im_session_image"
+                android:layout_width="@dimen/size_logo_extra_small"
+                android:layout_height="@dimen/size_logo_extra_small"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:background="@drawable/gradient_hourglass"
+                android:src="@drawable/ic_hourglass_transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_session_time"
+                style="@style/GreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/josefinsans_semibold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/im_session_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Session Time 10 minutes" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

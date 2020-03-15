@@ -16,7 +16,9 @@ data class ClosedSessionDetailsModel(
         @JsonProperty("checked_out") val checkoutTime: Date,
         @JsonProperty("ordered_items") val orderedItems: List<SessionOrderedItemModel>,
         val restaurant: RestaurantLocationModel,
-        val bill: SessionBillModel
+        val bill: SessionBillModel,
+        @JsonProperty("serving_time") val servingTime: Long,
+        @JsonProperty("session_time") val sessionTime: Long
 ) {
 
 

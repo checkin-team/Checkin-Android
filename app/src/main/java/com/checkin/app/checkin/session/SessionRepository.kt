@@ -11,6 +11,8 @@ import com.checkin.app.checkin.data.network.WebApiService
 import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.ClosedSessionBriefModel
+import com.checkin.app.checkin.home.model.ClosedSessionDetailsModel
 import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.manager.models.ManagerSessionEventModel
 import com.checkin.app.checkin.session.models.*
@@ -185,6 +187,28 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall() = RetrofitLiveData(mWebService.customerScheduledSessions)
         }.asLiveData
     }
+
+    val customerClosedSessionList: LiveData<Resource<List<ClosedSessionBriefModel>>> =
+            object : NetworkBoundResource<List<ClosedSessionBriefModel>, List<ClosedSessionBriefModel>>() {
+                override fun shouldUseLocalDb(): Boolean = false
+
+                override fun createCall(): LiveData<ApiResponse<List<ClosedSessionBriefModel>>> {
+                    return RetrofitLiveData(mWebService.customerClosedTransactions)
+                }
+
+            }.asLiveData
+
+    fun getCustomerClosedSessionDetails(sessionId: Long): LiveData<Resource<ClosedSessionDetailsModel>> =
+            object : NetworkBoundResource<ClosedSessionDetailsModel, ClosedSessionDetailsModel>() {
+                override fun shouldUseLocalDb(): Boolean = false
+
+                override fun createCall(): LiveData<ApiResponse<ClosedSessionDetailsModel>> {
+                    return RetrofitLiveData(mWebService.getCustomerClosedSessionDetails(sessionId))
+                }
+
+            }.asLiveData
+
+
 
     companion object : SingletonHolder<SessionRepository, Application>({ SessionRepository(it.applicationContext) })
 }

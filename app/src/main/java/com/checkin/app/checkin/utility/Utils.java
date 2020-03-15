@@ -29,11 +29,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.auth.AuthPreferences;
 import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService;
@@ -57,6 +52,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import kotlin.Pair;
 
 /**
@@ -296,6 +295,27 @@ public final class Utils {
         if (elapsedSeconds > 0)
             return String.format(Locale.ENGLISH, "%d Sec", elapsedSeconds);
         return "0 Sec";
+    }
+
+    public static String formatTimeTaken(long milliSec) {
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+
+        long elapsedHours = milliSec / hoursInMilli;
+        milliSec = milliSec % hoursInMilli;
+        long elapsedMinutes = milliSec / minutesInMilli;
+        milliSec = milliSec % minutesInMilli;
+        long elapsedSeconds = milliSec / secondsInMilli;
+        milliSec = milliSec % secondsInMilli;
+
+        if (elapsedHours > 0)
+            return String.format(Locale.ENGLISH, "%d Hours", elapsedHours);
+        if (elapsedMinutes > 0)
+            return String.format(Locale.ENGLISH, "%d Minutes", elapsedMinutes);
+        if (elapsedSeconds > 0)
+            return String.format(Locale.ENGLISH, "%d Seconds", elapsedSeconds);
+        return "0 Second";
     }
 
     public static String formatElapsedTime(@NonNull Date eventTime) {

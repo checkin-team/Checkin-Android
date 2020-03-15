@@ -45,6 +45,7 @@
     <dimen name="size_logo">60dp</dimen>
     <dimen name="size_logo_large">80dp</dimen>
     <dimen name="size_logo_extra_large">125dp</dimen>
+    <dimen name="size_logo_extra_small">24dp</dimen>
 
     <dimen name="size_image_tiny">25dp</dimen>
     <dimen name="size_image_small">40dp</dimen>

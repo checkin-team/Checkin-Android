@@ -122,7 +122,7 @@ interface WebApiService {
     fun postPaytmRequest(): Call<PaytmModel>
 
     @get:GET("/sessions/customer/closed/")
-    val customerClosedTransactions: Call<List<CustomerClosedSessionModel>>
+    val customerClosedTransactions: Call<List<ClosedSessionBriefModel>>
 
     @GET("/sessions/customer/closed/{session_id}")
     fun getCustomerClosedSessionDetails(@Path("session_id") sessionId: Long): Call<ClosedSessionDetailsModel>

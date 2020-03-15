@@ -13,7 +13,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.epoxy.closedTransactionModelHolder
-import com.checkin.app.checkin.home.viewmodels.ClosedTransactionViewModel
+import com.checkin.app.checkin.home.viewmodels.ClosedSessionViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 
 
@@ -24,7 +24,7 @@ class ClosedTransactionActivity : BaseActivity() {
     @BindView(R.id.toolbar_closed)
     internal lateinit var toolbar: Toolbar
 
-    val model: ClosedTransactionViewModel by viewModels()
+    val viewModel: ClosedSessionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class ClosedTransactionActivity : BaseActivity() {
         }
 
         epoxyTransactionDetails.withModels {
-            model.customerClosedTransaction.value?.data?.forEachIndexed { index, item ->
+            viewModel.customerClosedList.value?.data?.forEachIndexed { index, item ->
                 closedTransactionModelHolder {
                     id(index)
                     data(item)
@@ -54,7 +54,7 @@ class ClosedTransactionActivity : BaseActivity() {
     }
 
     private fun setupObservers() {
-        model.customerClosedTransaction.observe(this, Observer {
+        viewModel.customerClosedList.observe(this, Observer {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     epoxyTransactionDetails.requestModelBuild()
@@ -64,7 +64,7 @@ class ClosedTransactionActivity : BaseActivity() {
             }
         })
 
-        model.fetchCustomerTransaction()
+        viewModel.fetchCustomerTransaction()
 
     }
 
