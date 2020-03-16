@@ -35,8 +35,14 @@ class ClosedSessionViewModel(application: Application) : BaseViewModel(applicati
         mSessionData.addSource(sessionRepository.getCustomerClosedSessionDetails(sessionId), mSessionData::setValue)
     }
 
+    override fun fetchMissing() {
+        super.fetchMissing()
+        if (sessionId != 0L && mSessionData.value?.mayLoad == false) fetchSessionData(sessionId)
+        else if (mClosedSessions.value?.mayLoad == false) fetchClosedSessions()
+    }
+
     override fun updateResults() {
-        if (sessionId != 0L && mSessionData.value?.status != Resource.Status.LOADING) fetchSessionData(sessionId)
+        if (sessionId != 0L && mSessionData.value?.mayLoad == false) fetchSessionData(sessionId)
         else fetchClosedSessions()
     }
 }

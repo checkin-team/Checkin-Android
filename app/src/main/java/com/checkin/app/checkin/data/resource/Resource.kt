@@ -30,6 +30,8 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
     @get:JvmName("isInError")
     val inError: Boolean = status != Status.NO_REQUEST && !isSuccess && status != Status.LOADING && status != Status.ERROR_CANCELLED
 
+    val mayLoad: Boolean = isSuccess || status == Status.LOADING
+
     enum class Status {
         NO_REQUEST,
         SUCCESS,

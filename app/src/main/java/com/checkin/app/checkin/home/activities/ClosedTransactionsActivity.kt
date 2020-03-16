@@ -64,6 +64,11 @@ class ClosedTransactionsActivity : BaseActivity() {
         viewModel.fetchClosedSessions()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchMissing()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true

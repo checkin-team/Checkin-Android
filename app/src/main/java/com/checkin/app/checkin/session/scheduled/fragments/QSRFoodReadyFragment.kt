@@ -12,11 +12,11 @@ import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.home.model.ClosedSessionDetailsModel
+import com.checkin.app.checkin.home.viewmodels.ClosedSessionViewModel
 import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.holders.textModelHolder
-import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
-import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.isNotEmpty
 import com.checkin.app.checkin.utility.navigateBackToHome
@@ -38,7 +38,7 @@ class QSRFoodReadyFragment : BaseFragment() {
     @BindView(R.id.epoxy_rv_qsr_ready_orders_summary)
     internal lateinit var epoxyRvOrders: EpoxyRecyclerView
 
-    val viewModel: ScheduledSessionDetailViewModel by viewModels()
+    val viewModel: ClosedSessionViewModel by viewModels()
     lateinit var billHolder: BillHolder
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,11 +71,11 @@ class QSRFoodReadyFragment : BaseFragment() {
         })
     }
 
-    private fun setupData(data: CustomerScheduledSessionDetailModel) {
+    private fun setupData(data: ClosedSessionDetailsModel) {
         tvRestaurantName.text = data.restaurant.name
         tvAmount.text = Utils.formatCurrencyAmount(requireContext(), data.bill.total)
         tvTotal.text = tvAmount.text
-        tvOrderId.text = data.hashId
+        tvOrderId.text = data.formatId
         tvLocation.text = data.restaurant.formatAddress
         billHolder.bind(data.bill)
     }

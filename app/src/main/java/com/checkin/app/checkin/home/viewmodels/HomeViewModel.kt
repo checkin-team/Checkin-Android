@@ -39,7 +39,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     }
 
     override fun fetchMissing() {
-        if (mNearbyRestaurants.value?.status != Resource.Status.SUCCESS) fetchNearbyRestaurants()
+        if (mNearbyRestaurants.value?.mayLoad == false) fetchNearbyRestaurants()
     }
 
     fun processQr(data: String) {

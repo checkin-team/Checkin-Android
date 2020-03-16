@@ -40,6 +40,10 @@ class ClosedSessionDetailFragment : BaseFragment() {
 
     private fun setupData(data: ClosedSessionDetailsModel) {
         tvServingTime.text = data.formatServingTIme
-        tvSessionTime.text = data.formatSessionTime
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchMissing()
     }
 }
