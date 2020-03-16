@@ -10,7 +10,7 @@ import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 
 @EpoxyModelClass(layout = R.layout.item_user_location_current)
 abstract class CurrentLocationModelHolder : EpoxyModelWithHolder<CurrentLocationModelHolder.Holder>() {
-    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    @EpoxyAttribute
     internal lateinit var listener: LocationSelectedListener
 
     override fun createNewHolder() = Holder(listener)

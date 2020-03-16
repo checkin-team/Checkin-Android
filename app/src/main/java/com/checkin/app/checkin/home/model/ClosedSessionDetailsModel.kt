@@ -20,13 +20,10 @@ data class ClosedSessionDetailsModel(
         @JsonProperty("serving_time") val servingTime: Long,
         @JsonProperty("session_time") val sessionTime: Long
 ) {
-
-
     val formatPlannedDate: String = Utils.formatDate(checkedinTime, "hh:mm a | MMM dd, YYYY ")
 
     val formatId = "#$hashId"
 
-    val formatServingTIme: String = "Serving : ${Utils.formatDueTime(servingTime)}"
-
-    val formatSessionTime: String = "Session : ${Utils.formatDueTime(sessionTime)}"
+    val formatServingTIme: String = "Serving: ${Utils.formatTimeDuration(servingTime)}"
+    val formatSessionTime: String = "Session: ${Utils.formatTimeDuration(sessionTime)}"
 }

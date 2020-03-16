@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.Settings
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +57,6 @@ import com.checkin.app.checkin.user.fragments.UserPrivateProfileFragment
 import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.checkin.app.checkin.utility.*
-import com.checkin.app.checkin.utility.Constants.LOCATION_CITY_FILE
 import com.checkin.app.checkin.utility.Constants.LOCATION_CITY_ID
 import com.checkin.app.checkin.utility.Constants.LOCATION_CITY_NAME
 import com.checkin.app.checkin.utility.OnBoardingUtils.OnBoardingModel
@@ -85,6 +85,7 @@ class HomeActivity : BaseAccountActivity() {
     private val userViewModel: UserViewModel by viewModels()
     private val liveViewModel: LiveSessionViewModel by viewModels()
     private val networkFragment = NetworkBlockingFragment()
+    private val locationFragment by lazy { UserLocationFragment() }
 
     private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -177,7 +178,6 @@ class HomeActivity : BaseAccountActivity() {
                         .show()
             }
         }
-
     }
 
     override fun updateScreen() {
@@ -251,8 +251,7 @@ class HomeActivity : BaseAccountActivity() {
         })
 
         mViewModel.cityId.observe(this, Observer {
-            val preferences = getSharedPreferences(LOCATION_CITY_FILE, Context.MODE_PRIVATE)
-            tvCityLocation.text = preferences.getString(LOCATION_CITY_NAME, "Current Location")
+            tvCityLocation.text = PreferenceManager.getDefaultSharedPreferences(this).getString(LOCATION_CITY_NAME, "Current Location")
             if (it == 0) setupUserLocationTracker()
         })
         liveViewModel.clearCartData.observe(this, Observer { })
@@ -263,8 +262,7 @@ class HomeActivity : BaseAccountActivity() {
     }
 
     private fun getCityId(): Int {
-        val preferences = getSharedPreferences(LOCATION_CITY_FILE, Context.MODE_PRIVATE)
-        return preferences.getInt(LOCATION_CITY_ID, 0)
+        return PreferenceManager.getDefaultSharedPreferences(this).getInt(LOCATION_CITY_ID, 0)
     }
 
     private fun resetUserIcon() {
@@ -288,7 +286,7 @@ class HomeActivity : BaseAccountActivity() {
             icon = R.drawable.ic_order_summary
             textColorRes = R.color.brownish_grey
             onClick { _ ->
-                val intent = ClosedTransactionActivity.withIntent(this@HomeActivity)
+                val intent = ClosedTransactionsActivity.withIntent(this@HomeActivity)
                 startActivity(intent)
                 false
             }
@@ -404,9 +402,8 @@ class HomeActivity : BaseAccountActivity() {
 
     @OnClick(R.id.cl_checkin_location)
     fun onCLickLocation() {
-        val fragment: UserLocationFragment = UserLocationFragment()
         supportFragmentManager.inTransaction {
-            add(R.id.frg_container_activity, fragment)
+            replace(R.id.frg_container_activity, locationFragment, UserLocationFragment.TAG)
             addToBackStack(null)
         }
     }

@@ -18,13 +18,10 @@ class ClosedSessionDetailFragment : BaseFragment() {
 
     @BindView(R.id.csv_closed_session_billing)
     internal lateinit var csvBilling: CollapsibleSectionView
-
     @BindView(R.id.csv_closed_session_order)
     internal lateinit var csvOrders: CollapsibleSectionView
-
     @BindView(R.id.tv_serving_time)
     internal lateinit var tvServingTime: TextView
-
     @BindView(R.id.tv_session_time)
     internal lateinit var tvSessionTime: TextView
 

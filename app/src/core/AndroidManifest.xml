@@ -49,8 +49,8 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Shop.ShopJoin.ContactVerifyActivity"
@@ -69,10 +69,19 @@
         <activity android:name=".Cook.CookWorkActivity" />
 
         <activity
+            android:name=".home.activities.ClosedTransactionsActivity"
+            android:label="Past Transactions"
+            android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity
+            android:name=".home.activities.ClosedSessionDetailsActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
             android:name=".restaurant.activities.PublicRestaurantProfileActivity"
-            android:windowSoftInputMode="adjustPan"
             android:exported="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <data android:scheme="checkin" />
                 <data
@@ -89,8 +98,8 @@
 
         <activity
             android:name=".menu.activities.ActiveSessionMenuActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppThemeWhiteActionBar" />
+            android:theme="@style/AppThemeWhiteActionBar"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".menu.activities.ShopMenuActivity"

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.checkin.app.checkin">
-    
+
     <uses-permission
         android:name="android.permission.AUTHENTICATE_ACCOUNTS"
         android:maxSdkVersion="22" />
@@ -22,9 +22,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    
+
     <uses-feature android:name="android.hardware.camera" />
-    
+
     <application
         android:name=".CheckinApplication"
         android:allowBackup="true"
@@ -33,26 +33,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity android:name=".home.activities.ClosedTransactionActivity" />
-        <activity android:name=".home.activities.ClosedSessionDetailsActivity" />
         <activity
             android:name=".home.activities.AboutUsActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".home.activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        
+
         <activity-alias
             android:name="checkin.app.launcher"
             android:screenOrientation="sensorPortrait"
             android:targetActivity=".home.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-    
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
-        
+
         <activity
             android:name=".auth.activities.AuthActivity"
             android:screenOrientation="portrait"
@@ -68,9 +66,9 @@
                     android:host="check-in.in"
                     android:path="/home"
                     android:scheme="app" />
-    
+
                 <action android:name="android.intent.action.VIEW" />
-    
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -88,15 +86,15 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-    
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-    
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
         <activity android:name=".misc.activities.UpdateAppActivity" />
-        
+
         <service
             android:name=".auth.services.AuthenticatorService"
             android:enabled="true"
@@ -104,7 +102,7 @@
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
-            
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
@@ -113,7 +111,7 @@
         <service android:name=".auth.services.DeviceTokenService" />
         <service android:name=".data.notifications.ActiveSessionNotificationService" />
         <service android:name=".location.UserCurrentLocationService" />
-        
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

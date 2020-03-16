@@ -30,7 +30,6 @@ object Constants {
     const val SP_MANAGER_LIVE_ORDER_ACTIVE_KEY = "com.checkin.app.checkin.sp.manager.live.order.key"
     const val SP_SHOP_PREFERENCES_TABLE = "com.checkin.app.checkin.sp.shop.preferences"
 
-    const val LOCATION_CITY_FILE = "home.user.location"
     const val LOCATION_CITY_ID = "home.user.location.id"
     const val LOCATION_CITY_NAME = "home.user.location.name"
 

@@ -9,31 +9,29 @@ import com.checkin.app.checkin.home.model.CityLocationModel
 import com.checkin.app.checkin.menu.viewmodels.BaseMenuViewModel
 
 class UserLocationViewModel(application: Application) : BaseMenuViewModel(application) {
-
     val repository = HomeRepository.getInstance(application)
 
-
-    private val mAllLocationsData =
-            createNetworkLiveData<List<CityLocationModel>>()
-
-
-    private val allLocationsData: LiveData<Resource<List<CityLocationModel>>> = mAllLocationsData
-
+    private val mAllLocationsData = createNetworkLiveData<List<CityLocationModel>>()
     private val mLocationData = createNetworkLiveData<List<CityLocationModel>>()
 
     val locationData: LiveData<Resource<List<CityLocationModel>>> = mLocationData
 
+    init {
+        mLocationData.addSource(mAllLocationsData) { resource ->
+            mLocationData.value = resource.data?.let {
+                Resource.cloneResource(resource, it.slice(0 until it.size.coerceAtMost(5)))
+            } ?: resource
+        }
+    }
+
     fun fetchData() {
         mAllLocationsData.addSource(repository.getAllCities, mAllLocationsData::setValue)
-        mLocationData.addSource(allLocationsData, mLocationData::setValue)
     }
 
-    fun searchCities(query: String) {
-        internalSearchCities(query)
-    }
+    fun searchCities(query: String) = internalSearchCities(query)
 
     private fun internalSearchCities(query: String) {
-        val resourceLiveData = Transformations.map(allLocationsData) { input ->
+        val resourceLiveData = Transformations.map(mAllLocationsData) { input ->
             val items = input.data?.filter {
                 it.name.contains(query, ignoreCase = true) || it.state.contains(query, ignoreCase = true)
             }
@@ -41,5 +39,11 @@ class UserLocationViewModel(application: Application) : BaseMenuViewModel(applic
             Resource.cloneResource(input, items)
         }
         mLocationData.addSource(resourceLiveData, mLocationData::setValue)
+    }
+
+    fun resetResults() {
+        mLocationData.value = mAllLocationsData.value?.data?.let {
+            Resource.cloneResource(mAllLocationsData.value, it.slice(0 until it.size.coerceAtMost(5)))
+        } ?: mAllLocationsData.value
     }
 }

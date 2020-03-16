@@ -176,6 +176,7 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
                 MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE
         )
         MessageUtils.registerLocalReceiver(requireContext(), receiver, *types)
+        mViewModel.fetchMissing()
     }
 
     override fun onPause() {

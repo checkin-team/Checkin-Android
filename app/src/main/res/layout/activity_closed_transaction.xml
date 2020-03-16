@@ -1,41 +1,22 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    
     android:orientation="horizontal">
-    
-    <com.google.android.material.appbar.AppBarLayout
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_closed_sessions"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:elevation="@dimen/card_elevation">
-        
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_closed"
+        android:layout_height="match_parent">
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/epoxy_closed_transaction"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-            
-            <TextView
-                android:id="@+id/tv_closed_heading"
-                style="@style/GreyBoldTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/past_transaction" />
-        
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-    
-    
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/epoxy_closed_transaction"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_transaction_details" />
+            android:layout_height="match_parent"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_transaction_details" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -16,7 +16,7 @@ abstract class CityLocationModelHolder : EpoxyModelWithHolder<CityLocationModelH
     @EpoxyAttribute
     internal lateinit var data: CityLocationModel
 
-    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    @EpoxyAttribute
     internal lateinit var listener: LocationSelectedListener
 
     override fun createNewHolder() = Holder(listener)

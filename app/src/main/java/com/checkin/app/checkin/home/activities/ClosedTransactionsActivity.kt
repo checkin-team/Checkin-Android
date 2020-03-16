@@ -1,11 +1,9 @@
 package com.checkin.app.checkin.home.activities
 
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -16,13 +14,9 @@ import com.checkin.app.checkin.home.epoxy.closedTransactionModelHolder
 import com.checkin.app.checkin.home.viewmodels.ClosedSessionViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 
-
-class ClosedTransactionActivity : BaseActivity() {
-
+class ClosedTransactionsActivity : BaseActivity() {
     @BindView(R.id.epoxy_closed_transaction)
     internal lateinit var epoxyTransactionDetails: EpoxyRecyclerView
-    @BindView(R.id.toolbar_closed)
-    internal lateinit var toolbar: Toolbar
 
     val viewModel: ClosedSessionViewModel by viewModels()
 
@@ -36,10 +30,8 @@ class ClosedTransactionActivity : BaseActivity() {
     }
 
     private fun initUI() {
-
-        setSupportActionBar(toolbar)
+        initRefreshScreen(R.id.sr_closed_sessions)
         supportActionBar?.apply {
-            title = null
             setDisplayHomeAsUpEnabled(true)
         }
 
@@ -55,25 +47,29 @@ class ClosedTransactionActivity : BaseActivity() {
 
     private fun setupObservers() {
         viewModel.customerClosedList.observe(this, Observer {
-            when (it.status) {
-                Resource.Status.SUCCESS -> {
-                    epoxyTransactionDetails.requestModelBuild()
-                    stopRefreshing()
+            it?.let { resource ->
+                handleLoadingRefresh(resource)
+                when (resource.status) {
+                    Resource.Status.SUCCESS -> {
+                        epoxyTransactionDetails.requestModelBuild()
+                    }
                 }
-
             }
         })
-
-        viewModel.fetchCustomerTransaction()
-
+        viewModel.fetchClosedSessions()
     }
 
-    companion object {
-        fun withIntent(context: Context) = Intent(context, ClosedTransactionActivity::class.java)
+    override fun updateScreen() {
+        super.updateScreen()
+        viewModel.fetchClosedSessions()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
+    }
+
+    companion object {
+        fun withIntent(context: Context) = Intent(context, ClosedTransactionsActivity::class.java)
     }
 }

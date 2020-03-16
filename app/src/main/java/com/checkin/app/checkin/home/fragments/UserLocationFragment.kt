@@ -1,12 +1,11 @@
 package com.checkin.app.checkin.home.fragments
 
-import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.text.Editable
 import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
@@ -31,7 +30,7 @@ class UserLocationFragment : BaseFragment(), LocationSelectedListener {
     @BindView(R.id.epoxy_rv_user_location)
     internal lateinit var epoxyUserLocation: EpoxyRecyclerView
 
-    val viewModel: UserLocationViewModel by viewModels()
+    val viewModel: UserLocationViewModel by activityViewModels()
     val homeViewModel: HomeViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,8 +42,7 @@ class UserLocationFragment : BaseFragment(), LocationSelectedListener {
                 }
             }
 
-
-            viewModel.locationData.value?.data?.forEachIndexed { index, model ->
+            viewModel.locationData.value?.data?.forEachIndexed { _, model ->
                 cityLocationModelHolder {
                     id(model.id)
                     data(model)
@@ -65,12 +63,18 @@ class UserLocationFragment : BaseFragment(), LocationSelectedListener {
 
     @OnTextChanged(R.id.et_user_location, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     fun onTextChanged(et: Editable?) {
-        viewModel.searchCities(et.toString())
+        if (et != null) viewModel.searchCities(et.toString())
     }
 
     @OnClick(R.id.im_user_location_back)
-    fun onBack() {
-        requireActivity().supportFragmentManager.popBackStack()
+    fun onClickBack() {
+        onBackPressed()
+    }
+
+    override fun onBackPressed(): Boolean {
+        viewModel.resetResults()
+        parentFragmentManager.popBackStack()
+        return true
     }
 
     override fun onLocationSelected(data: CityLocationModel?) {
@@ -82,15 +86,14 @@ class UserLocationFragment : BaseFragment(), LocationSelectedListener {
             name = data.name
         }
 
-        val preferences = requireContext().getSharedPreferences(Constants.LOCATION_CITY_FILE, Context.MODE_PRIVATE)
-        with(preferences.edit()) {
+        with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
             putInt(Constants.LOCATION_CITY_ID, id)
             putString(Constants.LOCATION_CITY_NAME, name)
             apply()
         }
 
         homeViewModel.setCityId(id)
-        requireActivity().supportFragmentManager.popBackStack()
+        onBackPressed()
     }
 
     companion object {

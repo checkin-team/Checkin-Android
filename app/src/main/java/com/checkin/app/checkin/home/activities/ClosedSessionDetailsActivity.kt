@@ -33,7 +33,6 @@ class ClosedSessionDetailsActivity : BaseActivity() {
     val networkViewModel: BlockingNetworkViewModel by viewModels()
     val viewModel: ClosedSessionViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_closed_session_details)
@@ -44,19 +43,15 @@ class ClosedSessionDetailsActivity : BaseActivity() {
 
     private fun initUI() {
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         supportFragmentManager.inTransaction {
             add(android.R.id.content, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
-        }
-        supportFragmentManager.inTransaction {
             add(R.id.frg_container_activity, mainFragment, "main")
         }
 
-
         val sessionId = intent.getLongExtra(KEY_SESSION_ID, 0L)
         viewModel.fetchSessionData(sessionId)
-
 
         viewModel.sessionData.observe(this, Observer {
             networkViewModel.updateStatus(it)
@@ -82,6 +77,4 @@ class ClosedSessionDetailsActivity : BaseActivity() {
             putExtra(KEY_SESSION_ID, sessionId)
         }
     }
-
-
 }
