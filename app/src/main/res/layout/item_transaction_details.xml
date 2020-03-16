@@ -91,7 +91,7 @@
             android:layout_width="@dimen/spacing_unit"
             android:layout_height="0dp"
             android:layout_marginEnd="125dp"
-            android:background="@color/pinkish_grey"
+            android:background="@color/lightest_grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
