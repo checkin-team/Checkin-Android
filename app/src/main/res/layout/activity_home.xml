@@ -31,7 +31,7 @@
                     <ImageView
                         android:id="@+id/im_checkin_logo"
                         android:layout_width="wrap_content"
-                        android:layout_height="26dp"
+                        android:layout_height="@dimen/height_checkin_logo_icon"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"
                         android:src="@drawable/check_in_logo_no_background"
@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_small"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="@dimen/spacing_small"
                         android:fontFamily="@font/opensans_semibold"
                         android:text="Location"
                         android:textSize="@dimen/font_extra_small"
@@ -65,7 +65,7 @@
                         android:translationY="3dp"
                         app:layout_constraintBottom_toBottomOf="@id/im_checkin_logo"
                         app:layout_constraintStart_toStartOf="@id/tv_checkin_location_heading"
-                        app:layout_constraintTop_toTopOf="@+id/im_checkin_logo"
+                        app:layout_constraintTop_toTopOf="@id/im_checkin_logo"
                         app:layout_constraintVertical_bias="1.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
