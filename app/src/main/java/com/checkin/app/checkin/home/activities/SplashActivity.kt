@@ -14,6 +14,7 @@ import com.checkin.app.checkin.auth.AuthPreferences
 import com.checkin.app.checkin.auth.activities.AuthActivity
 import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.config.RemoteConfig
+import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
@@ -34,6 +35,9 @@ class SplashActivity : AppCompatActivity() {
         ButterKnife.bind(this)
         // Activates the fetched config from Firebase Remote Config
         RemoteConfig.activate()
+
+        // Initializing the DB
+        AppDatabase.init(applicationContext)
 
         goForScreens()
 //        lottieSplash.addAnimatorListener(this)

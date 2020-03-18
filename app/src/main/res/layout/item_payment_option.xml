@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingStart="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingEnd="@dimen/spacing_normal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_payment_option_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/im_payment_option_icon"
+            android:layout_width="@dimen/width_payment_option_icon"
+            android:layout_height="@dimen/height_payment_option_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_payment_visa" />
+
+        <TextView
+            android:id="@+id/tv_payment_option_name"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_large"
+            app:layout_constraintBottom_toBottomOf="@id/im_payment_option_icon"
+            app:layout_constraintStart_toEndOf="@id/im_payment_option_icon"
+            app:layout_constraintTop_toTopOf="@id/im_payment_option_icon"
+            tools:text="Content" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb_payment_option_select"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:checked="false"
+            android:gravity="end"
+            app:buttonTint="@color/greenish_teal"
+            app:layout_constraintBottom_toBottomOf="@id/im_payment_option_icon"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/im_payment_option_icon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_line"
+        app:layout_constraintEnd_toEndOf="@id/cl_payment_option_select"
+        app:layout_constraintTop_toBottomOf="@id/cl_payment_option_select">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_payment_option_pay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <EditText
+                android:id="@+id/et_payment_option_card_cvv"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:background="@drawable/round_border_button_grey"
+                android:fontFamily="@font/opensans_bold"
+                android:gravity="center"
+                android:hint="CVV"
+                android:inputType="numberPassword"
+                android:maxLength="3"
+                android:paddingLeft="@dimen/spacing_small"
+                android:paddingRight="@dimen/spacing_small"
+                android:textSize="@dimen/font_extra_small"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/btn_payment_option_pay"
+                app:layout_constraintEnd_toStartOf="@id/btn_payment_option_pay"
+                app:layout_constraintTop_toTopOf="@id/btn_payment_option_pay"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/btn_payment_option_pay"
+                style="@style/GreenPayTextStyle"
+                android:layout_width="@dimen/payment_button_pay_width"
+                android:layout_height="@dimen/payment_button_pay_height"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:text="@string/action_payment_pay_now"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/white_two"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

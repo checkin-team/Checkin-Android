@@ -2,6 +2,7 @@ package com.checkin.app.checkin.data.resource
 
 import android.util.Log
 import com.checkin.app.checkin.data.network.ApiResponse
+import com.checkin.app.checkin.misc.exceptions.NetworkIssueException
 import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.misc.exceptions.RequestCanceledException
 import com.checkin.app.checkin.utility.Utils
@@ -74,17 +75,21 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
 
         fun <T> noRequest(): Resource<T> = Resource(Status.NO_REQUEST, null, null, null)
 
+        fun <T> error(errorThrowable: Throwable, errorMessage: String?, data: T?, errorData: JsonNode?): Resource<T> = when (errorThrowable) {
+            is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
+            is NoConnectivityException, is NetworkIssueException -> error(Status.ERROR_DISCONNECTED, errorMessage, data, null)
+            else -> {
+                Utils.logErrors(TAG, errorThrowable, errorMessage)
+                error(Status.ERROR_UNKNOWN, errorMessage, data, errorData)
+            }
+        }
+
+        fun <T> error(errorThrowable: Throwable): Resource<T> = error(errorThrowable, null, null, null)
+
         fun <T> createResource(apiResponse: ApiResponse<T>): Resource<T> {
             return when {
                 apiResponse.isSuccessful -> success(apiResponse.data)
-                apiResponse.errorThrowable != null -> when (apiResponse.errorThrowable) {
-                    is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
-                    is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
-                    else -> {
-                        Utils.logErrors(TAG, apiResponse.errorThrowable, apiResponse.errorMessage)
-                        error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
-                    }
-                }
+                apiResponse.errorThrowable != null -> error(apiResponse.errorThrowable, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_NOT_FOUND) -> error(Status.ERROR_NOT_FOUND, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_BAD_REQUEST) -> error(Status.ERROR_INVALID_REQUEST, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_UNAUTHORIZED) -> error(Status.ERROR_UNAUTHORIZED, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)

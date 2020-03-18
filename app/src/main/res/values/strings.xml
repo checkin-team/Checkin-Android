@@ -288,4 +288,6 @@
     <string name="url_app_refund">https://check-in.in/refund</string>
     <string name="order_summary">Order Summary</string>
     <string name="past_transaction">Past Transaction</string>
+    <string name="action_payment_pay_now">Pay Now</string>
+    <string name="action_payment_verify_pay">Verify and Pay</string>
 </resources>

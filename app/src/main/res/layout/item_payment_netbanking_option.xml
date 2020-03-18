@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_small">
+
+    <ImageView
+        android:id="@+id/im_payment_netbanking_option"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_height_medium"
+        android:src="@drawable/ic_payment_sbi" />
+</FrameLayout>

@@ -114,6 +114,10 @@
             android:theme="@style/AppTheme" />
 
         <activity
+            android:name=".payment.activities.PaymentActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
             android:name=".manager.activities.ManagerPreOrderDetailActivity"
             android:theme="@style/AppTheme" />
         <activity

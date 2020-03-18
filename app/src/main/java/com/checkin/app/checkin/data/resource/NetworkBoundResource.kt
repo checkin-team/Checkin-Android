@@ -22,7 +22,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
     protected var `val`: Any? = null
 
     private fun fetchFromNetwork(dbSource: LiveData<ResultType>?) {
-        val apiResponse = createCall()
+        val apiResponse = createCall()!!
         val useDb = shouldUseLocalDb() && dbSource != null
         if (useDb) {
             // we re-attach dbSource as a new source, it will dispatch its latest value quickly
@@ -88,7 +88,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
 
     // Called to create the API call.
     @MainThread
-    protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
+    protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>?
 
     // Called to get the cached data from the database
     @MainThread

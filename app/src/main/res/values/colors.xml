@@ -20,6 +20,7 @@
     <color name="blue">#6485CC</color>
     <color name="light_pink">#ff9abd</color>
     <color name="orange">#e88e45</color>
+    <color name="white_smoke">#f5f5f5</color>
 
     <!--Grey variants-->
     <color name="brownish_grey">#6d6d6d</color>

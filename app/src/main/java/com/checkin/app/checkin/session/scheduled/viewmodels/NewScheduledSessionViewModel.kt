@@ -14,7 +14,8 @@ import com.checkin.app.checkin.data.resource.Resource.Companion.cloneResource
 import com.checkin.app.checkin.data.resource.Resource.Companion.createResource
 import com.checkin.app.checkin.data.resource.Resource.Companion.errorNotFound
 import com.checkin.app.checkin.data.resource.Resource.Companion.loading
-import com.checkin.app.checkin.misc.paytm.PaytmModel
+import com.checkin.app.checkin.payment.PaymentRepository
+import com.checkin.app.checkin.payment.models.NewPaytmTransactionModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
 import com.checkin.app.checkin.session.models.PromoDetailModel
@@ -32,13 +33,14 @@ import java.util.*
 class NewScheduledSessionViewModel(application: Application) : BaseViewModel(application) {
     private val sessionRepository = SessionRepository.getInstance(application)
     private val scheduledSessionRepository = ScheduledSessionRepository.getInstance(application)
+    private val paymentRepository = PaymentRepository.getInstance(application)
 
     private val mNewSessionData = createNetworkLiveData<NewScheduledSessionModel>()
     private val mClearCart = createNetworkLiveData<ObjectNode>()
     private val mQrResult = createNetworkLiveData<QRResultModel>()
     private val mPromoRemove = createNetworkLiveData<ObjectNode>()
     private val mPaytmCallbackData = createNetworkLiveData<ObjectNode>()
-    private val mPaytmData = createNetworkLiveData<PaytmModel>()
+    private val mTransactionData = createNetworkLiveData<NewPaytmTransactionModel>()
     private val mPromoData = createNetworkLiveData<List<PromoDetailModel>>()
     private val mSessionPromo = createNetworkLiveData<SessionPromoModel>()
 
@@ -54,7 +56,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     val newQrSessionData: LiveData<Resource<QRResultModel>> = mQrResult
     val clearCartData: LiveData<Resource<ObjectNode>> = mClearCart
     val promoCodes: LiveData<Resource<List<PromoDetailModel>>> = mPromoData
-    val paytmData: LiveData<Resource<PaytmModel>> = mPaytmData
+    val newTransactionData: LiveData<Resource<NewPaytmTransactionModel>> = mTransactionData
     val paytmCallbackData: LiveData<Resource<ObjectNode>> = mPaytmCallbackData
 
     val promoDeletedData: LiveData<Resource<ObjectNode>> = Transformations.map(mPromoRemove) { input ->
@@ -130,8 +132,8 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
 
     fun retryPostPaytmCallback() = lastPaymentBundle?.let { postPaytmCallback(it) }
 
-    fun requestPaytmDetails() {
-        mPaytmData.addSource(scheduledSessionRepository.postPaytmDetailRequest(sessionPk), mPaytmData::setValue)
+    fun initiateNewTransaction() {
+        mTransactionData.addSource(paymentRepository.createNewTransaction(sessionPk), mTransactionData::setValue)
     }
 
     private fun doPostPaytmCallback(data: ObjectNode, listener: UploadCallbacks<ObjectNode>) {

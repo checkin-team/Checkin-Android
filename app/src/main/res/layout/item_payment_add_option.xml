@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_payment_add_option"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingEnd="@dimen/spacing_normal"
+    android:paddingBottom="@dimen/spacing_small">
+
+    <Button
+        android:id="@+id/btn_payment_add_item"
+        android:layout_width="@dimen/width_payment_option_icon"
+        android:layout_height="@dimen/height_payment_option_icon"
+        android:background="@drawable/round_border_button_orange"
+        android:fontFamily="@font/opensans_bold"
+        android:text="+"
+        android:textColor="@color/orange_red" />
+
+    <TextView
+        android:id="@+id/tv_payment_add_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:fontFamily="@font/opensans_bold"
+        android:textAllCaps="true"
+        android:textColor="@color/orange_red"
+        android:textStyle="bold"
+        tools:text="ADD UPI ID" />
+</LinearLayout>

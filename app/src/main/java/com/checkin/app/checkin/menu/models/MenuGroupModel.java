@@ -61,11 +61,11 @@ public class MenuGroupModel implements Cloneable {
     public void setItems(List<MenuItemModel> items) {
         vegItems = null;
         nonVegItems = null;
-        AppDatabase.getMenuGroupModel(null).attach(this);
-        AppDatabase.getMenuItemModel(null).remove(this.items);
-        AppDatabase.getMenuItemModel(null).put(items);
+        AppDatabase.getMenuGroupModel().attach(this);
+        AppDatabase.getMenuItemModel().remove(this.items);
+        AppDatabase.getMenuItemModel().put(items);
         this.items.addAll(items);
-        AppDatabase.getMenuGroupModel(null).put(this);
+        AppDatabase.getMenuGroupModel().put(this);
     }
 
     public void setCacheItems(List<MenuItemModel> items) {

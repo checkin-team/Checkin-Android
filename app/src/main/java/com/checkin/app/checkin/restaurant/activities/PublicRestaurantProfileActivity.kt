@@ -45,6 +45,8 @@ import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
 import com.checkin.app.checkin.misc.fragments.QRScannerWrapperInteraction
 import com.checkin.app.checkin.misc.paytm.PaytmPayment
+import com.checkin.app.checkin.payment.activities.PaymentActivity
+import com.checkin.app.checkin.payment.models.NewPaytmTransactionModel
 import com.checkin.app.checkin.restaurant.fragments.PublicRestaurantInfoFragment
 import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
@@ -270,8 +272,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                         else if (isMasterQr) {
                             wrongRestaurantQrScanned()
                             scheduledSessionViewModel.clearCart()
-                        }
-                        else startActivity(Intent(this@PublicRestaurantProfileActivity, ActiveSessionActivity::class.java))
+                        } else startActivity(Intent(this@PublicRestaurantProfileActivity, ActiveSessionActivity::class.java))
                     }
                     Resource.Status.LOADING -> pass
                     else -> toast(resource.message)
@@ -306,7 +307,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         networkViewModel.shouldTryAgain {
             when (it) {
                 LOAD_DATA_RESTAURANT -> restaurantViewModel.fetchMissing()
-                LOAD_SYNC_PAY_REQUEST -> scheduledSessionViewModel.requestPaytmDetails()
+                LOAD_SYNC_PAY_REQUEST -> scheduledSessionViewModel.initiateNewTransaction()
                 LOAD_SYNC_PAYTM_CALLBACK -> scheduledSessionViewModel.retryPostPaytmCallback()
                 LOAD_SYNC_USER_DETAILS -> userViewModel.retryUpdateProfile()
             }
@@ -314,11 +315,11 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     private fun setupPaytm() {
-        scheduledSessionViewModel.paytmData.observe(this, Observer {
+        scheduledSessionViewModel.newTransactionData.observe(this, Observer {
             it?.let { paytmModelResource ->
                 networkViewModel.updateStatus(paytmModelResource, LOAD_SYNC_PAY_REQUEST)
                 if (paytmModelResource.status === Resource.Status.SUCCESS && paytmModelResource.data != null) {
-                    paytmPayment.initializePayment(paytmModelResource.data, this)
+                    goToPayment(paytmModelResource.data)
                 } else if (paytmModelResource.status !== Resource.Status.LOADING) {
                     when (paytmModelResource.problem?.getErrorCode()) {
                         ProblemModel.ERROR_CODE.USER_MISSING_PHONE -> {
@@ -346,6 +347,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         })
     }
 
+    private fun goToPayment(data: NewPaytmTransactionModel) {
+        startActivityForResult(PaymentActivity.withTransactionIntent(this, data), REQUEST_PAYMENT_CODE)
+    }
 
     private fun handleErrorCartExists(cartRestaurant: RestaurantBriefModel) {
         AlertDialog.Builder(this)
@@ -464,7 +468,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 return
             }
         }
-        scheduledSessionViewModel.requestPaytmDetails()
+        scheduledSessionViewModel.initiateNewTransaction()
     }
 
     override fun onCartClose() {
@@ -574,6 +578,13 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         if (callSuper) super.onBackPressed()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_PAYMENT_CODE) {
+            toast(resultCode.toString())
+        }
+    }
+
     companion object {
         const val KEY_RESTAURANT_ID = "restaurant_profile.public.id"
         const val KEY_SESSION_ID = "session.new.id"
@@ -583,6 +594,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         private const val LOAD_SYNC_PAY_REQUEST = "load.sync.pay.request"
         private const val LOAD_DATA_RESTAURANT = "load.data.restaurant"
         private const val LOAD_SYNC_USER_DETAILS = "load.sync.user_detail"
+
+        private const val REQUEST_PAYMENT_CODE = 151
 
         private val DEEP_LINK_RESTAURANT_PROFILE = Regex("/restaurants/(\\d+)/profile/")
 

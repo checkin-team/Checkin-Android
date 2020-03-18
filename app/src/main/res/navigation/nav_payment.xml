@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/paymentOptionsFragment">
+
+    <fragment
+        android:id="@+id/paymentOptionsFragment"
+        android:name="com.checkin.app.checkin.payment.fragments.PaymentOptionsFragment"
+        android:label="PaymentSelectFragment"
+        tools:layout="@layout/fragment_payment_options">
+        <action
+            android:id="@+id/action_paymentOptionsFragment_to_paymentCardFragment"
+            app:destination="@id/paymentAddCardFragment" />
+        <action
+            android:id="@+id/action_paymentOptionsFragment_to_paymentUpiFragment"
+            app:destination="@id/paymentUpiFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/paymentAddCardFragment"
+        android:name="com.checkin.app.checkin.payment.fragments.PaymentCardFragment"
+        android:label="PaymentCardFragment"
+        tools:layout="@layout/fragment_payment_card" />
+    <dialog
+        android:id="@+id/paymentUpiFragment"
+        android:name="com.checkin.app.checkin.payment.fragments.PaymentOptionAddUpiFragment"
+        android:label="PaymentUpiFragment"
+        tools:layout="@layout/fragment_payment_option_add_upi" />
+</navigation>

@@ -177,11 +177,11 @@ public class MenuItemModel implements Serializable {
 
     @JsonProperty("customizations")
     public void setCustomizationGroups(List<ItemCustomizationGroupModel> customizationGroups) {
-        AppDatabase.getMenuItemModel(null).attach(this);
-        AppDatabase.getMenuItemCustomizationGroupModel(null).remove(this.customizationGroups);
-        AppDatabase.getMenuItemCustomizationGroupModel(null).put(customizationGroups);
+        AppDatabase.getMenuItemModel().attach(this);
+        AppDatabase.getMenuItemCustomizationGroupModel().remove(this.customizationGroups);
+        AppDatabase.getMenuItemCustomizationGroupModel().put(customizationGroups);
         this.customizationGroups.addAll(customizationGroups);
-        AppDatabase.getMenuItemModel(null).put(this);
+        AppDatabase.getMenuItemModel().put(this);
     }
 
     public List<AVAILABLE_MEAL> getAvailableMeals() {

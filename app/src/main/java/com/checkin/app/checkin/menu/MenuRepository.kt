@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 import io.objectbox.Box
 
 class MenuRepository private constructor(context: Context) {
-    private val mMenuBox: Box<MenuModel> = AppDatabase.getMenuModel(context)
-    private val mCartBox: Box<CartStatusModel> = AppDatabase.getCartStatusModel(context)
+    private val mMenuBox: Box<MenuModel> = AppDatabase.getMenuModel()
+    private val mCartBox: Box<CartStatusModel> = AppDatabase.getCartStatusModel()
     private val mWebService: WebApiService = getApiService(context)
 
     fun getAvailableMenu(shopId: Long): LiveData<Resource<MenuModel>> {

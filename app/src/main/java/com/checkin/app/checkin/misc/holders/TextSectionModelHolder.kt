@@ -8,7 +8,7 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 
-@EpoxyModelClass(layout = R.layout.item_section_heading)
+@EpoxyModelClass(layout = R.layout.item_section_heading, useLayoutOverloads = true)
 abstract class TextSectionModelHolder : EpoxyModelWithHolder<TextSectionModelHolder.Holder>() {
     @EpoxyAttribute
     lateinit var heading: String

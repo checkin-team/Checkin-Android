@@ -43,11 +43,11 @@ public class MenuModel {
 
     @JsonProperty("groups")
     public void setGroups(List<MenuGroupModel> groups) {
-        AppDatabase.getMenuModel(null).attach(this);
-        AppDatabase.getMenuGroupModel(null).remove(this.groups);
-        AppDatabase.getMenuGroupModel(null).put(groups);
+        AppDatabase.getMenuModel().attach(this);
+        AppDatabase.getMenuGroupModel().remove(this.groups);
+        AppDatabase.getMenuGroupModel().put(groups);
         this.groups.addAll(groups);
-        AppDatabase.getMenuModel(null).put(this);
+        AppDatabase.getMenuModel().put(this);
     }
 
     public long getPk() {

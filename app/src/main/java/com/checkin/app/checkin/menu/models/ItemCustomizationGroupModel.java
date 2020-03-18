@@ -77,10 +77,10 @@ public class ItemCustomizationGroupModel {
 
     @JsonProperty("fields")
     public void setCustomizationFields(List<ItemCustomizationFieldModel> customizationFields) {
-        AppDatabase.getMenuItemCustomizationGroupModel(null).attach(this);
-        AppDatabase.getMenuItemCustomizationFieldModel(null).remove(this.customizationFields);
-        AppDatabase.getMenuItemCustomizationFieldModel(null).put(customizationFields);
-        AppDatabase.getMenuItemCustomizationGroupModel(null).put(this);
+        AppDatabase.getMenuItemCustomizationGroupModel().attach(this);
+        AppDatabase.getMenuItemCustomizationFieldModel().remove(this.customizationFields);
+        AppDatabase.getMenuItemCustomizationFieldModel().put(customizationFields);
+        AppDatabase.getMenuItemCustomizationGroupModel().put(this);
         this.customizationFields.addAll(customizationFields);
     }
 

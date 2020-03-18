@@ -47,6 +47,12 @@ abstract class EnumIntGetter<T : EnumIntType> : EnumGetter<T, Int>() {
     override fun writeJson(gen: JsonGenerator, value: Int) = gen.writeNumber(value)
 }
 
+abstract class EnumStringGetter<T : EnumStringType> : EnumGetter<T, String>() {
+    override fun parseJson(p: JsonParser): String = p.text
+
+    override fun writeJson(gen: JsonGenerator, value: String) = gen.writeString(value)
+}
+
 open class EnumDeserializer<T : EnumType<V>, V>(private val getter: EnumGetter<T, V>) : JsonDeserializer<T>() {
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): T = getter.getByValue(getter.parseJson(p))
 }

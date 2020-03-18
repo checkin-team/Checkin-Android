@@ -16,6 +16,7 @@ import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -52,6 +53,9 @@ fun ImageView.blackAndWhite() {
 fun Context.toast(msg: String?) = Utils.toast(this, msg)
 fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)
 
+fun Fragment.toast(msg: String?) = context?.run { toast(msg) }
+fun Fragment.toast(@StringRes msgRes: Int) = context?.run { toast(msgRes) }
+
 fun Activity.snack(msg: String) = Utils.snack(this, msg)
 fun View.snack(@StringRes msgRes: Int) = Utils.snack(this, msgRes)
 fun Activity.errorSnack(msg: String) = Utils.errorSnack(this, msg)
@@ -79,6 +83,8 @@ fun String.callPhoneNumber(context: Context) {
 }
 
 fun String.toHtml() = Utils.fromHtml(this)
+
+fun Double.toCurrency(context: Context) = Utils.formatCurrencyAmount(context, this)
 
 /*
     Datetime

@@ -28,7 +28,6 @@ class ScheduledSessionDetailViewModel(application: Application) : BaseViewModel(
         } ?: Resource.cloneResource(it, emptyList<SessionOrderedItemModel>())
     }
 
-
     fun fetchSessionData(sessionId: Long) {
         this.sessionId = sessionId
         mSessionData.addSource(sessionRepository.getCustomerScheduledSessionDetail(sessionId), mSessionData::setValue)
