@@ -59,6 +59,8 @@
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:background="@null"
                 android:padding="@dimen/spacing_extra_small"
+                android:inputType="text"
+                android:maxLines="1"
                 android:textColor="@color/pinkish_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/im_user_location_cross"

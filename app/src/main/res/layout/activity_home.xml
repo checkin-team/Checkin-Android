@@ -30,7 +30,7 @@
                     
                     <ImageView
                         android:id="@+id/im_checkin_logo"
-                        android:layout_width="@dimen/width_checkin_logo_icon"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/height_checkin_logo_icon"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"
@@ -38,30 +38,35 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-    
+
                     <TextView
                         android:id="@+id/tv_checkin_location_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_small"
-                        android:layout_marginTop="@dimen/spacing_unit"
+                        android:layout_marginBottom="@dimen/spacing_small"
                         android:fontFamily="@font/opensans_semibold"
                         android:text="Location"
                         android:textSize="@dimen/font_extra_small"
+                        android:translationY="-4dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/im_checkin_logo"
                         app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
-                        app:layout_constraintTop_toTopOf="@id/im_checkin_logo" />
-                    
+                        app:layout_constraintTop_toTopOf="@id/im_checkin_logo"
+                        app:layout_constraintVertical_bias="0.0" />
+
                     <TextView
                         android:id="@+id/tv_checkin_location"
                         style="@style/TealBlueTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_unit"
-                        android:text="Bengaluru"
                         android:fontFamily="@font/josefinsans_semibold"
-                        android:textSize="@dimen/font_large"
+                        android:text="Bengaluru"
+                        android:textSize="@dimen/font_heading"
+                        android:translationY="3dp"
                         app:layout_constraintBottom_toBottomOf="@id/im_checkin_logo"
-                        app:layout_constraintStart_toStartOf="@id/tv_checkin_location_heading" />
+                        app:layout_constraintStart_toStartOf="@id/tv_checkin_location_heading"
+                        app:layout_constraintTop_toTopOf="@id/im_checkin_logo"
+                        app:layout_constraintVertical_bias="1.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
 

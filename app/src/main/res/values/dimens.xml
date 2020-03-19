@@ -217,7 +217,7 @@
 
     <!--Home -->
     <dimen name="width_checkin_logo_icon">26dp</dimen>
-    <dimen name="height_checkin_logo_icon">34dp</dimen>
+    <dimen name="height_checkin_logo_icon">24dp</dimen>
     <dimen name="width_trending_rest">120dp</dimen>
     <dimen name="height_trending_rest">110dp</dimen>
     <dimen name="size_qr_scanner">20dp</dimen>
@@ -235,6 +235,8 @@
 
     <dimen name="new_bottom_user_height">800dp</dimen>
 
+    <!-- Material Drawer -->
+    <dimen name="material_drawer_item_primary_text">16sp</dimen>
     <!--Location-->
     <dimen name="width_current_location">150dp</dimen>
     <dimen name="height_current_location">140dp</dimen>
