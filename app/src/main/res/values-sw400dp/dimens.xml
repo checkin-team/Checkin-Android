@@ -189,7 +189,7 @@
 
     <!--Home -->
     <dimen name="width_checkin_logo_icon">28dp</dimen>
-    <dimen name="height_checkin_logo_icon">36dp</dimen>
+    <dimen name="height_checkin_logo_icon">26dp</dimen>
     <dimen name="width_trending_rest">150dp</dimen>
     <dimen name="height_trending_rest">140dp</dimen>
     <dimen name="size_qr_scanner">20dp</dimen>
