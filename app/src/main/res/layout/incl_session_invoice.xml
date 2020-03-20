@@ -84,13 +84,28 @@
                 android:id="@+id/shimmer_bill_tax"
                 layout="@layout/shimmer_bill_list_item" />
 
-            <TextView
-                android:id="@+id/tv_label_bill_tax"
-                style="@style/BlackRoundedSmallTextStyle"
+            <LinearLayout
+                android:id="@+id/container_invoice_tax_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:text="Taxes" />
+                android:layout_gravity="center_vertical|start">
+
+                <TextView
+                    android:id="@+id/tv_label_bill_tax"
+                    style="@style/BlackRoundedSmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Taxes" />
+
+                <ImageView
+                    android:id="@+id/im_tax_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:src="@drawable/ic_info" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_invoice_tax"
