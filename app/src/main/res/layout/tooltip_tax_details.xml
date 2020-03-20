@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/spacing_small">
+
+
+    <TextView
+        android:id="@+id/tc_tax_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefinsans_semibold"
+        android:text="Taxes"
+        android:textSize="@dimen/font_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tax_cgst_heading"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefinsans_regular"
+        android:text="CGST (5%)"
+        app:layout_constraintBottom_toBottomOf="@id/tv_tax_cgst"
+        app:layout_constraintStart_toStartOf="@id/tc_tax_heading"
+        app:layout_constraintTop_toTopOf="@id/tv_tax_cgst" />
+
+    <TextView
+        android:id="@+id/tv_tax_cgst"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_gigantic"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:fontFamily="@font/josefinsans_regular"
+        app:layout_constraintStart_toEndOf="@id/tc_tax_heading"
+        app:layout_constraintTop_toBottomOf="@id/tc_tax_heading"
+        tools:text="₹ 254.00" />
+
+    <TextView
+        android:id="@+id/tv_tax_sgst_heading"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefinsans_regular"
+        android:text="SGST (5%)"
+        app:layout_constraintStart_toStartOf="@id/tv_tax_cgst_heading"
+        app:layout_constraintTop_toTopOf="@id/tv_tax_sgst" />
+
+    <TextView
+        android:id="@+id/tv_tax_sgst"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:fontFamily="@font/josefinsans_regular"
+        app:layout_constraintStart_toStartOf="@id/tv_tax_cgst"
+        app:layout_constraintTop_toBottomOf="@id/tv_tax_cgst"
+        tools:text="₹ 2533.00" />
+
+
+    <TextView
+        android:id="@+id/tv_tax_igst_heading"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:fontFamily="@font/josefinsans_regular"
+        android:text="IGST"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tv_tax_sgst_heading"
+        app:layout_constraintTop_toBottomOf="@id/tv_tax_sgst_heading" />
+
+
+    <TextView
+        android:id="@+id/tv_tax_igst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:fontFamily="@font/josefinsans_regular"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="@id/tv_tax_sgst"
+        app:layout_constraintTop_toBottomOf="@id/tv_tax_sgst"
+        tools:text="₹ 2533.00" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

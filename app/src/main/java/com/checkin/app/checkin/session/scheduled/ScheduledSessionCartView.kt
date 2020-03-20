@@ -7,10 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.FragmentActivity
@@ -33,11 +30,16 @@ import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
+import com.checkin.app.checkin.session.models.TaxDetailModel
 import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
 import com.checkin.app.checkin.utility.LockableBottomSheetBehavior
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.pass
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.createBalloon
+import kotlinx.android.synthetic.main.tooltip_tax_details.view.*
 
 class ScheduledSessionCartView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -78,6 +80,8 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     internal lateinit var tvRestaurantName: TextView
     @BindView(R.id.tv_cart_header_restaurant_locality)
     internal lateinit var tvRestaurantLocality: TextView
+    @BindView(R.id.container_invoice_tax_details)
+    internal lateinit var llTaxDetails: LinearLayout
 
     lateinit var activity: FragmentActivity
     lateinit var viewModel: ScheduledCartViewModel
@@ -88,6 +92,23 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     private val ordersController = CartOrderedItemController(this)
     private val billHolder: BillHolder
     private lateinit var bottomSheetBehavior: LockableBottomSheetBehavior<View>
+
+    private val balloonTaxDetails by lazy {
+        createBalloon(context) {
+            layout = R.layout.tooltip_tax_details
+            arrowOrientation = ArrowOrientation.BOTTOM
+            backgroundColor = ContextCompat.getColor(context, R.color.pinkish_grey)
+            balloonAnimation = BalloonAnimation.FADE
+            padding = 1
+            setBackgroundDrawableResource(R.drawable.layout_border_grey)
+            lifecycleOwner = activity
+            dismissWhenClicked = true
+            dismissWhenShowAgain = true
+            dismissWhenTouchOutside = true
+
+
+        }
+    }
 
     init {
         View.inflate(context, R.layout.fragment_scheduled_session_cart, this).apply {
@@ -110,12 +131,25 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         }
         epoxyRvCartOrders.setHasFixedSize(false)
         epoxyRvCartOrders.setControllerAndBuildModels(ordersController)
+
+        llTaxDetails.setOnClickListener {
+            if (balloonTaxDetails.isShowing) {
+                balloonTaxDetails.dismiss()
+            } else {
+                balloonTaxDetails.showAlignTop(it)
+            }
+        }
     }
 
     fun isExpanded() = bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED
 
     fun dismiss() {
-        if (isExpanded()) bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        if (isExpanded()) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            if (balloonTaxDetails.isShowing) {
+                balloonTaxDetails.dismiss()
+            }
+        }
     }
 
     fun show() {
@@ -204,6 +238,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
                 networkViewModel.updateStatus(resource, LOAD_DATA_CART_DETAILS)
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                     setupData(resource.data)
+                    setupTaxDetails(resource.data.bill.taxDetail)
                 }
             }
         })
@@ -313,6 +348,18 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+    }
+
+    private fun setupTaxDetails(taxDetailModel: TaxDetailModel) {
+        balloonTaxDetails.getContentView().apply {
+            tv_tax_cgst.text = "₹ ${taxDetailModel.cgst}"
+            tv_tax_sgst.text = "₹ ${taxDetailModel.sgst}"
+            if (taxDetailModel.igst.toFloat() != 0F) {
+                tv_tax_igst.visibility = View.VISIBLE
+                tv_tax_igst_heading.visibility = View.VISIBLE
+                tv_tax_igst.text = "₹ ${taxDetailModel.igst}"
+            }
+        }
     }
 
     companion object {

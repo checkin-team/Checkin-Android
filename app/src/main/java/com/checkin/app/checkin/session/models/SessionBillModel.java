@@ -35,6 +35,9 @@ public class SessionBillModel {
 
     private Double discountPercentage;
 
+    @JsonProperty("tax_detail")
+    private TaxDetailModel taxDetail;
+
     public SessionBillModel() {
     }
 
@@ -52,6 +55,10 @@ public class SessionBillModel {
 
     public Double getDiscount() {
         return discount;
+    }
+
+    public TaxDetailModel getTaxDetail() {
+        return taxDetail;
     }
 
     @JsonProperty("discount")
