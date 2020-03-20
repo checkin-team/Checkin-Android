@@ -3,14 +3,21 @@ package com.checkin.app.checkin.misc
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import butterknife.BindViews
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.session.models.SessionBillModel
+import com.checkin.app.checkin.session.models.TaxDetailModel
 import com.checkin.app.checkin.utility.Utils
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.createBalloon
+import kotlinx.android.synthetic.main.tooltip_tax_details.view.*
 
 class BillHolder(itemView: View) {
     @BindView(R.id.shimmer_invoice_holder)
@@ -39,6 +46,8 @@ class BillHolder(itemView: View) {
     internal lateinit var containerInvoicePromo: ViewGroup
     @BindView(R.id.container_invoice_discount)
     internal lateinit var containerInvoiceDiscount: ViewGroup
+    @BindView(R.id.container_invoice_tax_details)
+    internal lateinit var llTaxDetails: LinearLayout
 
     @BindViews(R.id.shimmer_bill_subtotal, R.id.shimmer_bill_charge, R.id.shimmer_bill_discount, R.id.shimmer_bill_tax, R.id.shimmer_bill_brownie, R.id.shimmer_bill_promo, R.id.shimmer_bill_tip)
     internal lateinit var shimmerViews: List<@JvmSuppressWildcards View>
@@ -48,11 +57,33 @@ class BillHolder(itemView: View) {
 
     private val mContext: Context
 
+    private val balloonTaxDetails by lazy {
+        createBalloon(itemView.context) {
+            layout = R.layout.tooltip_tax_details
+            arrowOrientation = ArrowOrientation.BOTTOM
+            backgroundColor = ContextCompat.getColor(itemView.context, R.color.pinkish_grey)
+            balloonAnimation = BalloonAnimation.FADE
+            padding = 1
+            setBackgroundDrawableResource(R.drawable.layout_border_grey)
+            dismissWhenClicked = true
+            dismissWhenShowAgain = true
+            dismissWhenTouchOutside = true
+        }
+    }
+
     init {
         ButterKnife.bind(this, itemView)
         mContext = itemView.context
         containerInvoicePromo.visibility = View.GONE
         containerInvoiceDiscount.visibility = View.GONE
+
+        llTaxDetails.setOnClickListener {
+            if (balloonTaxDetails.isShowing) {
+                balloonTaxDetails.dismiss()
+            } else {
+                balloonTaxDetails.showAlignTop(it)
+            }
+        }
     }
 
     fun bind(bill: SessionBillModel) {
@@ -64,6 +95,7 @@ class BillHolder(itemView: View) {
             if (it != null) tvInvoiceTax.text = Utils.formatCurrencyAmount(mContext, bill.tax)
             else containerInvoiceTax.visibility = View.GONE
         }
+        setupTaxDetails(bill.taxDetail)
         // Charges
         bill.charges.let {
             if (it != null && it > 0) {
@@ -103,5 +135,17 @@ class BillHolder(itemView: View) {
         labelViews.forEach { it.visibility = View.GONE }
         shimmerViews.forEach { it.visibility = View.VISIBLE }
         shimmerHolder.startShimmer()
+    }
+
+    private fun setupTaxDetails(taxDetailModel: TaxDetailModel) {
+        balloonTaxDetails.getContentView().apply {
+            tv_tax_cgst.text = Utils.formatCurrencyAmount(context, taxDetailModel.cgst)
+            tv_tax_sgst.text = Utils.formatCurrencyAmount(context, taxDetailModel.sgst)
+            if (taxDetailModel.igst.toFloat() != 0F) {
+                tv_tax_igst.visibility = View.VISIBLE
+                tv_tax_igst_heading.visibility = View.VISIBLE
+                tv_tax_igst.text = Utils.formatCurrencyAmount(context, taxDetailModel.igst)
+            }
+        }
     }
 }
