@@ -16,7 +16,7 @@ import io.objectbox.android.ObjectBoxLiveData
 
 class AccountRepository private constructor(context: Context) : BaseRepository() {
     private val mWebService: WebApiService = getApiService(context)
-    private val boxAccount = AppDatabase.getAccountModel()
+    private val boxAccount = AppDatabase.boxFor<AccountModel>()
 
     val selfAccounts: LiveData<Resource<List<AccountModel>>>
         get() = object : NetworkBoundResource<List<AccountModel>, List<AccountModel>>() {

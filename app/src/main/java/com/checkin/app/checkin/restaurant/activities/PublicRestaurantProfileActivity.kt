@@ -46,7 +46,7 @@ import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
 import com.checkin.app.checkin.misc.fragments.QRScannerWrapperInteraction
 import com.checkin.app.checkin.misc.paytm.PaytmPayment
 import com.checkin.app.checkin.payment.activities.PaymentActivity
-import com.checkin.app.checkin.payment.models.NewPaytmTransactionModel
+import com.checkin.app.checkin.payment.models.NewTransactionModel
 import com.checkin.app.checkin.restaurant.fragments.PublicRestaurantInfoFragment
 import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
@@ -347,7 +347,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         })
     }
 
-    private fun goToPayment(data: NewPaytmTransactionModel) {
+    private fun goToPayment(data: NewTransactionModel) {
         startActivityForResult(PaymentActivity.withTransactionIntent(this, data), REQUEST_PAYMENT_CODE)
     }
 

@@ -86,6 +86,12 @@ fun String.toHtml() = Utils.fromHtml(this)
 
 fun Double.toCurrency(context: Context) = Utils.formatCurrencyAmount(context, this)
 
+fun <K, V> MutableMap<K, V>.putAll(vararg pairs: Pair<K, V>) {
+    for ((key, value) in pairs) {
+        put(key, value)
+    }
+}
+
 /*
     Datetime
  */

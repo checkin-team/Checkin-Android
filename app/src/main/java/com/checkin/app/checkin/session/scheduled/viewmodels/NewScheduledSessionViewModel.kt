@@ -15,7 +15,7 @@ import com.checkin.app.checkin.data.resource.Resource.Companion.createResource
 import com.checkin.app.checkin.data.resource.Resource.Companion.errorNotFound
 import com.checkin.app.checkin.data.resource.Resource.Companion.loading
 import com.checkin.app.checkin.payment.PaymentRepository
-import com.checkin.app.checkin.payment.models.NewPaytmTransactionModel
+import com.checkin.app.checkin.payment.models.NewRazorpayTransactionModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
 import com.checkin.app.checkin.session.models.PromoDetailModel
@@ -40,7 +40,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     private val mQrResult = createNetworkLiveData<QRResultModel>()
     private val mPromoRemove = createNetworkLiveData<ObjectNode>()
     private val mPaytmCallbackData = createNetworkLiveData<ObjectNode>()
-    private val mTransactionData = createNetworkLiveData<NewPaytmTransactionModel>()
+    private val mTransactionData = createNetworkLiveData<NewRazorpayTransactionModel>()
     private val mPromoData = createNetworkLiveData<List<PromoDetailModel>>()
     private val mSessionPromo = createNetworkLiveData<SessionPromoModel>()
 
@@ -56,7 +56,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     val newQrSessionData: LiveData<Resource<QRResultModel>> = mQrResult
     val clearCartData: LiveData<Resource<ObjectNode>> = mClearCart
     val promoCodes: LiveData<Resource<List<PromoDetailModel>>> = mPromoData
-    val newTransactionData: LiveData<Resource<NewPaytmTransactionModel>> = mTransactionData
+    val newTransactionData: LiveData<Resource<NewRazorpayTransactionModel>> = mTransactionData
     val paytmCallbackData: LiveData<Resource<ObjectNode>> = mPaytmCallbackData
 
     val promoDeletedData: LiveData<Resource<ObjectNode>> = Transformations.map(mPromoRemove) { input ->

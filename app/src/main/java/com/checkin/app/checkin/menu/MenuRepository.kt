@@ -16,11 +16,10 @@ import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
-import io.objectbox.Box
 
 class MenuRepository private constructor(context: Context) {
-    private val mMenuBox: Box<MenuModel> = AppDatabase.getMenuModel()
-    private val mCartBox: Box<CartStatusModel> = AppDatabase.getCartStatusModel()
+    private val mMenuBox = AppDatabase.boxFor<MenuModel>()
+    private val mCartBox = AppDatabase.boxFor<CartStatusModel>()
     private val mWebService: WebApiService = getApiService(context)
 
     fun getAvailableMenu(shopId: Long): LiveData<Resource<MenuModel>> {

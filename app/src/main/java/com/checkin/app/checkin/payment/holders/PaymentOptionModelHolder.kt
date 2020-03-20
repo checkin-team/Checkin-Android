@@ -20,6 +20,7 @@ import com.checkin.app.checkin.payment.models.CardPaymentOptionModel
 import com.checkin.app.checkin.payment.models.PaymentOptionModel
 import com.checkin.app.checkin.payment.models.UPICollectPaymentOptionModel
 import com.checkin.app.checkin.payment.models.UPIPushPaymentOptionModel
+import com.checkin.app.checkin.utility.Utils
 
 @EpoxyModelClass(layout = R.layout.item_payment_option)
 abstract class PaymentOptionModelHolder : EpoxyModelWithHolder<PaymentOptionModelHolder.OptionHolder>() {
@@ -68,7 +69,7 @@ abstract class PaymentOptionModelHolder : EpoxyModelWithHolder<PaymentOptionMode
             when (data) {
                 is UPIPushPaymentOptionModel -> {
                     tvName.text = data.appName
-                    imIcon.setImageDrawable(data.iconDrawable)
+                    Utils.loadImageOrDefault(imIcon, data.iconUrl, 0)
                     etCardCvv.visibility = GONE
                 }
                 is CardPaymentOptionModel -> {

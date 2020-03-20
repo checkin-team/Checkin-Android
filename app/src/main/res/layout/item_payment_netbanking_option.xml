@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -9,5 +10,5 @@
         android:id="@+id/im_payment_netbanking_option"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height_medium"
-        android:src="@drawable/ic_payment_sbi" />
+        tools:src="@drawable/ic_payment_netbanking_sbi" />
 </FrameLayout>

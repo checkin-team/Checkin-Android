@@ -17,7 +17,7 @@ data class CartStatusModel(
 
     @JsonProperty("restaurant")
     fun setRestaurantInfo(data: RestaurantBriefModel) {
-        AppDatabase.getCartStatusModel().attach(this)
+        AppDatabase.boxFor<CartStatusModel>().attach(this)
         AppDatabase.getRestaurantBriefModel().put(data)
         this.restaurant.target = data
     }

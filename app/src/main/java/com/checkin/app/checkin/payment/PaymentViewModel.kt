@@ -3,10 +3,12 @@ package com.checkin.app.checkin.payment
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.payment.models.*
+import com.checkin.app.checkin.payment.services.Transaction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.consumeEach
@@ -16,7 +18,8 @@ import kotlinx.coroutines.launch
 class PaymentViewModel(application: Application) : BaseViewModel(application) {
     private val repository = PaymentRepository.getInstance(application)
 
-    lateinit var transactionData: NewPaytmTransactionModel
+    lateinit var transactionData: NewTransactionModel
+        private set
 
     private val payRequestChannel = ConflatedBroadcastChannel<PaymentRequest>()
     private val mUPIPushOptions = createNetworkLiveData<List<UPIPushPaymentOptionModel>>()
@@ -39,9 +42,13 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             }
         }
     }
-    val netBankingOptions: LiveData<Resource<List<NetBankingPaymentOptionModel>>> = mNetBankingOptions
+    val netBankingOptions: LiveData<Resource<List<NetBankingPaymentOptionModel>>> = Transformations.map(mNetBankingOptions) {
+        it?.data?.filter { it.iconRes != 0 }?.let { data ->
+            Resource.cloneResource(it, data)
+        } ?: it
+    }
 
-    fun init(transactionModel: NewPaytmTransactionModel) {
+    fun init(transactionModel: NewTransactionModel) {
         transactionData = transactionModel
     }
 
@@ -50,8 +57,8 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
         mUPICollectOptions.addSource(repository.UPIIdOptions, mUPICollectOptions::setValue)
     }
 
-    fun fetchNetBankingOptions() {
-        mNetBankingOptions.addSource(repository.netBankingOptions, mNetBankingOptions::setValue)
+    fun fetchNetBankingOptions(transaction: Transaction) {
+        mNetBankingOptions.addSource(repository.getNetBankingOptions(transaction), mNetBankingOptions::setValue)
     }
 
     fun payUsing(paymentOptionModel: PaymentOptionModel, saveOption: Boolean = true) {

@@ -23,6 +23,7 @@ import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.payment.models.NewPaytmTransactionModel
+import com.checkin.app.checkin.payment.models.NewRazorpayTransactionModel
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.models.RestaurantServiceModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
@@ -425,6 +426,9 @@ interface WebApiService {
 
     @POST("payments/pay/paytm/sessions/{session_id}/")
     fun postNewPaytmTransaction(@Path("session_id") sessionId: Long): Call<NewPaytmTransactionModel>
+
+    @POST("payments/pay/razorpay/sessions/{session_id}/")
+    fun postNewRazorpayTransaction(@Path("session_id") sessionId: Long): Call<NewRazorpayTransactionModel>
     //endregion
 
     //region REVIEW

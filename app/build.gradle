@@ -156,11 +156,6 @@ dependencies {
             // Google Maps
             "com.google.android.gms:play-services-maps:$versions.playService",
             "com.google.android.gms:play-services-location:$versions.playService",
-
-            // Dependencies included because of Paytm Native SDK
-            "com.google.android.gms:play-services-analytics-impl:$versions.playService",
-            "com.google.android.gms:play-services-tagmanager:$versions.playService",
-            "com.google.android.gms:play-services-tagmanager-api:$versions.playService"
     )
 
     // Google Places API
@@ -239,7 +234,7 @@ dependencies {
     implementation "com.getkeepsafe.taptargetview:taptargetview:1.12.0"
 
     // PayTM sdk
-    implementation("com.paytm.nativesdk:apisdk:$versions.paytmNative")
+    implementation(name: "razorpay-android-3.8.8", ext: 'aar')
     implementation("com.paytm:pgplussdk:$versions.paytm") { transitive = true }
 
     // Shimmering Effects

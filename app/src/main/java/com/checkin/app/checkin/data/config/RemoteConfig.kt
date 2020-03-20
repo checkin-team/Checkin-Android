@@ -42,5 +42,6 @@ object RemoteConfig {
         const val SUPPORT_INSTAGRAM_PAGE_ID = "checkin_support_instagram_page_id"
         const val SUPPORT_YOUTUBE_CHANNEL_ID = "checkin_support_youtube_channel_id"
         const val HOME_TOP_BANNERS_AD = "checkin_home_banners_top"
+        const val KEY_RAZORPAY = "checkin_key_razorpay"
     }
 }

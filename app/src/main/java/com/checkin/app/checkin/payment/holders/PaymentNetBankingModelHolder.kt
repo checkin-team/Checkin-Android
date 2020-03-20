@@ -10,7 +10,6 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.payment.listeners.PaymentOptionSelectListener
 import com.checkin.app.checkin.payment.models.NetBankingPaymentOptionModel
-import com.checkin.app.checkin.utility.Utils
 
 @EpoxyModelClass(layout = R.layout.item_payment_netbanking_option)
 abstract class PaymentNetBankingModelHolder : EpoxyModelWithHolder<PaymentNetBankingModelHolder.OptionHolder>() {
@@ -37,7 +36,8 @@ abstract class PaymentNetBankingModelHolder : EpoxyModelWithHolder<PaymentNetBan
 
         override fun bindData(data: NetBankingPaymentOptionModel) {
             mData = data
-            Utils.loadImageOrDefault(imOption, data.iconUrl, 0)
+            if (mData.iconRes != 0)
+                imOption.setImageResource(mData.iconRes)
         }
     }
 }

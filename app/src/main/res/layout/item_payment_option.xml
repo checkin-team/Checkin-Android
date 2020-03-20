@@ -22,7 +22,7 @@
             android:layout_height="@dimen/height_payment_option_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_payment_visa" />
+            tools:src="@drawable/ic_payment_card_visa" />
 
         <TextView
             android:id="@+id/tv_payment_option_name"

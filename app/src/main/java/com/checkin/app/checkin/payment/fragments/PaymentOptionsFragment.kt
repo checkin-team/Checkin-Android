@@ -31,7 +31,6 @@ class PaymentOptionsFragment : BaseFragment(), PaymentOptionSelectListener {
         epoxyRvOptions.setControllerAndBuildModels(controller)
 
         setupObserver()
-        viewModel.fetchNetBankingOptions()
         viewModel.fetchUPIOptions()
     }
 
@@ -45,7 +44,7 @@ class PaymentOptionsFragment : BaseFragment(), PaymentOptionSelectListener {
         viewModel.netBankingOptions.observe(this, Observer {
             it?.let { resource ->
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null)
-                    controller.netBankingOptions = resource.data
+                    controller.netBankingOptions = resource.data.slice(0 until resource.data.size.coerceAtMost(5))
             }
         })
     }

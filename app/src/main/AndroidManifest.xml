@@ -25,6 +25,9 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
+    <!--  Fixes Manifest Merge error with Razorpay library  -->
+    <uses-sdk tools:overrideLibrary="com.razorpay" />
+
     <application
         android:name=".CheckinApplication"
         android:allowBackup="true"
