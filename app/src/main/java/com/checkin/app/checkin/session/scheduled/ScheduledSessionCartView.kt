@@ -115,7 +115,10 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     fun isExpanded() = bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED
 
     fun dismiss() {
-        if (isExpanded()) bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        if (isExpanded()) {
+            billHolder.closeTaxTooltip()
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
     fun show() {

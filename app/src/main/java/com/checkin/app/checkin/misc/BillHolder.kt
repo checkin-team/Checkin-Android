@@ -148,4 +148,12 @@ class BillHolder(itemView: View) {
             }
         }
     }
+
+    fun closeTaxTooltip() {
+        if (balloonTaxDetails.isShowing) {
+            balloonTaxDetails.dismiss()
+        }
+    }
+
+
 }
