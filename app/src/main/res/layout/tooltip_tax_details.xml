@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/josefinsans_regular"
-        android:text="CGST (5%)"
+        android:text="CGST"
         app:layout_constraintBottom_toBottomOf="@id/tv_tax_cgst"
         app:layout_constraintStart_toStartOf="@id/tc_tax_heading"
         app:layout_constraintTop_toTopOf="@id/tv_tax_cgst" />
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/josefinsans_regular"
-        android:text="SGST (5%)"
+        android:text="SGST"
         app:layout_constraintStart_toStartOf="@id/tv_tax_cgst_heading"
         app:layout_constraintTop_toTopOf="@id/tv_tax_sgst" />
 
@@ -82,7 +82,6 @@
         android:fontFamily="@font/josefinsans_regular"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="@id/tv_tax_sgst"
         app:layout_constraintTop_toBottomOf="@id/tv_tax_sgst"
         tools:text="₹ 2533.00" />

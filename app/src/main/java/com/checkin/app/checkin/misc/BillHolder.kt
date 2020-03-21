@@ -13,6 +13,7 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.session.models.SessionBillModel
 import com.checkin.app.checkin.session.models.TaxDetailModel
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.toCurrency
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.BalloonAnimation
@@ -139,13 +140,22 @@ class BillHolder(itemView: View) {
 
     private fun setupTaxDetails(taxDetailModel: TaxDetailModel) {
         balloonTaxDetails.getContentView().apply {
-            tv_tax_cgst.text = Utils.formatCurrencyAmount(context, taxDetailModel.cgst)
-            tv_tax_sgst.text = Utils.formatCurrencyAmount(context, taxDetailModel.sgst)
-            if (taxDetailModel.igst.toFloat() != 0F) {
+            tv_tax_cgst.text = taxDetailModel.cgst.toCurrency(context)
+            tv_tax_sgst.text = taxDetailModel.sgst.toCurrency(context)
+            if (taxDetailModel.igst > 0) {
                 tv_tax_igst.visibility = View.VISIBLE
                 tv_tax_igst_heading.visibility = View.VISIBLE
-                tv_tax_igst.text = Utils.formatCurrencyAmount(context, taxDetailModel.igst)
+                tv_tax_igst.text = taxDetailModel.igst.toCurrency(context)
+            } else {
+                tv_tax_igst.visibility = View.GONE
+                tv_tax_igst_heading.visibility = View.GONE
             }
+        }
+    }
+
+    fun resetUi() {
+        if (balloonTaxDetails.isShowing) {
+            balloonTaxDetails.dismiss()
         }
     }
 }
