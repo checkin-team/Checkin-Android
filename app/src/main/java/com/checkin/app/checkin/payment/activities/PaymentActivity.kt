@@ -101,12 +101,14 @@ class PaymentActivity : BaseActivity(), TransactionListener {
     }
 
     override fun onBackPressed() {
-        setResult(RESULT_CANCELED)
-        finish()
+        if (wvPaymentProcess.visibility != View.VISIBLE || onDoubleBackPressed()) {
+            setResult(RESULT_CANCELED)
+            super.onBackPressed()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        finish()
+        onBackPressed()
         return true
     }
 

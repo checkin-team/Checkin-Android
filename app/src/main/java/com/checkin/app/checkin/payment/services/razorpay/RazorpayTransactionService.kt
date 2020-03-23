@@ -21,8 +21,9 @@ class RazorpayTransactionService(private val razorpay: Razorpay, private val lis
                 "amount" to mTransactionData.amount.toInt() * 100,
                 "currency" to mTransactionData.currency,
                 "order_id" to mTransactionData.orderId,
-                "email" to mTransactionData.customerEmail,
-                "contact" to mTransactionData.customerPhone
+                "contact" to mTransactionData.customerPhone,
+                "email" to (mTransactionData.customerEmail?.takeIf { it.isNotBlank() }
+                        ?: "missing@email.com")
         )
 
     override fun initialize(webView: WebView, txnData: NewTransactionModel) {

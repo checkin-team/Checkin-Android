@@ -10,6 +10,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Status
 import com.checkin.app.checkin.misc.fragments.DataStatusFragment
+import com.checkin.app.checkin.utility.coroutineLifecycleScope
+import com.checkin.app.checkin.utility.toast
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
@@ -21,6 +25,8 @@ open class BaseActivity : AppCompatActivity() {
 
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var progressBar: ProgressBar? = null
+
+    private var doublePressedBackToExit: Boolean = false
 
     fun init(@IdRes groupId: Int, isNetworkRequired: Boolean) {
         if (mFragment != null) {
@@ -93,6 +99,19 @@ open class BaseActivity : AppCompatActivity() {
         when (resource.status) {
             Status.LOADING -> startRefreshing()
             else -> stopRefreshing()
+        }
+    }
+
+    protected fun onDoubleBackPressed(): Boolean {
+        return if (doublePressedBackToExit) true
+        else {
+            doublePressedBackToExit = true
+            toast("Press back again to exit")
+            coroutineLifecycleScope.launch {
+                delay(2000)
+                doublePressedBackToExit = false
+            }
+            false
         }
     }
 
