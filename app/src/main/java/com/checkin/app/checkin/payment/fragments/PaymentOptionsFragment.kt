@@ -32,9 +32,10 @@ class PaymentOptionsFragment : BaseFragment(), PaymentOptionSelectListener {
 
         setupObserver()
         viewModel.fetchUPIOptions()
+        viewModel.fetchCardOptions()
     }
 
-    fun setupObserver() {
+    private fun setupObserver() {
         viewModel.upiOptions.observe(this, Observer {
             it?.let { resource ->
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null)
@@ -47,6 +48,15 @@ class PaymentOptionsFragment : BaseFragment(), PaymentOptionSelectListener {
                     controller.netBankingOptions = resource.data.slice(0 until resource.data.size.coerceAtMost(5))
             }
         })
+        viewModel.cardOptions.observe(this, Observer {
+            it?.let { resource ->
+                if (resource.status == Resource.Status.SUCCESS && resource.data != null)
+                    controller.cardOptions = resource.data
+            }
+        })
+        viewModel.recentlyUsedOptions.observe(this, Observer {
+            controller.lastUsedOptions = it?.run { subList(0, size.coerceAtMost(5)) }
+        })
     }
 
     override fun onAddPaymentOption(pmtType: PAYMENT_TYPE) {
@@ -58,10 +68,12 @@ class PaymentOptionsFragment : BaseFragment(), PaymentOptionSelectListener {
                 return
             }
         }
-        findNavController().navigate(action)
+        kotlin.runCatching {
+            findNavController().navigate(action)
+        }
     }
 
     override fun onPayPaymentOption(paymentOption: PaymentOptionModel) {
-        viewModel.payUsing(paymentOption)
+        viewModel.payUsing(paymentOption, saveOption = true)
     }
 }

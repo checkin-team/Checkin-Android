@@ -13,9 +13,10 @@ object AppDatabase {
         private set
 
     fun init(context: Context) {
-        store = MyObjectBox.builder()
-                .androidContext(context.applicationContext)
-                .buildDefault()
+        if (!::store.isInitialized)
+            store = MyObjectBox.builder()
+                    .androidContext(context.applicationContext)
+                    .buildDefault()
     }
 
     inline fun <reified T> boxFor() = store.boxFor<T>()

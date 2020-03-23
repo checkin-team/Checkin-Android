@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.data.BaseRepository
-import com.checkin.app.checkin.data.db.AppDatabase
+import com.checkin.app.checkin.data.db.dbStore
 import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitLiveData
@@ -16,7 +16,7 @@ import io.objectbox.android.ObjectBoxLiveData
 
 class AccountRepository private constructor(context: Context) : BaseRepository() {
     private val mWebService: WebApiService = getApiService(context)
-    private val boxAccount = AppDatabase.boxFor<AccountModel>()
+    private val boxAccount by dbStore<AccountModel>()
 
     val selfAccounts: LiveData<Resource<List<AccountModel>>>
         get() = object : NetworkBoundResource<List<AccountModel>, List<AccountModel>>() {

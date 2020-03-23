@@ -129,7 +129,7 @@
     <dimen name="card_corner_radius_large">14dp</dimen>
 
     <dimen name="size_card_square">102dp</dimen>
-    <dimen name="height_input_normal">42dp</dimen>
+    <dimen name="height_input_large">42dp</dimen>
     <dimen name="height_input_small">27dp</dimen>
 
     <dimen name="height_horizontal_line">1dp</dimen>
@@ -153,7 +153,7 @@
     <dimen name="notif_heading_size">20sp</dimen>
     <dimen name="text_spacing_from_right">20dp</dimen>
     <dimen name="width_input_large">77dp</dimen>
-    <dimen name="height_input_large">37dp</dimen>
+    <dimen name="height_input_normal">37dp</dimen>
 
     <dimen name="height_horizontal_view">1.5dp</dimen>
 

@@ -19,15 +19,16 @@ sealed class PaymentOptionModel(val type: PAYMENT_TYPE) : Serializable {
 
 @Entity
 data class CardPaymentOptionModel(
-        val cardNumber: String,
+        val name: String,
+        @Unique val cardNumber: String,
         val expiryMonth: String,
         val expiryYear: String,
         val cvv: String,
-        val bankCode: String,
+        var bankCode: String? = null,
         @Convert(converter = CARD_PROVIDER.Companion.Converter::class, dbType = String::class)
-        val channel: CARD_PROVIDER,
+        var channel: CARD_PROVIDER? = null,
         @Convert(converter = CARD_TYPE.Companion.TypeConverter::class, dbType = String::class)
-        val cardType: CARD_TYPE
+        var cardType: CARD_TYPE? = null
 ) : PaymentOptionModel(PAYMENT_TYPE.CARD) {
     @Id
     override var id: Long = 0
@@ -42,7 +43,7 @@ data class CardPaymentOptionModel(
         RUPAY("rupay", R.drawable.ic_payment_card_rupay);
 
         companion object : EnumStringGetter<CARD_PROVIDER>() {
-            override fun getByValue(value: String): CARD_PROVIDER = EnumStringType.getByValue(value)
+            override fun getByValue(value: String?): CARD_PROVIDER? = value?.let { EnumStringType.getByValue(it) }
 
             class Converter : EnumConverter<CARD_PROVIDER, String>(this)
         }
@@ -52,7 +53,7 @@ data class CardPaymentOptionModel(
         DEBIT("DEBIT_CARD"), CREDIT("CREDIT_CARD");
 
         companion object : EnumStringGetter<CARD_TYPE>() {
-            override fun getByValue(value: String): CARD_TYPE = EnumStringType.getByValue(value)
+            override fun getByValue(value: String?): CARD_TYPE? = value?.let { EnumStringType.getByValue(it) }
 
             class TypeConverter : EnumConverter<CARD_TYPE, String>(this)
         }

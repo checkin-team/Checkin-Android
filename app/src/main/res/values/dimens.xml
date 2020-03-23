@@ -149,11 +149,17 @@
     <dimen name="spacing_zero">0dp</dimen>
 
     <dimen name="size_card_square">100dp</dimen>
-    <dimen name="height_input_normal">40dp</dimen>
-    <dimen name="height_input_small">25dp</dimen>
 
+    <dimen name="height_input_huge">70dp</dimen>
+    <dimen name="height_input_large">40dp</dimen>
+    <dimen name="height_input_normal">35dp</dimen>
+    <dimen name="height_input_small">25dp</dimen>
+    <dimen name="width_input_large">75dp</dimen>
+
+    <dimen name="height_horizontal_view">1.5dp</dimen>
     <dimen name="height_horizontal_line">1dp</dimen>
     <dimen name="width_vertical_line">1dp</dimen>
+
 
     <!-- Shop dimensions -->
     <dimen name="width_shop_finance_tax">160dp</dimen>
@@ -172,11 +178,6 @@
     <dimen name="notif_heading_padding">10dp</dimen>
     <dimen name="notif_heading_size">18sp</dimen>
     <dimen name="text_spacing_from_right">18dp</dimen>
-    <dimen name="width_input_large">75dp</dimen>
-    <dimen name="height_input_large">35dp</dimen>
-    <dimen name="height_input_huge">70dp</dimen>
-
-    <dimen name="height_horizontal_view">1.5dp</dimen>
 
     <!--Payment Mode-->
     <dimen name="payment_card_logo">140dp</dimen>
@@ -264,4 +265,6 @@
     <dimen name="height_payment_option_icon">24dp</dimen>
 	<dimen name="payment_button_pay_width">200dp</dimen>
 	<dimen name="payment_button_pay_height">30dp</dimen>
+    <dimen name="width_button_verify_pay">250dp</dimen>
+    <dimen name="height_button_verify_pay">40dp</dimen>
 </resources>

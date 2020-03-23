@@ -3,9 +3,10 @@ package com.checkin.app.checkin.menu
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
+import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.Converters
-import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.data.db.ObjectBoxInstanceLiveData
+import com.checkin.app.checkin.data.db.dbStore
 import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitLiveData
@@ -17,9 +18,9 @@ import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
 
-class MenuRepository private constructor(context: Context) {
-    private val mMenuBox = AppDatabase.boxFor<MenuModel>()
-    private val mCartBox = AppDatabase.boxFor<CartStatusModel>()
+class MenuRepository private constructor(context: Context) : BaseRepository() {
+    private val mMenuBox by dbStore<MenuModel>()
+    private val mCartBox by dbStore<CartStatusModel>()
     private val mWebService: WebApiService = getApiService(context)
 
     fun getAvailableMenu(shopId: Long): LiveData<Resource<MenuModel>> {

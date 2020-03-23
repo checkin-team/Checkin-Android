@@ -36,6 +36,7 @@ abstract class PaymentAddOptionModelHolder : EpoxyModelWithHolder<PaymentAddOpti
 
         override fun bindView(itemView: View) {
             super.bindView(itemView)
+            btnAddItem.setOnClickListener { listener.onAddPaymentOption(optionType) }
             containerAddOption.setOnClickListener { listener.onAddPaymentOption(optionType) }
         }
 

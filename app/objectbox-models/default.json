@@ -413,7 +413,7 @@
     },
     {
       "id": "31:6910879426788537457",
-      "lastPropertyId": "10:8071455483819393748",
+      "lastPropertyId": "11:8918262677824334159",
       "name": "CardPaymentOptionModel",
       "properties": [
         {
@@ -430,7 +430,9 @@
         {
           "id": "3:2880955115990580488",
           "name": "cardNumber",
-          "type": 9
+          "indexId": "24:5078945634884132146",
+          "type": 9,
+          "flags": 2080
         },
         {
           "id": "4:3076818549596311869",
@@ -461,13 +463,18 @@
           "id": "10:8071455483819393748",
           "name": "cardType",
           "type": 9
+        },
+        {
+          "id": "11:8918262677824334159",
+          "name": "name",
+          "type": 9
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "31:6910879426788537457",
-  "lastIndexId": "23:2893800455538585981",
+  "lastIndexId": "24:5078945634884132146",
   "lastRelationId": "11:5984758523878906706",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

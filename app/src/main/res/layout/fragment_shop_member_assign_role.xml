@@ -57,7 +57,7 @@
             android:id="@+id/container_roles"
             style="@style/RoundedInputTextStyle"
             android:layout_width="0dp"
-            android:layout_height="@dimen/height_input_normal"
+            android:layout_height="@dimen/height_input_large"
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginTop="@dimen/spacing_normal"
             app:layout_constraintEnd_toEndOf="parent"

@@ -23,7 +23,7 @@
         android:id="@+id/et_dialog_phone"
         style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_input_normal"
+        android:layout_height="@dimen/height_input_large"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:hint="Input Phone Number"

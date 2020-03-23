@@ -19,9 +19,9 @@
     </fragment>
     <dialog
         android:id="@+id/paymentAddCardFragment"
-        android:name="com.checkin.app.checkin.payment.fragments.PaymentCardFragment"
+        android:name="com.checkin.app.checkin.payment.fragments.PaymentOptionAddCardFragment"
         android:label="PaymentCardFragment"
-        tools:layout="@layout/fragment_payment_card" />
+        tools:layout="@layout/fragment_payment_option_add_card" />
     <dialog
         android:id="@+id/paymentUpiFragment"
         android:name="com.checkin.app.checkin.payment.fragments.PaymentOptionAddUpiFragment"

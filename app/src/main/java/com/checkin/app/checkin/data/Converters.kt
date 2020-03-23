@@ -1,15 +1,15 @@
 package com.checkin.app.checkin.data
 
 import android.util.Log
+import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.JavaType
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.objectbox.converter.PropertyConverter
+import org.json.JSONObject
 import java.io.IOException
+
 
 object Converters {
     val objectMapper = jacksonObjectMapper().apply {
@@ -56,6 +56,12 @@ object Converters {
                 e.printStackTrace()
             }
             return ""
+        }
+    }
+
+    class JsonObjectSerializer : JsonSerializer<JSONObject?>() {
+        override fun serialize(value: JSONObject?, gen: JsonGenerator?, serializers: SerializerProvider?) {
+            gen?.writeRawValue(value?.toString())
         }
     }
 }

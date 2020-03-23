@@ -34,7 +34,7 @@ interface EnumStringType : EnumType<String> {
 }
 
 sealed class EnumGetter<T : EnumType<V>, V> {
-    abstract fun getByValue(value: V): T
+    abstract fun getByValue(value: V?): T?
 
     abstract fun parseJson(p: JsonParser): V
 
@@ -54,7 +54,7 @@ abstract class EnumStringGetter<T : EnumStringType> : EnumGetter<T, String>() {
 }
 
 open class EnumDeserializer<T : EnumType<V>, V>(private val getter: EnumGetter<T, V>) : JsonDeserializer<T>() {
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): T = getter.getByValue(getter.parseJson(p))
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): T? = getter.getByValue(getter.parseJson(p))
 }
 
 open class EnumSerializer<T : EnumType<V>, V>(private val getter: EnumGetter<T, V>) : JsonSerializer<T>() {
@@ -64,7 +64,7 @@ open class EnumSerializer<T : EnumType<V>, V>(private val getter: EnumGetter<T, 
 }
 
 open class EnumConverter<T : EnumType<V>, V>(private val getter: EnumGetter<T, V>) : PropertyConverter<T, V> {
-    override fun convertToDatabaseValue(entityProperty: T): V = entityProperty.value
+    override fun convertToDatabaseValue(entityProperty: T?): V? = entityProperty?.value
 
-    override fun convertToEntityProperty(databaseValue: V): T = getter.getByValue(databaseValue)
+    override fun convertToEntityProperty(databaseValue: V?): T? = getter.getByValue(databaseValue)
 }

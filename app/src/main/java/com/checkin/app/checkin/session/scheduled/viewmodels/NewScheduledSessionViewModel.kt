@@ -7,13 +7,9 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
-import com.checkin.app.checkin.data.network.ApiResponse
-import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Companion.cloneResource
-import com.checkin.app.checkin.data.resource.Resource.Companion.createResource
 import com.checkin.app.checkin.data.resource.Resource.Companion.errorNotFound
-import com.checkin.app.checkin.data.resource.Resource.Companion.loading
 import com.checkin.app.checkin.payment.PaymentRepository
 import com.checkin.app.checkin.payment.models.NewRazorpayTransactionModel
 import com.checkin.app.checkin.session.SessionRepository
@@ -22,7 +18,6 @@ import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.checkin.app.checkin.session.scheduled.ScheduledSessionRepository
-import com.checkin.app.checkin.utility.ProgressRequestBody.UploadCallbacks
 import com.fasterxml.jackson.databind.node.ObjectNode
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -98,29 +93,6 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         }
     }
 
-    fun postPaytmCallback(bundle: Bundle) {
-        lastPaymentBundle = bundle
-        val data = objectMapper.createObjectNode()
-        val keys = bundle.keySet()
-        for (key in keys) {
-            data.put(key, bundle[key]?.toString())
-        }
-        val listener = object : UploadCallbacks<ObjectNode> {
-            override fun onProgressUpdate(percentage: Int) {
-                mPaytmCallbackData.postValue(loading<ObjectNode>(null))
-            }
-
-            override fun onSuccess(response: ApiResponse<ObjectNode>) {
-                mPaytmCallbackData.postValue(createResource(response))
-            }
-
-            override fun onFailure(response: ApiResponse<ObjectNode>) {
-                mPaytmCallbackData.postValue(createResource(response))
-            }
-        }
-        doPostPaytmCallback(data, listener)
-    }
-
     fun retrySessionCreation() {
         if (::retryQrData.isInitialized) {
             createNewQrSession(retryQrData)
@@ -130,14 +102,8 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         }
     }
 
-    fun retryPostPaytmCallback() = lastPaymentBundle?.let { postPaytmCallback(it) }
-
     fun initiateNewTransaction() {
         mTransactionData.addSource(paymentRepository.createNewTransaction(sessionPk), mTransactionData::setValue)
-    }
-
-    private fun doPostPaytmCallback(data: ObjectNode, listener: UploadCallbacks<ObjectNode>) {
-        RetrofitCallAsyncTask(listener).execute(scheduledSessionRepository.syncPostPaytmCallback(data))
     }
 
     fun createNewQrSession(data: String) {

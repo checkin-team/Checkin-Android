@@ -35,7 +35,8 @@ class ProblemModel(@JsonProperty("type") val type: String, @JsonProperty("status
         USER_MISSING_PHONE("user__missing_phone"), ACCOUNT_ALREADY_REGISTERED("account__already_registered"),
         SESSION_SCHEDULED_CBYG_INVALID_PLANNED_TIME("session__scheduled_invalid_time"),
         SESSION_SCHEDULED_CBYG_SHOP_CLOSED("session__scheduled_shop_invalid_time_shop_closed"),
-        SESSION_SCHEDULED_CBYG_PAST_PLANNED_TIME("session__scheduled__plan_time_elapsed");
+        SESSION_SCHEDULED_CBYG_PAST_PLANNED_TIME("session__scheduled__plan_time_elapsed"),
+        SESSION_PAYMENT_ALREADY_DONE("session__payment_done");
 
         companion object {
             internal fun findByTag(tag: String): ERROR_CODE {

@@ -44,7 +44,6 @@ import com.checkin.app.checkin.misc.fragments.BlankFragment
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
 import com.checkin.app.checkin.misc.fragments.QRScannerWrapperInteraction
-import com.checkin.app.checkin.misc.paytm.PaytmPayment
 import com.checkin.app.checkin.payment.activities.PaymentActivity
 import com.checkin.app.checkin.payment.models.NewTransactionModel
 import com.checkin.app.checkin.restaurant.fragments.PublicRestaurantInfoFragment
@@ -127,21 +126,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 .setAuthCallback(this)
                 .build()
     }
-    private val paytmPayment: PaytmPayment by lazy {
-        object : PaytmPayment() {
-            override fun onPaytmTransactionResponse(inResponse: Bundle) {
-                scheduledSessionViewModel.postPaytmCallback(inResponse)
-            }
-
-            override fun onPaytmError(inErrorMessage: String?) {
-                Utils.toast(this@PublicRestaurantProfileActivity, inErrorMessage)
-            }
-
-            override fun onPaytmTransactionCancel(inResponse: Bundle?, msg: String?) {
-                Utils.toast(this@PublicRestaurantProfileActivity, msg)
-            }
-        }
-    }
 
     private val childSizeUtil by lazy { ChildSizeMeasureViewPager2(vpFragment) }
 
@@ -152,7 +136,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         setupObservers()
         initUi()
-        setupPaytm()
+        setupPayment()
     }
 
     private fun initUi() {
@@ -294,11 +278,11 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                         scheduledSessionViewModel.retrySessionCreation()
                     }
                     resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.ACCOUNT_ALREADY_REGISTERED -> {
-                        Utils.toast(this, "This number already exists.")
+                        toast("This number already exists.")
                         onVerifyPhoneOfUser()
                     }
                     resource.status != Resource.Status.LOADING -> {
-                        Utils.toast(this, resource.message)
+                        toast(resource.message)
                     }
                 }
             }
@@ -308,40 +292,27 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             when (it) {
                 LOAD_DATA_RESTAURANT -> restaurantViewModel.fetchMissing()
                 LOAD_SYNC_PAY_REQUEST -> scheduledSessionViewModel.initiateNewTransaction()
-                LOAD_SYNC_PAYTM_CALLBACK -> scheduledSessionViewModel.retryPostPaytmCallback()
                 LOAD_SYNC_USER_DETAILS -> userViewModel.retryUpdateProfile()
             }
         }
     }
 
-    private fun setupPaytm() {
+    private fun setupPayment() {
         scheduledSessionViewModel.newTransactionData.observe(this, Observer {
-            it?.let { paytmModelResource ->
-                networkViewModel.updateStatus(paytmModelResource, LOAD_SYNC_PAY_REQUEST)
-                if (paytmModelResource.status === Resource.Status.SUCCESS && paytmModelResource.data != null) {
-                    goToPayment(paytmModelResource.data)
-                } else if (paytmModelResource.status !== Resource.Status.LOADING) {
-                    when (paytmModelResource.problem?.getErrorCode()) {
+            it?.let { txnResource ->
+                networkViewModel.updateStatus(txnResource, LOAD_SYNC_PAY_REQUEST)
+                if (txnResource.status === Resource.Status.SUCCESS && txnResource.data != null) {
+                    goToPayment(txnResource.data)
+                } else if (txnResource.status !== Resource.Status.LOADING) {
+                    toast(txnResource.message)
+                    when (txnResource.problem?.getErrorCode()) {
                         ProblemModel.ERROR_CODE.USER_MISSING_PHONE -> {
                             scheduledSessionViewModel.isPhoneVerified = false
                             onVerifyPhoneOfUser()
                         }
                         ProblemModel.ERROR_CODE.SESSION_SCHEDULED_CBYG_INVALID_PLANNED_TIME -> scheduledCartView.switchTime()
+                        ProblemModel.ERROR_CODE.SESSION_PAYMENT_ALREADY_DONE -> navigateBackToHome()
                     }
-                    Utils.toast(this, paytmModelResource.message)
-                }
-            }
-        })
-
-        scheduledSessionViewModel.paytmCallbackData.observe(this, Observer {
-            it?.let { objectNodeResource ->
-                networkViewModel.updateStatus(objectNodeResource, LOAD_SYNC_PAYTM_CALLBACK)
-                if (objectNodeResource.status === Resource.Status.SUCCESS) {
-                    Utils.navigateBackToHome(this)
-                }
-                if (objectNodeResource.status !== Resource.Status.LOADING) {
-                    Utils.toast(this, objectNodeResource.message)
-                    hideProgressBar()
                 }
             }
         })
@@ -463,7 +434,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     override fun onStartPayment() {
         cartViewModel.cartDetailData.value?.data?.scheduled?.plannedDatetime?.let {
             if (it.time < Calendar.getInstance().time.time) {
-                Utils.toast(this, "Booking time must be set in future.")
+                toast("Booking time must be set in future.")
                 scheduledCartView.switchTime()
                 return
             }
@@ -581,7 +552,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_PAYMENT_CODE) {
-            toast(resultCode.toString())
+            when (resultCode) {
+                PaymentActivity.RESULT_PAID -> navigateBackToHome()
+                else -> hideProgressBar()
+            }
         }
     }
 
@@ -590,7 +564,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         const val KEY_SESSION_ID = "session.new.id"
         const val KEY_OPEN_CART = "cart.open"
 
-        private const val LOAD_SYNC_PAYTM_CALLBACK = "load.sync.paytm_callback"
         private const val LOAD_SYNC_PAY_REQUEST = "load.sync.pay.request"
         private const val LOAD_DATA_RESTAURANT = "load.data.restaurant"
         private const val LOAD_SYNC_USER_DETAILS = "load.sync.user_detail"

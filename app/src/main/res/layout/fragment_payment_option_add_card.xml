@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/spacing_normal">
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/GreyHeadingStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_payment_option_card_name"
+        style="@style/NormalInputTextStyle"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tet_payment_option_card_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Name on card"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_small" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_payment_option_card_number"
+        style="@style/NormalInputTextStyle"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_payment_option_card_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tet_payment_option_card_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="1234567890 "
+            android:hint="Card Number"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:textSize="@dimen/font_small"
+            tools:drawableEnd="@drawable/ic_payment_card_visa" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_payment_option_card_expiry"
+        style="@style/NormalInputTextStyle"
+        android:layout_width="@dimen/button_width_wide"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_payment_option_card_number">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tet_payment_option_card_expiry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="1234567890/"
+            android:hint="Expiry (MM/YY)"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="5"
+            android:textSize="@dimen/font_extra_small" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_payment_option_card_cvv"
+        style="@style/NormalInputTextStyle"
+        android:layout_width="@dimen/width_input_small"
+        android:layout_marginStart="@dimen/spacing_small"
+        app:layout_constraintStart_toEndOf="@id/til_payment_option_card_expiry"
+        app:layout_constraintTop_toTopOf="@id/til_payment_option_card_expiry">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tet_payment_option_card_cvv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="CVV"
+            android:imeOptions="actionDone"
+            android:inputType="number|numberPassword"
+            android:maxLength="3"
+            android:textSize="@dimen/font_extra_small" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/cb_payment_option_save_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:checked="true"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/payment_option_save_card"
+        android:textColor="@color/greenish_teal"
+        android:textSize="@dimen/font_small"
+        app:layout_constraintStart_toStartOf="@id/til_payment_option_card_expiry"
+        app:layout_constraintTop_toBottomOf="@id/til_payment_option_card_expiry" />
+
+    <Button
+        android:id="@+id/btn_payment_option_pay_card"
+        style="@style/GreenPayLargeTextStyle"
+        android:layout_width="@dimen/width_button_verify_pay"
+        android:layout_height="@dimen/height_button_verify_pay"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:text="@string/action_payment_verify_pay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cb_payment_option_save_card" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

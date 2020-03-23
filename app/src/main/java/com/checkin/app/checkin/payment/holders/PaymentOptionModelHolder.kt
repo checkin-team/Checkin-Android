@@ -4,10 +4,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.core.widget.addTextChangedListener
 import butterknife.BindView
 import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyAttribute
@@ -54,6 +57,8 @@ abstract class PaymentOptionModelHolder : EpoxyModelWithHolder<PaymentOptionMode
         internal lateinit var imIcon: ImageView
         @BindView(R.id.cl_payment_option_select)
         internal lateinit var containerSelect: ViewGroup
+        @BindView(R.id.btn_payment_option_pay)
+        internal lateinit var btnPay: Button
 
         private lateinit var mData: PaymentOptionModel
         private var mShowPay: Boolean = false
@@ -62,25 +67,40 @@ abstract class PaymentOptionModelHolder : EpoxyModelWithHolder<PaymentOptionMode
             super.bindView(itemView)
             rbSelect.setOnCheckedChangeListener { _, isChecked -> if (isChecked && !mShowPay) selectListener.onSelectOption(id()) }
             containerSelect.setOnClickListener { rbSelect.isChecked = true }
+            etCardCvv.addTextChangedListener {
+                btnPay.isActivated = it?.length == 3
+            }
+            etCardCvv.setOnEditorActionListener { _, actionId, _ ->
+                var handled = false
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    btnPay.performClick()
+                    handled = true
+                }
+                return@setOnEditorActionListener handled
+            }
         }
 
         override fun bindData(data: PaymentOptionModel) {
             mData = data
+
             when (data) {
                 is UPIPushPaymentOptionModel -> {
                     tvName.text = data.appName
                     Utils.loadImageOrDefault(imIcon, data.iconUrl, 0)
                     etCardCvv.visibility = GONE
+                    btnPay.isActivated = true
                 }
                 is CardPaymentOptionModel -> {
                     tvName.text = data.formatNumber
-                    imIcon.setImageResource(data.channel.drawable)
+                    data.channel?.also { imIcon.setImageResource(it.drawable) }
                     etCardCvv.visibility = VISIBLE
+                    btnPay.isActivated = false
                 }
                 is UPICollectPaymentOptionModel -> {
                     tvName.text = data.vpa
                     imIcon.setImageResource(R.drawable.ic_payment_upi)
                     etCardCvv.visibility = GONE
+                    btnPay.isActivated = true
                 }
             }
         }
@@ -93,6 +113,9 @@ abstract class PaymentOptionModelHolder : EpoxyModelWithHolder<PaymentOptionMode
 
         @OnClick(R.id.btn_payment_option_pay)
         fun onClickPay() {
+            if (!btnPay.isActivated) {
+                etCardCvv.error = "Input CVV to pay"
+            }
             listener.onPayPaymentOption(mData)
         }
     }

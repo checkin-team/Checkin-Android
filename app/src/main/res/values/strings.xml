@@ -290,4 +290,6 @@
     <string name="past_transaction">Past Transaction</string>
     <string name="action_payment_pay_now">Pay Now</string>
     <string name="action_payment_verify_pay">Verify and Pay</string>
+    <string name="payment_option_save_vpa">Save your VPA Securely</string>
+    <string name="payment_option_save_card">Save your card securely</string>
 </resources>

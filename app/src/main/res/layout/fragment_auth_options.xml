@@ -11,7 +11,7 @@
     <com.checkin.app.checkin.misc.views.PrefixEditText
         android:id="@+id/ed_phone"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_input_normal"
+        android:layout_height="@dimen/height_input_large"
         android:layout_marginEnd="@dimen/spacing_huge"
         android:layout_marginStart="@dimen/spacing_huge"
         android:layout_marginTop="@dimen/spacing_extra_large"

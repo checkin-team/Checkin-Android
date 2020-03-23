@@ -13,7 +13,7 @@
     <EditText
         android:id="@+id/ed_otp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_input_normal"
+        android:layout_height="@dimen/height_input_large"
         style="@style/RoundedInputTextStyle"
         android:hint="Enter OTP"
         android:textAlignment="center"

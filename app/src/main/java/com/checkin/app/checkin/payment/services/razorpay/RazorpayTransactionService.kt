@@ -1,24 +1,20 @@
 package com.checkin.app.checkin.payment.services.razorpay
 
-import android.content.Context
 import android.webkit.WebView
-import androidx.appcompat.app.AppCompatActivity
-import com.checkin.app.checkin.data.config.RemoteConfig
+import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.payment.listeners.TransactionListener
 import com.checkin.app.checkin.payment.models.*
 import com.checkin.app.checkin.payment.services.ITransactionService
-import com.checkin.app.checkin.payment.services.Transaction
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.log
 import com.checkin.app.checkin.utility.putAll
+import com.razorpay.BaseRazorpay
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import com.razorpay.Razorpay
 import org.json.JSONObject
 
-class RazorpayTransactionService(activity: AppCompatActivity, private val listener: TransactionListener) : ITransactionService, PaymentResultWithDataListener {
-    private val razorpay by lazy {
-        Razorpay(activity, RemoteConfig[RemoteConfig.Constants.KEY_RAZORPAY].asString())
-    }
+class RazorpayTransactionService(private val razorpay: Razorpay, private val listener: TransactionListener) : ITransactionService, PaymentResultWithDataListener {
     private lateinit var mTransactionData: NewRazorpayTransactionModel
     private val baseJsonData: MutableMap<String, Any>
         get() = mutableMapOf(
@@ -29,50 +25,93 @@ class RazorpayTransactionService(activity: AppCompatActivity, private val listen
                 "contact" to mTransactionData.customerPhone
         )
 
-    override val transaction: Transaction = razorpay
-
     override fun initialize(webView: WebView, txnData: NewTransactionModel) {
         razorpay.setWebView(webView)
         mTransactionData = txnData as NewRazorpayTransactionModel
     }
 
+    private fun initiateTransaction(data: Map<String, Any>) {
+        val payload = JSONObject(data)
+        razorpay.validateFields(payload, object : BaseRazorpay.ValidationListener {
+            override fun onValidationError(errorData: MutableMap<String, String>?) {
+                val msg = errorData?.let {
+                    "Validation: ${it["field"]} - ${it["description"]}"
+                } ?: "Validation failed during payment"
+                onPaymentError(ERROR_CODE_INVALID_PAYLOAD, msg, null)
+            }
+
+            override fun onValidationSuccess() {
+                kotlin.runCatching {
+                    razorpay.submit(payload, this@RazorpayTransactionService)
+                }.onFailure { it.log(TAG) }
+            }
+        })
+    }
+
     override fun payByUPICollect(data: UPICollectPaymentOptionModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        initiateTransaction(baseJsonData.apply {
+            putAll(
+                    "method" to "upi",
+                    "vpa" to data.vpa
+            )
+        })
     }
 
     override fun payByUPIPush(data: UPIPushPaymentOptionModel) {
-        val jsonData = JSONObject(baseJsonData.apply {
+        initiateTransaction(baseJsonData.apply {
             putAll(
                     "method" to "upi",
                     "_[flow]" to "intent",
                     "upi_app_package_name" to data.packageName
             )
         })
-        razorpay.submit(jsonData, this)
     }
 
-    override fun confirmUPIPushPayment(context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun payByNetBanking(data: NetBankingPaymentOptionModel) {
+        initiateTransaction(baseJsonData.apply {
+            putAll(
+                    "method" to "netbanking",
+                    "bank" to data.bankCode
+            )
+        })
     }
 
-    override fun payByNetBanking(context: Context, data: NetBankingPaymentOptionModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun payByCard(data: CardPaymentOptionModel) {
+        initiateTransaction(baseJsonData.apply {
+            putAll(
+                    "method" to "card",
+                    "card[name]" to data.name,
+                    "card[number]" to data.cardNumber,
+                    "card[expiry_month]" to data.expiryMonth,
+                    "card[expiry_year]" to data.expiryYear,
+                    "card[cvv]" to data.cvv
+            )
+        })
     }
 
     override fun onPaymentError(errCode: Int, errorMsg: String?, data: PaymentData?) {
-        val exc = RazorpayTransactionException(errCode, errorMsg)
+        val msg = errorMsg?.let {
+            runCatching { Converters.objectMapper.readTree(it)["error"]["description"].asText() }
+                    .onFailure { it.log(TAG) }
+                    .getOrNull()
+        } ?: errorMsg
+        val exc = RazorpayTransactionException(errCode, msg)
         Utils.logErrors(TAG, exc, errorMsg)
         listener.onTransactionError(exc)
     }
 
     override fun onPaymentSuccess(paymentId: String, data: PaymentData) {
+        val extraData = data.data ?: JSONObject()
+        extraData.put("user_email", data.userEmail)
+        extraData.put("user_phone", data.userContact)
         listener.onTransactionResponse(RazorpayTxnResponseModel(
-                paymentId, data.orderId, data.signature, data.userEmail,
-                data.userContact, data.data
+                paymentId, data.orderId, data.signature, extraData
         ))
     }
 
     companion object {
-        private val TAG = RazorpayTransactionService::class.simpleName
+        private val TAG: String = RazorpayTransactionService::class.simpleName!!
+
+        const val ERROR_CODE_INVALID_PAYLOAD = 1
     }
 }

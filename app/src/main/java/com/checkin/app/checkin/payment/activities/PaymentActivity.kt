@@ -11,13 +11,18 @@ import androidx.navigation.findNavController
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
+import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.payment.PaymentViewModel
 import com.checkin.app.checkin.payment.listeners.TransactionListener
 import com.checkin.app.checkin.payment.models.*
-import com.checkin.app.checkin.payment.services.PaymentServiceLocator
-import com.checkin.app.checkin.utility.pass
+import com.checkin.app.checkin.payment.services.TransactionException
+import com.checkin.app.checkin.payment.services.paymentLocator
+import com.checkin.app.checkin.utility.inTransaction
 import com.checkin.app.checkin.utility.toCurrency
+import com.checkin.app.checkin.utility.toast
 
 class PaymentActivity : BaseActivity(), TransactionListener {
     @BindView(R.id.tv_payment_toolbar_amount)
@@ -26,7 +31,8 @@ class PaymentActivity : BaseActivity(), TransactionListener {
     internal lateinit var wvPaymentProcess: WebView
 
     private val viewModel: PaymentViewModel by viewModels()
-    private val txnService by lazy { PaymentServiceLocator.getTransactionService(this, this) }
+    private val txnService by lazy { paymentLocator.getTransactionService(this) }
+    private val networkViewModel: BlockingNetworkViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,33 +53,46 @@ class PaymentActivity : BaseActivity(), TransactionListener {
         findNavController(R.id.nav_host_payment).setGraph(R.navigation.nav_payment)
 
         setupObserver()
-        viewModel.fetchNetBankingOptions(txnService.transaction)
+        supportFragmentManager.inTransaction {
+            add(R.id.frg_container_activity, NetworkBlockingFragment.withBlockingLoader(), NetworkBlockingFragment.FRAGMENT_TAG)
+        }
     }
 
     private fun setupObserver() {
+        viewModel.fetchPaymentMethods()
         viewModel.onRequestPay {
             wvPaymentProcess.visibility = View.VISIBLE
             when (it) {
                 is UPICollectPaymentOptionModel -> txnService.payByUPICollect(it)
                 is UPIPushPaymentOptionModel -> txnService.payByUPIPush(it)
-                is NetBankingPaymentOptionModel -> txnService.payByNetBanking(this, it)
-                else -> pass
+                is NetBankingPaymentOptionModel -> txnService.payByNetBanking(it)
+                is CardPaymentOptionModel -> txnService.payByCard(it)
+            }
+        }
+        viewModel.onPaymentCallback {
+            networkViewModel.updateStatus(it)
+            if (it.status == Resource.Status.SUCCESS) {
+                setResult(RESULT_PAID)
+                finish()
+            } else if (it.status != Resource.Status.LOADING) {
+                toast(it.message)
             }
         }
     }
 
     override fun onTransactionResponse(data: TransactionResponseModel) {
-        println("RESPONSE ==== $data")
+        toast("Success Payment!")
+        viewModel.savePaymentOption()
+        viewModel.callPaymentCallback(data)
         resetWebView()
     }
 
     override fun onTransactionCancel(msg: String?) {
-        println("CANCELLED ==== $msg")
         resetWebView()
     }
 
-    override fun onTransactionError(error: Throwable) {
-        error.printStackTrace()
+    override fun onTransactionError(error: TransactionException) {
+        toast(error.localizedMessage)
         resetWebView()
     }
 
@@ -82,7 +101,7 @@ class PaymentActivity : BaseActivity(), TransactionListener {
     }
 
     override fun onBackPressed() {
-        setResult(RESULT_CANCELED, Intent())
+        setResult(RESULT_CANCELED)
         finish()
     }
 
@@ -91,8 +110,16 @@ class PaymentActivity : BaseActivity(), TransactionListener {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        kotlin.runCatching {
+            paymentLocator.paymentProvider.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
     companion object {
         const val RESULT_CANCELED = 0
+        const val RESULT_PAID = 1
 
         const val KEY_TRANSACTION_MODEL = "payment.transaction"
 

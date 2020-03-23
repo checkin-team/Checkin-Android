@@ -1,26 +1,35 @@
 package com.checkin.app.checkin.utility
 
-open class SingletonHolder<out T : Any, in A>(creator: (A) -> T) {
-    private var creator: ((A) -> T)? = creator
+import androidx.annotation.CallSuper
+import java.lang.ref.WeakReference
+
+open class SingletonHolder<out T, in A>(val creator: (A) -> T) {
     @Volatile
     private var instance: T? = null
 
-    fun getInstance(arg: A): T {
-        val i = instance
-        if (i != null) {
-            return i
-        }
+    protected open fun createInstance(arg: A) = creator(arg)
 
-        return synchronized(this) {
-            val i2 = instance
-            if (i2 != null) {
-                i2
-            } else {
-                val created = creator!!(arg)
-                instance = created
-                creator = null
-                created
-            }
-        }
+    protected fun resetInstance() {
+        instance = null
+    }
+
+    @CallSuper
+    open fun getInstance(arg: A? = null): T = instance ?: synchronized(this) {
+        instance ?: createInstance(arg!!).also { instance = it }
+    }
+}
+
+open class ConflatedSingletonHolder<out T, in A>(creator: (A) -> T) : SingletonHolder<T, A>(creator) {
+    @Volatile
+    private var lastArg: WeakReference<A>? = null
+
+    override fun createInstance(arg: A): T {
+        lastArg = WeakReference(arg)
+        return super.createInstance(arg)
+    }
+
+    override fun getInstance(arg: A?): T {
+        if (arg != null && lastArg != arg) resetInstance()
+        return super.getInstance(arg)
     }
 }

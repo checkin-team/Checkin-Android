@@ -8,5 +8,8 @@ data class RazorpayPaymentMethod(
         @JsonProperty("debit_card") val debitCard: Boolean,
         @JsonProperty("credit_card") val creditCard: Boolean,
         @JsonProperty("card_networks") val cardNetworks: Map<String, Int>,
-        val netbanking: Map<String, String>
+        val netbanking: Map<String, String>,
+        val wallet: Map<String, Boolean>,
+        val upi: Boolean,
+        @JsonProperty("upi_intent") val upiIntent: Boolean
 ) : PaymentMethods()

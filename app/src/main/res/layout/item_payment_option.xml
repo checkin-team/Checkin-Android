@@ -72,6 +72,7 @@
                 android:fontFamily="@font/opensans_bold"
                 android:gravity="center"
                 android:hint="CVV"
+                android:imeOptions="actionDone"
                 android:inputType="numberPassword"
                 android:maxLength="3"
                 android:paddingLeft="@dimen/spacing_small"

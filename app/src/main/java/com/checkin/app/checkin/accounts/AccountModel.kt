@@ -40,7 +40,7 @@ enum class ACCOUNT_TYPE(override val value: Int) : EnumIntType {
     RESTAURANT_MANAGER(204), RESTAURANT_WAITER(205), RESTAURANT_COOK(206);
 
     companion object : EnumIntGetter<ACCOUNT_TYPE>() {
-        override fun getByValue(value: Int): ACCOUNT_TYPE = EnumIntType.getByValue(value)
+        override fun getByValue(value: Int?): ACCOUNT_TYPE? = value?.let { EnumIntType.getByValue(it) }
 
         class Deserializer : EnumDeserializer<ACCOUNT_TYPE, Int>(this)
         class Serializer : EnumSerializer<ACCOUNT_TYPE, Int>(this)
