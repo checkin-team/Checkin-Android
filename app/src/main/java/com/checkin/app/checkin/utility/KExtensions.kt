@@ -23,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import com.checkin.app.checkin.misc.models.GeolocationModel
 import com.checkin.app.checkin.misc.models.LocationModel
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -57,6 +58,9 @@ fun View.snack(@StringRes msgRes: Int) = Utils.snack(this, msgRes)
 fun Activity.errorSnack(msg: String) = Utils.errorSnack(this, msg)
 
 fun Context.navigateBackToHome() = Utils.navigateBackToHome(this)
+
+val Activity.firebaseAnalytics
+    get() = FirebaseAnalytics.getInstance(this)
 
 /*
     Data Utils

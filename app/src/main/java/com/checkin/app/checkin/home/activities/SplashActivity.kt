@@ -13,12 +13,14 @@ import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.auth.AuthPreferences
 import com.checkin.app.checkin.auth.activities.AuthActivity
 import com.checkin.app.checkin.auth.services.DeviceTokenService
+import com.checkin.app.checkin.data.config.AnalyticsUtil
 import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.coroutineLifecycleScope
+import com.checkin.app.checkin.utility.firebaseAnalytics
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -38,6 +40,9 @@ class SplashActivity : AppCompatActivity() {
 
         // Initializing the DB
         AppDatabase.init(applicationContext)
+
+        // Setting App ENVIRONMENT User Property
+        AnalyticsUtil.setAppBuild(firebaseAnalytics)
 
         goForScreens()
 //        lottieSplash.addAnimatorListener(this)
