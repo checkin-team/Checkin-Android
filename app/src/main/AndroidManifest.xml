@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.checkin.app.checkin">
+    package="com.checkin.app.checkin"> <!-- Fixes Manifest Merge error with Razorpay library -->
+    <uses-sdk tools:overrideLibrary="com.razorpay" />
 
     <uses-permission
         android:name="android.permission.AUTHENTICATE_ACCOUNTS"
@@ -25,9 +26,6 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
-    <!--  Fixes Manifest Merge error with Razorpay library  -->
-    <uses-sdk tools:overrideLibrary="com.razorpay" />
-
     <application
         android:name=".CheckinApplication"
         android:allowBackup="true"
@@ -36,6 +34,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
+        <activity
+            android:name=".auth.activity.AuthenticationActivity"
+            android:theme="@style/AuthTheme"></activity>
         <activity
             android:name=".home.activities.AboutUsActivity"
             android:theme="@style/AppThemeWhiteActionBar" />

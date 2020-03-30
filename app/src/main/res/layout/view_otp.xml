@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/otp1"
+            style="@style/WhiteLargerTextStyle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:background="@drawable/layout_border_white_round"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintEnd_toStartOf="@+id/otp2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp2"
+            style="@style/WhiteLargerTextStyle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:background="@drawable/layout_border_white_round"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintEnd_toStartOf="@+id/otp3"
+            app:layout_constraintStart_toEndOf="@+id/otp1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp3"
+            style="@style/WhiteLargerTextStyle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:background="@drawable/layout_border_white_round"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintEnd_toStartOf="@+id/otp4"
+            app:layout_constraintStart_toEndOf="@+id/otp2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp4"
+            style="@style/WhiteLargerTextStyle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:background="@drawable/layout_border_white_round"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/otp3"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

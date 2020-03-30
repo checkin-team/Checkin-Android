@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/im_auth_front_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:adjustViewBounds="true"
+        android:elevation="1dp"
+        android:src="@drawable/ic_authentication_front_background"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_auth_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/tv_auth_signin_welcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/im_auth_front_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/check_in_logo_large" />
+
+    <TextView
+        android:id="@+id/tv_auth_checkin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="Checkin"
+        android:textColor="@color/authentication_red"
+        android:textSize="@dimen/font_largest"
+        app:layout_constraintEnd_toEndOf="@+id/im_auth_logo"
+        app:layout_constraintStart_toStartOf="@+id/im_auth_logo"
+        app:layout_constraintTop_toBottomOf="@+id/im_auth_logo" />
+
+    <TextView
+        android:id="@+id/tv_auth_signin_info"
+        style="@style/WhiteTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:text="Login to access your account info"
+        app:layout_constraintEnd_toEndOf="@+id/tv_auth_signin_welcome"
+        app:layout_constraintStart_toStartOf="@+id/tv_auth_signin_welcome"
+        app:layout_constraintTop_toBottomOf="@+id/tv_auth_signin_welcome" />
+
+    <TextView
+        android:id="@+id/tv_auth_signin_welcome"
+        style="@style/WhiteLargestTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans"
+        android:text="Welcome,"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_auth_front_background" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tet_auth_contact_no"
+        style="@style/WhiteOutlinedTextBoxStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_extra_large"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:layout_marginEnd="@dimen/spacing_extra_large"
+        android:enabled="true"
+        android:hint="Contact No."
+        app:endIconContentDescription="Verify"
+        app:endIconDrawable="@drawable/ic_auth_continue"
+        app:endIconMode="custom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_auth_signin_info">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/WhiteTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="13"
+            android:text="@string/prefix_country_code" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_auth_or"
+        style="@style/WhiteLargeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="OR"
+        app:layout_constraintEnd_toEndOf="@+id/tet_auth_contact_no"
+        app:layout_constraintStart_toStartOf="@+id/tet_auth_contact_no"
+        app:layout_constraintTop_toBottomOf="@+id/tet_auth_contact_no" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_auth_fb"
+        style="@style/FacebookLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_tiny"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_auth_google"
+        app:layout_constraintEnd_toStartOf="@+id/btn_auth_google"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_auth_google" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_auth_google"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:buttonSize="wide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/btn_auth_fb"
+        app:layout_constraintTop_toBottomOf="@+id/tv_auth_or" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

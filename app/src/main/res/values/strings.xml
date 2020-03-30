@@ -1,41 +1,41 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Checkin</string>
     <string name="account_type">com.checkin.accounts</string>
-    
+
     <string name="app_old_version_button_update">Update app</string>
     <string name="app_old_version_dialog_title">Update your app</string>
     <string name="app_old_version_dialog_message">Your app needs to be updated\nfrom the play store to use it.</string>
-    
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="tables_drawer_open">Open tables drawer</string>
     <string name="tables_drawer_close">Close tables drawer</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
-    
+
     <string name="action_settings">Settings</string>
-    
+
     <string name="action_search">Search</string>
     <string name="action_finish">Finish</string>
     <string name="action_filter">Filter Items</string>
     <string name="label_about">About Us</string>
-    
+
     <!--for bottomnav bar-->
-    
+
     <!-- value for the phone mode btn_menu -->
     <string name="bbn_phone_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.BottomBehavior</string>
-    
+
     <!-- behavior for the tablet mode btn_menu -->
     <string name="bbn_tablet_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.TabletBehavior</string>
-    
+
     <!-- this is the default value -->
     <string name="bbn_default_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.BottomBehavior</string>
-    
+
     <!-- default badge provider -->
     <string name="bbn_badgeProvider" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.BadgeProvider</string>
-    
+
     <!-- default floating action button behavior -->
     <string name="bbn_fab_default_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.FloatingActionButtonBehavior</string>
-    
+
     <string name="shop_status_check">Check Status</string>
     <string name="home_text_qrscanner">Scan QR!</string>
     <string name="home_text_delivery">Delivery</string>
@@ -48,10 +48,10 @@
     <string name="menu_drawer_open">Open Menu Cart drawer</string>
     <string name="menu_drawer_close">Close Menu Cart drawer</string>
     <string name="active_session">Active Session</string>
-    
+
     <string name="facebook_app_id">150714782397445</string>
     <string name="fb_login_protocol_scheme">fb150714782397445</string>
-    
+
     <string name="btn_cancel">Cancel</string>
     <string name="btn_save">Save</string>
     <string name="btn_edit">Edit</string>
@@ -65,24 +65,24 @@
     <string name="finish">done</string>
     <string name="title_create_business_account">Create Business Account</string>
     <string name="prefix_country_code">+91</string>
-    
+
     <!--notification-->
     <string name="notif_appbar_title">NOTIFICATIONS</string>
     <string name="notif_heading_unseen">New</string>
     <string name="notif_heading_seen">Seen</string>
-    
+
     <string name="error_unavailable_network">No network available, please check your WiFi or Data connection.</string>
-    
+
     <!--Fetch Address-->
     <string name="no_geocoder_available">No geocoder available</string>
-    
+
     <string name="fetch_address">Fetch address</string>
-    
+
     <string name="address_found">Address found</string>
-    
+
     <string name="status_searching">Searching…</string>
     <string name="status_search_not_found">No results matched.</string>
-    
+
     <string name="no_address_found">Sorry, no address found</string>
     <string name="no_location_data_provided">No location data provided</string>
     <string name="service_not_available">Sorry, the service is not available</string>
@@ -112,7 +112,7 @@
     <string name="positive_yes">Yes</string>
     <string name="negative_no">No</string>
     <string name="title_shop_aspects">Aspects</string>
-    
+
     <string name="role_prompt">Choose a role</string>
     <string name="action_shop_members">Members</string>
     <string name="action_shop_insights">Insights</string>
@@ -121,11 +121,11 @@
     <string name="action_call">Call</string>
     <string name="action_navigate">Navigate</string>
     <string name="title_member_assign_role">Assign Role</string>
-    
+
     <string name="symbol_currency_rupee">&#x20B9;</string>
     <string name="format_currency_rupee">&#x20B9; %s</string>
     <string name="format_session_benefits_savings">You\'re saving &lt;font color="#7ed321"&gt;&#x20B9; %.2f&lt;/font&gt;</string>
-    
+
     <!-- Active Session -->
     <string name="action_list_orders">View Orders</string>
     <string name="action_view_menu">Menu</string>
@@ -166,7 +166,7 @@
     <string name="session_inform_requested_checkout">Requested Checkout</string>
     <string name="session_requested_checkout">Your checkout request has been sent.\n Waiter is coming to you soon</string>
     <string name="session_payment_mode_via_cash">Via Cash</string>
-    
+
     <string name="status_order_open">Not Accepted</string>
     <string name="status_order_cancelled">Order Cancelled</string>
     <string name="status_cancelled">Cancelled</string>
@@ -180,7 +180,7 @@
     <string name="label_payable_amount">Payable Amount</string>
     <string name="select">Select</string>
     <string name="link">Link</string>
-    
+
     <!--Manager Orders-->
     <string name="label_orders">Orders</string>
     <string name="label_new">New</string>
@@ -193,7 +193,7 @@
     <string name="title_uploaded_by">Uploaded by</string>
     <string name="label_paid_via">Paid Via</string>
     <string name="title_switch_table">Switch Table</string>
-    
+
     <!--Review-->
     <string name="label_review_write">Write a review</string>
     <string name="label_share_your_experience">Share your experience</string>
@@ -225,17 +225,17 @@
     <string name="label_for_dining_with_us">For dining with us!</string>
     <string name="app_force_logged_out">Sorry, but your session has expired. Login again.</string>
     <string name="app_not_working_reinstall">App stopped working. Try reinstalling it.</string>
-    
+
     <string name="about_us">Checkin presents all the services of a restaurant at your fingerprints. All the in-house services of a restaurant are just one scan away.
         \n Copyright &#169; 2019 Reservefree Private Limited</string>
-    
+
     <string name="app_website_link"><![CDATA[<a href=\"https://check-in.in\">Checkin</a>]]></string>
     <string name="app_terms_and_condition_link"><![CDATA[<a href="https://check-in.in/terms">Terms & Conditions</a>]]></string>
     <string name="app_privacy_policy_link"><![CDATA[<a href="https://check-in.in/privacy">Privacy Policy</a>]]></string>
     <string name="app_refund_policy_link"><![CDATA[<a href="https://check-in.in/refund">Refund Policy</a>]]></string>
     <string name="label_cooked">Cooked</string>
     <string name="status_order_cooked">Cooked</string>
-    
+
     <string name="get_percent_discount"><![CDATA[<b>Get</b><font color="#ff4f19"> %1$s</font> <b>off*</b>]]></string>
     <string name="discount_code"><![CDATA[Code: <font color="#ff4f19">%1$s</font>]]></string>
     <string name="format_live_session_qsr_message">Hi %s, you have placed your order.</string>
@@ -274,16 +274,16 @@
     <string name="text_preorder_scheduled_status_info_accepted">Your orders will be prepared on time.</string>
     <string name="disclaimer_menu_cart_no_extra_charge">*Does not include extra charges or discounts*</string>
     <string name="text_error_network_unknown">Something broke on our end.\nApologies for the inconvenience.</string>
-    
+
     <string name="user_location_permission_rationale">Location permission is needed to suggest nearby restaurants.</string>
     <string name="location_permission_denied_explanation">Permission was denied but it is needed to use the app..</string>
     <string name="settings">Settings</string>
     <string name="allow">Allow</string>
     <string name="about_us_new">Hello, I am Checkin a unique way of experiencing restaurants. I believe in helping you skip the queue and enable you to save your time. I manage all engagement touch points from the time you enter the restaurant to the time you leave.</string>
     <string name="request_turn_on_gps">Turn on phone gps for better services</string>
-    
+
     <string name="description_restaurant_closed_open_timing"><![CDATA[<font color="#ff4f19">Closed.</font> Opens %s at %s]]></string>
-    
+
     <string name="url_app_terms_conditions">https://check-in.in/terms</string>
     <string name="url_app_refund">https://check-in.in/refund</string>
     <string name="order_summary">Order Summary</string>
@@ -292,4 +292,6 @@
     <string name="action_payment_verify_pay">Verify and Pay</string>
     <string name="payment_option_save_vpa">Save your VPA Securely</string>
     <string name="payment_option_save_card">Save your card securely</string>
+
+    <string name="resend_otp">&lt;u&gt;Resend Again&lt;/u&gt;</string>
 </resources>

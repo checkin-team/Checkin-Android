@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="@color/authentication_red">
+
+    <ImageView
+        android:id="@+id/im_auth_front_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_authentication_front_background"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_auth_checkin"
+        style="@style/GreyLargeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Profile Photo"
+        app:layout_constraintEnd_toEndOf="@+id/im_auth_logo"
+        app:layout_constraintStart_toStartOf="@+id/im_auth_logo"
+        app:layout_constraintTop_toBottomOf="@+id/im_auth_logo" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_auth_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_auth_profile"
+        app:civ_border_color="@color/pinkish_grey"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/im_auth_front_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/im_auth_front_background"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="One step away from your first 500 Checkin Chips ⓘ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_auth_front_background" />
+
+    <TextView
+        android:id="@+id/textView12"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Get 500 Checkin Chips more if you have, Referal Code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_auth_userinfo_proceed" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_auth_userinfo_firstname"
+        style="@style/WhiteOutlinedTextBoxStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:enabled="true"
+        android:hint="First Name"
+        app:layout_constraintEnd_toStartOf="@+id/til_auth_userinfo_lastname"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/WhiteTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusedByDefault="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_auth_userinfo_lastname"
+        style="@style/WhiteOutlinedTextBoxStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:enabled="true"
+        android:hint="Last Name"
+        app:layout_constraintEnd_toEndOf="@+id/textView10"
+        app:layout_constraintStart_toEndOf="@+id/til_auth_userinfo_firstname"
+        app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/WhiteTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusedByDefault="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_auth_userinfo_proceed"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height_normal"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="Proceed"
+        android:textColor="@color/authentication_red"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="@dimen/card_corner_radius_small"
+        app:layout_constraintEnd_toEndOf="@+id/til_auth_userinfo_lastname"
+        app:layout_constraintStart_toStartOf="@+id/til_auth_userinfo_firstname"
+        app:layout_constraintTop_toBottomOf="@+id/til_auth_userinfo_firstname" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,4 +51,12 @@
     <color name="material_drawer_accent">#FF4081</color>
     <color name="material_drawer_header_selection_text">@color/white</color>
     <color name="material_drawer_header_selection_subtext">@color/white_two</color>
+
+
+    <!--    for authentication there is a need to use the red provided has hardcoded values-->
+    <!--    so in these places remember to make the change if the color is changed.-->
+    <!--    ic_awning-->
+    <!--    ic_authentication_front_background-->
+    <!--    ic_auth_continue-->
+    <color name="authentication_red">#E64C3C</color>
 </resources>
