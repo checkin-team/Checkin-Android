@@ -17,7 +17,8 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
     private val mErrors = MutableLiveData<JsonNode>()
     private val mAuthResult = createNetworkLiveData<AuthResultModel>()
 
-    private var firebaseIdToken: String? = null
+    var firebaseIdToken: String? = null
+        private set
     private var providerIdToken: String? = null
 
     var isLoginAttempt = false

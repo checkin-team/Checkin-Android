@@ -55,8 +55,8 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
     private val navController: NavController get() = findNavController(R.id.nav_host_authentication)
 
     private var goBack = true
-    //this has to be changed since this value is passed for username for details and a global variable is not the best idea
     private lateinit var phoneNo: String
+    private var registeredAttempt = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,9 +138,24 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
         }
         val name = user.displayName
         goBack = false
-        val action = AuthOtpFragmentDirections.actionAddUserDetails(name, phoneNo)
-        navController.navigate(action)
-        hideProgress()
+
+        val fullNameSeparatedList = name?.split("\\s+".toRegex()) ?: listOf(defaultFirstName)
+        //create an user
+        onUserInfoProcess(firstName = fullNameSeparatedList[0], lastName = null, username = phoneNo, gender = defaultGender)
+        registeredAttempt = true
+
+        authViewModel.authResult.observe(this, Observer {
+            it?.let {
+                when (it.status) {
+                    Resource.Status.SUCCESS -> {
+                        val action = AuthOtpFragmentDirections.actionAddUserDetails(name, phoneNo, authViewModel.firebaseIdToken)
+                        navController.navigate(action)
+                        hideProgress()
+                    }
+                }
+            }
+        })
+
     }
 
 
@@ -190,8 +205,10 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
             accountManager.addAccountExplicitly(account, null, userData)
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken)
             startService(Intent(applicationContext, DeviceTokenService::class.java))
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+            if (!registeredAttempt) {
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+            }
         }
     }
 
@@ -241,6 +258,8 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
 
     companion object {
         private val TAG = AuthenticationActivity::class.java.simpleName
+        const val defaultFirstName = "Checkin"
+        val defaultGender = UserModel.GENDER.MALE
         private const val RC_AUTH_GOOGLE = 1000
     }
 

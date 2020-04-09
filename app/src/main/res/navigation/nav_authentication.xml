@@ -38,5 +38,9 @@
         <argument
             android:name="phone"
             app:argType="string" />
+        <argument
+            android:name="phoneToken"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
