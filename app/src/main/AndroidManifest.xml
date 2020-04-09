@@ -35,7 +35,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".auth.activity.AuthenticationActivity"
+            android:name=".auth.activities.AuthenticationActivity"
             android:theme="@style/AuthTheme"></activity>
         <activity
             android:name=".home.activities.AboutUsActivity"

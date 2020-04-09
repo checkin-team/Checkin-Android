@@ -11,7 +11,7 @@
         android:label="SignInFragment"
         tools:layout="@layout/fragment_auth_option">
         <action
-            android:id="@+id/action_signInFragment_to_otpFragment"
+            android:id="@+id/action_verifyOtp"
             app:destination="@id/otpFragment" />
     </fragment>
     <fragment
@@ -23,7 +23,7 @@
             android:name="phone"
             app:argType="string" />
         <action
-            android:id="@+id/action_otpFragment_to_authDetailsFragment"
+            android:id="@+id/action_add_user_details"
             app:destination="@id/authDetailsFragment" />
     </fragment>
     <fragment
@@ -33,6 +33,10 @@
         tools:layout="@layout/fragment_auth_details">
         <argument
             android:name="name"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="phone"
             app:argType="string" />
     </fragment>
 </navigation>

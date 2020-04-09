@@ -2,96 +2,83 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_auth_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/authentication_red"
-    tools:context=".auth.activity.AuthenticationActivity">
+    tools:context=".auth.activities.AuthenticationActivity">
 
-    <ImageView
-        android:id="@+id/imageView4"
+    <Space
+        android:id="@+id/space_auth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_authentication_front_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/im_auth_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_awning"
+        android:src="@drawable/ic_auth_front_background"
+        app:layout_constraintBottom_toTopOf="@id/space_auth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_auth_awning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_auth_awning"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/im_auth_table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:paddingStart="@dimen/spacing_normal"
         android:paddingEnd="@dimen/spacing_normal"
-        android:src="@drawable/ic_authentication_table"
+        android:src="@drawable/ic_auth_table"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/im_auth_flower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_extra_large"
-        android:src="@drawable/ic_authentication_flower"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        android:src="@drawable/ic_auth_flower"
+        app:layout_constraintBottom_toTopOf="@id/im_auth_table"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/im_auth_bag_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_extra_large"
-        android:src="@drawable/ic_authentication_bag"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        android:src="@drawable/ic_auth_bag"
+        app:layout_constraintBottom_toTopOf="@id/im_auth_table"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/im_auth_bag_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:src="@drawable/ic_authentication_take_away"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7" />
-
-    <fragment
-        android:id="@+id/nav_host_payment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_authentication" />
+        android:src="@drawable/ic_auth_take_away"
+        app:layout_constraintBottom_toTopOf="@id/im_auth_table"
+        app:layout_constraintEnd_toStartOf="@id/im_auth_bag_1" />
 
     <TextView
-        android:id="@+id/textView8"
-        style="@style/PinkishGreySmallTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:text="By logging in you accept to the Terms and conditions."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tv_auth_eatout"
         style="@style/WhiteSmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,6 +87,61 @@
         android:text="Eat Out Smartly"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+        app:layout_constraintTop_toTopOf="@id/im_auth_table" />
+
+    <TextView
+        android:id="@+id/tv_auth_terms"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:text="By logging in you accept to the "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_auth_terms_conditions"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_auth_terms_conditions"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Terms and conditions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_auth_terms"
+        app:layout_constraintTop_toTopOf="@+id/tv_auth_terms" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <fragment
+            android:id="@+id/nav_host_authentication"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_authentication" />
+
+        <FrameLayout
+            android:id="@+id/fl_circle_progress_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/translucent_black"
+            android:visibility="gone">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:progress="25" />
+        </FrameLayout>
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -690,6 +690,7 @@
         <item name="boxStrokeColor">@color/white</item>
         <item name="hintTextColor">@color/white</item>
         <item name="placeholderTextColor">@color/lightest_grey</item>
+
     </style>
 
     <style name="AuthTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -701,10 +702,34 @@
     </style>
 
     <style name="FacebookLoginButton">
+        <item name="android:paddingTop">@dimen/spacing_small</item>
+        <item name="android:paddingBottom">@dimen/spacing_small</item>
         <item name="android:textSize">@dimen/font_small</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="LighterRedTextStyle" parent="GreyTextStyle">
+        <item name="android:textColor">@color/authentication_red</item>
+    </style>
+
+    <style name="LighterRedLargerTextStyle" parent="LighterRedTextStyle">
+        <item name="android:textSize">@dimen/font_largest</item>
+    </style>
+
+    <style name="OtpTextBox" parent="WhiteLargerTextStyle">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/layout_border_white_round</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>"
+    </style>
+
+    <style name="WhiteLighterRedButtonStyle">
+        <item name="android:layout_height">@dimen/button_height_normal</item>
+        <item name="android:textColor">@color/authentication_red</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="cornerRadius">@dimen/card_corner_radius_small</item>
     </style>
 
 </resources>

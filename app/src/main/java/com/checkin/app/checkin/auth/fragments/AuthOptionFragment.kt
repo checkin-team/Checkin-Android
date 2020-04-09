@@ -3,8 +3,6 @@ package com.checkin.app.checkin.auth.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.doOnTextChanged
-import androidx.navigation.fragment.findNavController
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
@@ -27,12 +25,11 @@ class AuthOptionFragment : BaseFragment() {
 
     @BindView(R.id.btn_auth_fb)
     internal lateinit var btnLoginFb: LoginButton
+    @BindView(R.id.til_auth_contact_no)
+    internal lateinit var tilContactNo: TextInputLayout
 
-    @BindView(R.id.tet_auth_contact_no)
-    internal lateinit var tetContactNo: TextInputLayout
-
-    private val mInteractionListener: AuthFragmentInteraction by parentActivityDelegate()
-    private val mFacebookCallbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
+    private val interaction: AuthFragmentInteraction by parentActivityDelegate()
+    private val facebookCallbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
 
     private val isNetworkUnavailable: Boolean
         get() = context?.run {
@@ -46,9 +43,9 @@ class AuthOptionFragment : BaseFragment() {
         btnLoginFb.apply {
             setPermissions("email", "public_profile")
             fragment = this@AuthOptionFragment
-            registerCallback(mFacebookCallbackManager, object : FacebookCallback<LoginResult> {
+            registerCallback(facebookCallbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
-                    mInteractionListener.onFacebookAuth(loginResult)
+                    interaction.onFacebookAuth(loginResult)
                 }
 
                 override fun onCancel() {}
@@ -60,40 +57,36 @@ class AuthOptionFragment : BaseFragment() {
             })
         }
 
-        tetContactNo.editText?.doOnTextChanged { _, _, _, _ ->
-            tetContactNo.error = null
-        }
-        tetContactNo.setEndIconOnClickListener {
-            val value = tetContactNo.editText?.text.toString()
+        tilContactNo.setEndIconOnClickListener {
+            val phone = tilContactNo.editText?.text.toString()
             when {
-                value.isEmpty() -> {
-                    tetContactNo.error = "Phone cannot be empty"
+                phone.isEmpty() -> {
+                    tilContactNo.error = "Phone cannot be empty"
                 }
-                value.length <= 12 -> {
-                    tetContactNo.error = "Invalid phone number."
+                phone.length <= 12 -> {
+                    tilContactNo.error = "Invalid phone number."
                 }
                 isNetworkUnavailable -> pass
                 else -> {
-                    val action = AuthOptionFragmentDirections.actionSignInFragmentToOtpFragment(value)
-                    findNavController().navigate(action)
+                    interaction.onPhoneAuth(phone)
                 }
             }
         }
     }
 
-    companion object {
-        private val TAG = AuthDetailsFragment::class.java.simpleName
-        fun newInstance(): AuthDetailsFragment = AuthDetailsFragment()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (!mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data))
+        if (!facebookCallbackManager.onActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data)
     }
 
     @OnClick(R.id.btn_auth_google)
     fun onGoogleLogin() {
         if (isNetworkUnavailable) return
-        mInteractionListener.onGoogleAuth()
+        interaction.onGoogleAuth()
     }
+
+    companion object {
+        private val TAG = AuthDetailsFragment::class.java.simpleName
+    }
+
 }

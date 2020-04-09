@@ -11,7 +11,7 @@ import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.auth.AuthPreferences
-import com.checkin.app.checkin.auth.activity.AuthenticationActivity
+import com.checkin.app.checkin.auth.activities.AuthenticationActivity
 import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.config.AnalyticsUtil
 import com.checkin.app.checkin.data.config.RemoteConfig

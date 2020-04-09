@@ -7,71 +7,87 @@
     android:orientation="vertical"
     tools:background="@color/authentication_red">
 
-    <ImageView
-        android:id="@+id/im_auth_front_background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_authentication_front_background"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_auth_checkin"
-        style="@style/GreyLargeTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Profile Photo"
-        app:layout_constraintEnd_toEndOf="@+id/im_auth_logo"
-        app:layout_constraintStart_toStartOf="@+id/im_auth_logo"
-        app:layout_constraintTop_toBottomOf="@+id/im_auth_logo" />
-
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/im_auth_logo"
+        android:id="@+id/im_auth_details_profile_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_auth_profile"
         app:civ_border_color="@color/pinkish_grey"
-        app:civ_border_width="1dp"
-        app:layout_constraintBottom_toBottomOf="@+id/im_auth_front_background"
+        app:civ_border_width="@dimen/spacing_unit"
+        app:layout_constraintBottom_toTopOf="@id/tv_auth_details_first"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/im_auth_front_background"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView10"
-        style="@style/WhiteSmallTextStyle"
+        android:id="@+id/tv_auth_details_upload"
+        style="@style/GreyLargeTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="One step away from your first 500 Checkin Chips ⓘ"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im_auth_front_background" />
+        android:text="Upload Profile Photo"
+        app:layout_constraintEnd_toEndOf="@id/im_auth_details_profile_photo"
+        app:layout_constraintStart_toStartOf="@id/im_auth_details_profile_photo"
+        app:layout_constraintTop_toBottomOf="@id/im_auth_details_profile_photo" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tv_auth_details_first"
         style="@style/WhiteSmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:text="One step away from your first "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_auth_details_chips"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_chips"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_bold"
+        android:text="500 Checkin CHIPS "
+        app:layout_constraintEnd_toStartOf="@id/tv_auth_details_chips_info"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/tv_auth_details_first"
+        app:layout_constraintTop_toTopOf="@id/tv_auth_details_first" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_chips_info"
+        style="@style/WhiteTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ⓘ"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_auth_details_chips"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_auth_details_chips"
+        app:layout_constraintTop_toTopOf="@id/tv_auth_details_chips" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_referal"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
         android:text="Get 500 Checkin Chips more if you have, Referal Code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_auth_userinfo_proceed" />
+        app:layout_constraintTop_toBottomOf="@id/btn_auth_userinfo_proceed" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_auth_userinfo_firstname"
+        android:id="@+id/til_auth_details_firstname"
         style="@style/WhiteOutlinedTextBoxStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
         android:enabled="true"
         android:hint="First Name"
-        app:layout_constraintEnd_toStartOf="@+id/til_auth_userinfo_lastname"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10">
+        app:layout_constraintEnd_toStartOf="@id/til_auth_details_lastname"
+        app:layout_constraintStart_toStartOf="@id/tv_auth_details_first"
+        app:layout_constraintTop_toBottomOf="@id/tv_auth_details_first">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/WhiteTextStyle"
@@ -81,38 +97,34 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_auth_userinfo_lastname"
+        android:id="@+id/til_auth_details_lastname"
         style="@style/WhiteOutlinedTextBoxStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
-        android:enabled="true"
         android:hint="Last Name"
-        app:layout_constraintEnd_toEndOf="@+id/textView10"
-        app:layout_constraintStart_toEndOf="@+id/til_auth_userinfo_firstname"
-        app:layout_constraintTop_toBottomOf="@+id/textView10">
+        app:layout_constraintEnd_toEndOf="@id/tv_auth_details_chips_info"
+        app:layout_constraintStart_toEndOf="@id/til_auth_details_firstname"
+        app:layout_constraintTop_toTopOf="@id/til_auth_details_firstname">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/WhiteTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusedByDefault="true" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_auth_userinfo_proceed"
+        style="@style/WhiteLighterRedButtonStyle"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_height_normal"
+        android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_large"
-        android:fontFamily="@font/opensans_semibold"
+        android:layout_marginEnd="@dimen/spacing_normal"
         android:text="Proceed"
-        android:textColor="@color/authentication_red"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="@dimen/card_corner_radius_small"
-        app:layout_constraintEnd_toEndOf="@+id/til_auth_userinfo_lastname"
-        app:layout_constraintStart_toStartOf="@+id/til_auth_userinfo_firstname"
-        app:layout_constraintTop_toBottomOf="@+id/til_auth_userinfo_firstname" />
+        app:layout_constraintEnd_toEndOf="@id/til_auth_details_lastname"
+        app:layout_constraintStart_toStartOf="@id/til_auth_details_firstname"
+        app:layout_constraintTop_toBottomOf="@id/til_auth_details_firstname" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

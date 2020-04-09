@@ -191,7 +191,7 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback 
         eulaDialog.show()
     }
 
-    override fun onUserInfoProcess(firstName: String, lastName: String, username: String, gender: GENDER) {
+    override fun onUserInfoProcess(firstName: String, lastName: String?, username: String, gender: GENDER) {
         authViewModel.register(firstName, lastName, gender, username)
     }
 

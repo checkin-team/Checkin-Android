@@ -294,4 +294,6 @@
     <string name="payment_option_save_card">Save your card securely</string>
 
     <string name="resend_otp">&lt;u&gt;Resend Again&lt;/u&gt;</string>
+    <string name="terms_and_condition_underlined">&lt;u&gt;Terms and conditions&lt;/u&gt;</string><!-- cause license agreement dosen't worj-->
+
 </resources>

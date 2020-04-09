@@ -55,8 +55,8 @@
 
     <!--    for authentication there is a need to use the red provided has hardcoded values-->
     <!--    so in these places remember to make the change if the color is changed.-->
-    <!--    ic_awning-->
-    <!--    ic_authentication_front_background-->
+    <!--    ic_auth_awning-->
+    <!--    ic_auth_front_background-->
     <!--    ic_auth_continue-->
     <color name="authentication_red">#E64C3C</color>
 </resources>

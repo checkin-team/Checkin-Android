@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.auth.fragments
+package com.checkin.app.checkin.misc.views
 
 import android.content.Context
 import android.text.Editable
@@ -22,22 +22,22 @@ class OtpView @JvmOverloads constructor(
         etArray[0].requestFocus()
     }
 
-    @BindViews(R.id.otp1, R.id.otp2, R.id.otp3, R.id.otp4)
+    @BindViews(R.id.otp1, R.id.otp2, R.id.otp3, R.id.otp4, R.id.otp5, R.id.otp6)
     internal lateinit var etArray: Array<EditText>
 
-    var otpValue: String?
+    var otpValue: String
         get() {
             if (!validateOtp()) {
-                return null
+                return ""
             }
-            val otp = ""
+            var otp = ""
             for (et in etArray) {
-                otp.plus(et.text.toString())
+                otp += et.text.toString()
             }
             return otp
         }
         set(value) {
-            if (value.isNullOrBlank() && value?.length!! != 4) {
+            if (value.isBlank() && value.length != length) {
                 return
             }
             value.forEachIndexed { index: Int, c: Char ->
@@ -49,17 +49,22 @@ class OtpView @JvmOverloads constructor(
         View.inflate(context, R.layout.view_otp, this).apply {
             ButterKnife.bind(this@OtpView)
         }
+
+        //adding
         etArray[0].addTextChangedListener(GenericTextWatcher(etArray[0], etArray[1]))
         etArray[1].addTextChangedListener(GenericTextWatcher(etArray[1], etArray[2]))
         etArray[2].addTextChangedListener(GenericTextWatcher(etArray[2], etArray[3]))
-        etArray[3].addTextChangedListener(GenericTextWatcher(etArray[3], null))
+        etArray[3].addTextChangedListener(GenericTextWatcher(etArray[3], etArray[4]))
+        etArray[4].addTextChangedListener(GenericTextWatcher(etArray[4], etArray[5]))
+        etArray[5].addTextChangedListener(GenericTextWatcher(etArray[5], null))
 
-//GenericKeyEvent here works for deleting the element and to switch back to previous EditText
-//first parameter is the current EditText and second parameter is previous EditText
+        //deleting
         etArray[0].setOnKeyListener(GenericKeyEvent(etArray[0], null))
         etArray[1].setOnKeyListener(GenericKeyEvent(etArray[1], etArray[0]))
         etArray[2].setOnKeyListener(GenericKeyEvent(etArray[2], etArray[1]))
         etArray[3].setOnKeyListener(GenericKeyEvent(etArray[3], etArray[2]))
+        etArray[4].setOnKeyListener(GenericKeyEvent(etArray[4], etArray[3]))
+        etArray[5].setOnKeyListener(GenericKeyEvent(etArray[5], etArray[4]))
     }
 
 
@@ -72,12 +77,15 @@ class OtpView @JvmOverloads constructor(
         return true
     }
 
+    companion object {
+        const val length = 6
+    }
+
 }
 
 class GenericKeyEvent internal constructor(private val currentView: EditText, private val previousView: EditText?) : View.OnKeyListener {
     override fun onKey(p0: View?, keyCode: Int, event: KeyEvent?): Boolean {
         if (event!!.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL && currentView.id != R.id.otp1 && currentView.text.isEmpty()) {
-            //If current is empty then previous EditText's number will also be deleted
             previousView!!.text = null
             previousView.requestFocus()
             return true
@@ -89,13 +97,14 @@ class GenericKeyEvent internal constructor(private val currentView: EditText, pr
 }
 
 class GenericTextWatcher internal constructor(private val currentView: View, private val nextView: View?) : TextWatcher {
-    override fun afterTextChanged(editable: Editable) { // TODO Auto-generated method stub
+    override fun afterTextChanged(editable: Editable) {
         val text = editable.toString()
         when (currentView.id) {
             R.id.otp1 -> if (text.length == 1) nextView!!.requestFocus()
             R.id.otp2 -> if (text.length == 1) nextView!!.requestFocus()
             R.id.otp3 -> if (text.length == 1) nextView!!.requestFocus()
-            //You can use EditText4 same as above to hide the keyboard
+            R.id.otp4 -> if (text.length == 1) nextView!!.requestFocus()
+            R.id.otp5 -> if (text.length == 1) nextView!!.requestFocus()
         }
     }
 

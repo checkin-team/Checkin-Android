@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.auth.activity
+package com.checkin.app.checkin.auth.activities
 
 import android.accounts.Account
 import android.accounts.AccountManager
@@ -7,19 +7,24 @@ import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.auth.AuthFragmentInteraction
 import com.checkin.app.checkin.auth.AuthResultModel
 import com.checkin.app.checkin.auth.AuthViewModel
 import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
-import com.checkin.app.checkin.auth.fragments.AuthDetailsFragment
+import com.checkin.app.checkin.auth.fragments.AuthOptionFragmentDirections
 import com.checkin.app.checkin.auth.fragments.AuthOtpFragment
 import com.checkin.app.checkin.auth.fragments.AuthOtpFragmentDirections
 import com.checkin.app.checkin.auth.services.DeviceTokenService
@@ -29,6 +34,7 @@ import com.checkin.app.checkin.home.activities.HomeActivity
 import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.pass
 import com.checkin.app.checkin.utility.toast
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -39,8 +45,18 @@ import com.google.firebase.auth.*
 import java.util.*
 
 class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragment.AuthCallback {
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    @BindView(R.id.fl_circle_progress_container)
+    internal lateinit var flLoadingContainer: FrameLayout
+    @BindView(R.id.tv_auth_terms_conditions)
+    internal lateinit var tvTermsAndConditions: TextView
+
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val authViewModel: AuthViewModel by viewModels()
+    private val navController: NavController get() = findNavController(R.id.nav_host_authentication)
+
+    private var goBack = true
+    //this has to be changed since this value is passed for username for details and a global variable is not the best idea
+    private lateinit var phoneNo: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +66,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
         // Refresh and activate the remote config
         RemoteConfig.refreshAndActivate()
 
-        val user = mAuth.currentUser
-
+        val user = firebaseAuth.currentUser
         if (user != null && !PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
             Log.v(TAG, "User already exists.")
         }
@@ -65,6 +80,10 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                     }
                     Resource.Status.LOADING -> showProgress()
                     Resource.Status.ERROR_INVALID_REQUEST -> if (authViewModel.isLoginAttempt) {
+                        if (!::phoneNo.isInitialized) {
+                            toast("Invalid Mobile Number")
+                            pass
+                        }
                         askUserDetails()
                     } else {
                         val error = resource.errorBody ?: return@Observer
@@ -75,6 +94,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                             }
                             error.has("username") -> {
                                 authViewModel.showError(error)
+
                             }
                             resource.message != null -> toast(resource.message)
                         }
@@ -86,14 +106,19 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                 }
             }
         })
+
+        tvTermsAndConditions.apply {
+            text = Utils.fromHtml(getString(R.string.terms_and_condition_underlined))
+            setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.url_app_terms_conditions).toUri())) }
+        }
     }
 
     private fun authenticateWithCredential(credential: AuthCredential) {
-        mAuth.signInWithCredential(credential)
+        firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task: Task<AuthResult?> ->
                     if (task.isSuccessful) {
-                        assert(mAuth.currentUser != null)
-                        mAuth.currentUser!!.getIdToken(false).addOnSuccessListener { tokenResult: GetTokenResult ->
+                        assert(firebaseAuth.currentUser != null)
+                        firebaseAuth.currentUser!!.getIdToken(false).addOnSuccessListener { tokenResult: GetTokenResult ->
                             authViewModel.setFireBaseIdToken(tokenResult.token)
                             authViewModel.login()
                         }
@@ -106,31 +131,28 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
 
 
     private fun askUserDetails() {
-        val user = mAuth.currentUser
-
-        val fragment: Fragment = AuthDetailsFragment.newInstance()
+        val user = firebaseAuth.currentUser
         if (user == null) {
             Log.e(TAG, "Logged-in user is NULL")
             return
         }
         val name = user.displayName
-        if (name != null) {
-            val action = AuthOtpFragmentDirections.actionOtpFragmentToAuthDetailsFragment(name)
-            findNavController(R.id.nav_host_payment).navigate(action)
-        }
+        goBack = false
+        val action = AuthOtpFragmentDirections.actionAddUserDetails(name, phoneNo)
+        navController.navigate(action)
         hideProgress()
     }
 
 
     private fun showProgress() {
-        //TODO yet to add
+        flLoadingContainer.visibility = View.VISIBLE
     }
 
     private fun hideProgress() {
-        //TODO yet to add
+        flLoadingContainer.visibility = View.GONE
     }
 
-    override fun onUserInfoProcess(firstName: String, lastName: String, username: String, gender: UserModel.GENDER) {
+    override fun onUserInfoProcess(firstName: String, lastName: String?, username: String, gender: UserModel.GENDER) {
         authViewModel.register(firstName, lastName, gender, username)
     }
 
@@ -154,7 +176,8 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
     }
 
     override fun onPhoneAuth(phoneNo: String) {
-        //not required ?
+        val action = AuthOptionFragmentDirections.actionVerifyOtp(phoneNo)
+        navController.navigate(action)
     }
 
     private fun successAuth(data: AuthResultModel) {
@@ -172,22 +195,27 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
         }
     }
 
-    override fun onSuccessVerification(credential: PhoneAuthCredential, idToken: String) {
+    override fun onSuccessVerification(credential: PhoneAuthCredential, idToken: String, phone: String) {
         authViewModel.setFireBaseIdToken(idToken)
+        phoneNo = phone
         authViewModel.login()
-        //ddddd dialog?.dismiss()
-        //  hideDarkBack()
+
     }
 
     override fun onCancelVerification() {
-        //  hideDarkBack()
+
     }
 
     override fun onFailedVerification(exception: Exception) {
         toast(exception.message ?: getString(R.string.error_authentication_phone))
         if (exception !is InvalidOTPException) {
-            //dialog?.dismiss()
-            //   hideDarkBack()
+            toast("Invalid OTP try Again")
+        }
+    }
+
+    override fun onBackPressed() {
+        if (goBack) {
+            super.onBackPressed()
         }
     }
 
