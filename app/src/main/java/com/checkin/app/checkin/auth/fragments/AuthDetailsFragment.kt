@@ -63,7 +63,7 @@ class AuthDetailsFragment : BaseFragment() {
                 }
             }
         })
-        userViewModel.imageUploadResult.observe(this, Observer {
+        userViewModel.imageUploadResult.observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it.status) {
                     Resource.Status.SUCCESS -> userViewModel.updateResults()

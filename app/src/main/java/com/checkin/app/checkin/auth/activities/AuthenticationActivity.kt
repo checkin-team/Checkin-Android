@@ -32,6 +32,7 @@ import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.activities.HomeActivity
 import com.checkin.app.checkin.user.models.UserModel
+import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.pass
@@ -53,10 +54,11 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val authViewModel: AuthViewModel by viewModels()
     private val navController: NavController get() = findNavController(R.id.nav_host_authentication)
+    private val userViewModel: UserViewModel by viewModels()
 
     private var goBack = true
     private lateinit var phoneNo: String
-    private var registeredAttempt = false
+    private lateinit var phoneToken: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,15 +143,14 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
 
         val fullNameSeparatedList = name?.split("\\s+".toRegex()) ?: listOf(defaultFirstName)
         //create an user
-        onUserInfoProcess(firstName = fullNameSeparatedList[0], lastName = null, username = phoneNo, gender = defaultGender)
-        registeredAttempt = true
+        onUserInfoProcess(firstName = fullNameSeparatedList[0], lastName = if (fullNameSeparatedList.size > 1) fullNameSeparatedList[1]
+        else null, username = phoneNo, gender = defaultGender)
 
         authViewModel.authResult.observe(this, Observer {
             it?.let {
                 when (it.status) {
                     Resource.Status.SUCCESS -> {
-                        val action = AuthOtpFragmentDirections.actionAddUserDetails(name, phoneNo, authViewModel.firebaseIdToken)
-                        navController.navigate(action)
+                        fetchUserDetails(name)
                         hideProgress()
                     }
                 }
@@ -205,9 +206,25 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
             accountManager.addAccountExplicitly(account, null, userData)
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken)
             startService(Intent(applicationContext, DeviceTokenService::class.java))
-            if (!registeredAttempt) {
+            if (!authViewModel.isRegisteredAttempt) {
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
+            } else {
+                userViewModel.userData.observe(this, Observer {
+                    it?.let {
+                        when (it.status) {
+                            Resource.Status.SUCCESS -> {
+                                if (it.data?.firstName == defaultFirstName) {
+                                    fetchUserDetails(name = null)
+                                    //so if the firebase has  a name then that name would be the default name and the app will next time open with the
+                                    //name firebase gave otherwise if the username is Checkin(default name) then the case would be that the name would be checked
+                                    //if so that the name is checkin then the details screen would be fetched
+                                }
+                            }
+                        }
+                    }
+                })
+                userViewModel.fetchUserData()
             }
         }
     }
@@ -215,8 +232,8 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
     override fun onSuccessVerification(credential: PhoneAuthCredential, idToken: String, phone: String) {
         authViewModel.setFireBaseIdToken(idToken)
         phoneNo = phone
+        phoneToken = idToken
         authViewModel.login()
-
     }
 
     override fun onCancelVerification() {
@@ -236,6 +253,10 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
         }
     }
 
+    private fun fetchUserDetails(name: String?) {
+        val action = AuthOtpFragmentDirections.actionAddUserDetails(name, phoneNo, phoneToken)
+        navController.navigate(action)
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
