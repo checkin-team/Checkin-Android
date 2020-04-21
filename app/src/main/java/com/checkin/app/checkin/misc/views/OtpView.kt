@@ -51,20 +51,22 @@ class OtpView @JvmOverloads constructor(
         }
 
         //adding
-        etArray[0].addTextChangedListener(GenericTextWatcher(etArray[0], etArray[1]))
-        etArray[1].addTextChangedListener(GenericTextWatcher(etArray[1], etArray[2]))
-        etArray[2].addTextChangedListener(GenericTextWatcher(etArray[2], etArray[3]))
-        etArray[3].addTextChangedListener(GenericTextWatcher(etArray[3], etArray[4]))
-        etArray[4].addTextChangedListener(GenericTextWatcher(etArray[4], etArray[5]))
-        etArray[5].addTextChangedListener(GenericTextWatcher(etArray[5], null))
+        for (i in 0..5) {
+            if (i == 5) {
+                etArray[i].addTextChangedListener(GenericTextWatcher(etArray[i], null))
+                break
+            }
+            etArray[i].addTextChangedListener(GenericTextWatcher(etArray[i], etArray[i + 1]))
+        }
 
         //deleting
-        etArray[0].setOnKeyListener(GenericKeyEvent(etArray[0], null))
-        etArray[1].setOnKeyListener(GenericKeyEvent(etArray[1], etArray[0]))
-        etArray[2].setOnKeyListener(GenericKeyEvent(etArray[2], etArray[1]))
-        etArray[3].setOnKeyListener(GenericKeyEvent(etArray[3], etArray[2]))
-        etArray[4].setOnKeyListener(GenericKeyEvent(etArray[4], etArray[3]))
-        etArray[5].setOnKeyListener(GenericKeyEvent(etArray[5], etArray[4]))
+        for (i in 0..5) {
+            if (i == 0) {
+                etArray[i].setOnKeyListener(GenericKeyEvent(etArray[i], null))
+                continue
+            }
+            etArray[i].setOnKeyListener(GenericKeyEvent(etArray[i], etArray[i - 1]))
+        }
     }
 
 
@@ -99,13 +101,7 @@ class GenericKeyEvent internal constructor(private val currentView: EditText, pr
 class GenericTextWatcher internal constructor(private val currentView: View, private val nextView: View?) : TextWatcher {
     override fun afterTextChanged(editable: Editable) {
         val text = editable.toString()
-        when (currentView.id) {
-            R.id.otp1 -> if (text.length == 1) nextView!!.requestFocus()
-            R.id.otp2 -> if (text.length == 1) nextView!!.requestFocus()
-            R.id.otp3 -> if (text.length == 1) nextView!!.requestFocus()
-            R.id.otp4 -> if (text.length == 1) nextView!!.requestFocus()
-            R.id.otp5 -> if (text.length == 1) nextView!!.requestFocus()
-        }
+        if (text.length == 1) nextView?.requestFocus()
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
