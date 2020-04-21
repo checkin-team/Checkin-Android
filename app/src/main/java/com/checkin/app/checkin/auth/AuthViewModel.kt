@@ -22,9 +22,6 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
     private var providerIdToken: String? = null
 
     var isLoginAttempt = false
-        private set
-    var isRegisteredAttempt = false
-        private set
     val authResult: MediatorLiveData<Resource<AuthResultModel>> = mAuthResult
     val errors: LiveData<JsonNode> = mErrors
 
@@ -43,7 +40,6 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
         val data = objectMapper.createObjectNode()
         data.put("id_token", firebaseIdToken)
         if (providerIdToken != null) data.put("provider_token", providerIdToken)
-        isRegisteredAttempt = false
         isLoginAttempt = true
         mAuthResult.addSource(mRepository.login(data), mAuthResult::setValue)
     }
@@ -57,8 +53,6 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
         data.put("first_name", firstName)
         data.put("gender", if (gender == GENDER.MALE) "m" else "f")
         data.put("last_name", lastName ?: "")
-        isLoginAttempt = false
-        isRegisteredAttempt = true
         mAuthResult.addSource(mRepository.register(data), mAuthResult::setValue)
     }
 

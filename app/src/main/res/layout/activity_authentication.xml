@@ -19,14 +19,24 @@
         app:layout_constraintVertical_bias="0.4" />
 
     <ImageView
-        android:id="@+id/im_auth_background"
+        android:id="@+id/im_auth_bottom_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_auth_front_background"
+        android:src="@drawable/ic_auth_bottom_background"
         app:layout_constraintBottom_toTopOf="@id/space_auth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_auth_front_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_auth_front_background"
+        app:layout_constraintBottom_toBottomOf="@id/im_auth_bottom_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/im_auth_awning"
@@ -142,6 +152,4 @@
                 android:progress="25" />
         </FrameLayout>
     </FrameLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

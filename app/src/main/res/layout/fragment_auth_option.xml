@@ -93,32 +93,31 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_unit"
-        android:padding="@dimen/spacing_extra_tiny"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_auth_google"
         app:layout_constraintEnd_toStartOf="@id/btn_auth_google"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_auth_or">
+        app:layout_constraintTop_toTopOf="@+id/btn_auth_google">
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btn_auth_fb"
             style="@style/FacebookLoginButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_gravity="center"
             />
     </FrameLayout>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_auth_google"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_unit"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="@dimen/spacing_normal"
         app:buttonSize="wide"
-        app:layout_constraintBottom_toBottomOf="@+id/fl_fb_login_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fl_fb_login_container"
-        app:layout_constraintTop_toTopOf="@id/fl_fb_login_container" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_auth_or" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

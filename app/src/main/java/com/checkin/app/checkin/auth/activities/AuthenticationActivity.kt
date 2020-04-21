@@ -53,7 +53,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val authViewModel: AuthViewModel by viewModels()
-    private val navController: NavController get() = findNavController(R.id.nav_host_authentication)
+    private val navController: NavController by lazy { findNavController(R.id.nav_host_authentication) }
     private val userViewModel: UserViewModel by viewModels()
 
     private var goBack = true
@@ -82,6 +82,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                     }
                     Resource.Status.LOADING -> showProgress()
                     Resource.Status.ERROR_INVALID_REQUEST -> if (authViewModel.isLoginAttempt) {
+                        authViewModel.isLoginAttempt = false
                         if (!::phoneNo.isInitialized) {
                             toast("Invalid Mobile Number")
                             pass
@@ -206,7 +207,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
             accountManager.addAccountExplicitly(account, null, userData)
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken)
             startService(Intent(applicationContext, DeviceTokenService::class.java))
-            if (!authViewModel.isRegisteredAttempt) {
+            if (authViewModel.isLoginAttempt) {
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             } else {
