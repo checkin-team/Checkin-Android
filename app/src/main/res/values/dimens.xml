@@ -269,4 +269,5 @@
 	<dimen name="payment_button_pay_height">30dp</dimen>
     <dimen name="width_button_verify_pay">250dp</dimen>
     <dimen name="height_button_verify_pay">40dp</dimen>
+    <dimen name="auth_profile_size">90dp</dimen>
 </resources>

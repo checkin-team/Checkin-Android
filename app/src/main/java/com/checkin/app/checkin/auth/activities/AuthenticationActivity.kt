@@ -207,27 +207,29 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
             accountManager.addAccountExplicitly(account, null, userData)
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken)
             startService(Intent(applicationContext, DeviceTokenService::class.java))
-            if (authViewModel.isLoginAttempt) {
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
-            } else {
-                userViewModel.userData.observe(this, Observer {
-                    it?.let {
-                        when (it.status) {
-                            Resource.Status.SUCCESS -> {
-                                if (it.data?.firstName == defaultFirstName) {
-                                    fetchUserDetails(name = null)
-                                    //so if the firebase has  a name then that name would be the default name and the app will next time open with the
-                                    //name firebase gave otherwise if the username is Checkin(default name) then the case would be that the name would be checked
-                                    //if so that the name is checkin then the details screen would be fetched
-                                }
+            userViewModel.userData.observe(this, Observer {
+                it?.let {
+                    when (it.status) {
+                        Resource.Status.SUCCESS -> {
+                            if (it.data?.firstName == defaultFirstName) {
+                                fetchUserDetails(name = null)
+                                //so if the firebase has  a name then that name would be the default name and the app will next time open with the
+                                //name firebase gave otherwise if the username is Checkin(default name) then the case would be that the name would be checked
+                                //if so that the name is checkin then the details screen would be fetched
+                            } else {
+                                openHome()
                             }
                         }
                     }
-                })
-                userViewModel.fetchUserData()
-            }
+                }
+            })
+            userViewModel.fetchUserData()
         }
+    }
+
+    private fun openHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 
     override fun onSuccessVerification(credential: PhoneAuthCredential, idToken: String, phone: String) {

@@ -9,8 +9,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/im_auth_details_profile_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/auth_profile_size"
+        android:layout_height="@dimen/auth_profile_size"
         android:src="@drawable/ic_auth_profile_layer"
         app:civ_border_color="@color/pinkish_grey"
         app:civ_border_width="@dimen/spacing_unit"
