@@ -5,7 +5,7 @@ ext.versions = [
         publishVersion    : '1.1.4',
         publishVersionCode: 50,
 
-        gradlePlugin      : '3.5.3',
+        gradlePlugin      : '3.6.3',
 
         kotlin            : '1.3.61',
         ktx               : '1.1.0',

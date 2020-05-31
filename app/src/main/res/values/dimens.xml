@@ -1,5 +1,6 @@
 <resources>
     <!-- font sizes -->
+    <dimen name="font_huge">32dp</dimen>
     <dimen name="font_largest">26sp</dimen>
     <dimen name="font_larger">22sp</dimen>
     <dimen name="font_extra_large">20sp</dimen>

@@ -55,4 +55,7 @@
     <!--Authentication error-->
     <color name="authentication_red">#E64C3C</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#FFFFFF</color>
+
+    <color name="referral_red">#ce4c2c</color>
+    <color name="light_red">#ffa58f</color>
 </resources>

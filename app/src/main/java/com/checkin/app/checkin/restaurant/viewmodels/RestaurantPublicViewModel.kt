@@ -19,6 +19,7 @@ class RestaurantPublicViewModel(application: Application) : BaseViewModel(applic
         mRestaurantData.addSource(mRestaurantRepository.getRestaurantPublicProfile(restaurantId), mRestaurantData::setValue)
     }
 
+
     override fun fetchMissing() {
         super.fetchMissing()
         if (mRestaurantData.value?.data == null) fetchRestaurantWithId(mRestaurantId)

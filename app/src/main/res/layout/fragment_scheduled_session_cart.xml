@@ -135,7 +135,7 @@
                 android:layout_height="@dimen/size_extra_small_icon"
                 android:layout_gravity="center_vertical|end"
                 android:src="@drawable/ic_edit_pencil_white"
-                android:tint="@color/white" />
+                app:tint="@color/white" />
         </FrameLayout>
 
         <androidx.core.widget.NestedScrollView

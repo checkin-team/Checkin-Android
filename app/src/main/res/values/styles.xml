@@ -275,6 +275,11 @@
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
+    <style name="WhiteBoldTextStyle" parent="WhiteTextStyle">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
     <style name="WhiteSmallTextStyle" parent="WhiteTextStyle">
         <item name="android:textSize">@dimen/font_small</item>
     </style>
