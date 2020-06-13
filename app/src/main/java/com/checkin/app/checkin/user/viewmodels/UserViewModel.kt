@@ -95,6 +95,12 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
         mUserData.addSource(mRepository.postUserData(data), mUserData::setValue)
     }
 
+    fun postReferralCode(referralCode: String) {
+        val data = objectMapper.createObjectNode()
+        data.put("code", referralCode)
+        mUserData.addSource(mRepository.postUserReferralCode(data), mUserData::setValue)
+    }
+
     fun retryUpdateProfile() = mLastData?.let {
         mUserData.addSource(mRepository.postUserData(it), mUserData::setValue)
     }

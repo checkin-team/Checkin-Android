@@ -58,6 +58,9 @@ interface WebApiService {
 
     @POST("/users/self/locations/")
     fun postUserLocation(@Body location: UserLocationModel): Call<UserLocationModel>
+
+    @POST("/users/self/referrals/")
+    fun postUserReferralCode(@Body data: ObjectNode): Call<UserModel>
     // endregion
 
     // region SESSION
