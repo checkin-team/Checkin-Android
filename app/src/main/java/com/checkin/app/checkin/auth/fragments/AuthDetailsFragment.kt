@@ -8,13 +8,13 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.auth.activities.AuthenticationActivity.Companion.defaultFirstName
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.activities.HomeActivity
 import com.checkin.app.checkin.misc.activities.SelectCropImageActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.user.models.UserModel
@@ -46,16 +46,13 @@ class AuthDetailsFragment : BaseFragment() {
     private var signUpComplete = false
 
     private fun setupObservers() {
-        userViewModel.userData.observe(this, Observer<Resource<UserModel>> {
+        userViewModel.userData.observe(viewLifecycleOwner, Observer {
             it.let {
                 when (it.status) {
                     Resource.Status.SUCCESS -> {
                         if (signUpComplete) {
-                            requireActivity().apply {
-                                startActivity(Intent(this, HomeActivity::class.java))
-                                finish()
-                                return@Observer
-                            }
+                            val action = AuthDetailsFragmentDirections.actionAuthDetailsFragmentToAuthReferralFragment()
+                            findNavController().navigate(action)
                         }
                         setupData(it.data)
                     }

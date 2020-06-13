@@ -148,10 +148,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_small">
+                android:orientation="vertical">
 
                 <com.airbnb.epoxy.EpoxyRecyclerView
+                    android:padding="@dimen/spacing_small"
                     android:id="@+id/epoxy_rv_scheduled_cart_orders"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -179,13 +179,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:orientation="vertical"
-                    android:padding="@dimen/spacing_small"
-                    android:visibility="gone">
+                    android:paddingStart="@dimen/spacing_small"
+                    android:background="@color/white"
+                    android:paddingEnd="@dimen/font_normal">
 
                     <TextView
+                        android:layout_marginTop="@dimen/spacing_small"
                         style="@style/GreyTextStyle"
+                        android:fontFamily="@font/josefinsans_semibold"
+                        android:textSize="@dimen/font_large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Guest Details" />
@@ -194,9 +197,13 @@
                         android:id="@+id/tv_cart_guest_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        android:layout_marginTop="@dimen/spacing_extra_tiny"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:fontFamily="@font/josefinsans_regular"
                         tools:text="Ishu Darshan" />
                 </LinearLayout>
+
+                <include layout="@layout/incl_cart_checkin_rewards" />
 
                 <include layout="@layout/incl_cart_promo_card" />
 
@@ -226,6 +233,8 @@
                         tools:text="54" />
                 </FrameLayout>
             </LinearLayout>
+
+
         </androidx.core.widget.NestedScrollView>
 
         <include

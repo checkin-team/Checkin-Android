@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/container_cart_referral"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background_referral">
+
+        <ImageView
+            android:id="@+id/im_cart_monarchy_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/spacing_extra_tiny"
+            android:src="@drawable/ic_monarchy"
+            app:layout_constraintBottom_toBottomOf="@id/tv_cart_heading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_cart_heading" />
+
+        <TextView
+            android:id="@+id/tv_cart_heading"
+            style="@style/WhiteBoldTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="Checkin Rewards"
+            app:layout_constraintStart_toEndOf="@id/im_cart_monarchy_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cart_referral_offer_details"
+            style="@style/WhiteSmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Get Two shorts worth ₹375.00 on a minimum bill of ₹500.00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/im_cart_monarchy_image"
+            app:layout_constraintTop_toBottomOf="@id/im_cart_monarchy_image" />
+
+        <Button
+            android:id="@+id/btn_cart_referral_redeem"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="@dimen/spacing_huge"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:background="@drawable/gradient_button_golden"
+            android:fontFamily="@font/opensans_semibold"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:text="REDEEM NOW"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cart_referral_offer_details" />
+
+        <TextView
+            android:id="@+id/tv_cart_referral_available_points"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:background="@drawable/bordered_rounded_pinkish_grey_small"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:text="Available Balance: 370Chips"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_cart_referral_redeem"
+            app:layout_constraintTop_toTopOf="@id/btn_cart_referral_redeem" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
