@@ -137,6 +137,9 @@ obj/
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
+.idea/codeStyles/codeStyleConfig.xml
+.idea/jarRepositories.xml
+
 
 # OS-specific files
 .DS_Store
