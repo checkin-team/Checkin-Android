@@ -40,6 +40,7 @@ import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.home.fragments.HomeReferralFragment
 import com.checkin.app.checkin.home.fragments.UserHomeFragment
 import com.checkin.app.checkin.home.fragments.UserLocationFragment
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
@@ -126,16 +127,21 @@ class HomeActivity : BaseAccountActivity() {
         vpHome.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    2 -> {
+                    3 -> {
                         toolbarHome.visibility = View.GONE
                         imTabUserIcon!!.background = resources.getDrawable(R.drawable.shape_oval_orange_gradient)
                         imTabUserIcon!!.setPadding(6, 6, 6, 6)
                         onCancelCartView()
                     }
-                    1 -> {
+                    2 -> {
                         launchScanner()
                         vpHome.currentItem = 0
                         resetUserIcon()
+                    }
+                    1 -> {
+                        toolbarHome.visibility = View.GONE
+                        resetUserIcon()
+                        //hmmmmm nothing ?
                     }
                     else -> {
                         toolbarHome.visibility = View.VISIBLE
@@ -411,16 +417,17 @@ class HomeActivity : BaseAccountActivity() {
     private inner class HomeFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
         override fun getTabDrawable(position: Int): Int = when (position) {
             0 -> R.drawable.ic_home_toggle
-            1 -> R.drawable.ic_qr_code_grey
+            1 -> R.drawable.ic_wallet_toggle
+            2 -> R.drawable.ic_qr_code_grey
             else -> 0
         }
 
         override fun getCustomView(position: Int): Int {
-            return if (position == 2) R.layout.view_tab_bottom_nav_circle else super.getCustomView(position)
+            return if (position == 3) R.layout.view_tab_bottom_nav_circle else super.getCustomView(position)
         }
 
         override fun bindTabIcon(imIcon: ImageView, position: Int) {
-            if (position == 2) {
+            if (position == 3) {
                 imTabUserIcon = imIcon
                 imIcon.setImageResource(R.drawable.cover_unknown_male)
             } else super.bindTabIcon(imIcon, position)
@@ -428,15 +435,17 @@ class HomeActivity : BaseAccountActivity() {
 
         override fun getItem(position: Int): Fragment = when (position) {
             0 -> UserHomeFragment.newInstance()
-            2 -> UserPrivateProfileFragment.newInstance()
+            1 -> HomeReferralFragment.newInstance()
+            3 -> UserPrivateProfileFragment.newInstance()
             else -> BlankFragment.newInstance()
         }
 
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = 4
 
         override fun getPageTitle(position: Int): CharSequence? = when (position) {
             0 -> "Home"
-            1 -> "Scan"
+            1 -> "Referral"
+            2 -> "Scan"
             else -> null
         }
     }

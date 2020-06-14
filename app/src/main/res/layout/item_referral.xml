@@ -2,21 +2,25 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_normal"
+    android:layout_marginTop="@dimen/spacing_extra_small"
+    android:layout_marginEnd="@dimen/spacing_normal"
+    android:layout_marginBottom="@dimen/spacing_extra_small"
     android:layout_width="match_parent"
-    android:layout_height="125dp">
-
+    app:cardCornerRadius="@dimen/card_corner_radius_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
+            android:id="@+id/im_referral_restaurant"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="50dp"
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginTop="@dimen/spacing_normal"
-            android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_marginBottom="@dimen/spacing_normal"
             android:src="@drawable/cover_restaurant_unknown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
@@ -24,47 +28,49 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_referral_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
             android:fontFamily="@font/opensans_semibold"
             android:text="TextView"
             android:textColor="@color/referral_red"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
-            app:layout_constraintTop_toTopOf="@+id/circleImageView"
+            app:layout_constraintStart_toEndOf="@id/im_referral_restaurant"
+            app:layout_constraintTop_toTopOf="@id/im_referral_restaurant"
             tools:text="Pind Baluchi - Sigra Road" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/im_special"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
             android:layout_marginTop="@dimen/spacing_small"
             android:src="@drawable/ic_special"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintStart_toStartOf="@id/tv_referral_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_referral_name" />
 
 
         <TextView
+            android:id="@+id/tv_referral_description"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
             android:layout_marginStart="@dimen/spacing_normal"
             android:fontFamily="@font/josefinsans"
             android:textSize="@dimen/font_extra_small"
-            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintEnd_toStartOf="@+id/imageView4"
-            app:layout_constraintStart_toEndOf="@id/imageView3"
-            app:layout_constraintTop_toTopOf="@id/imageView3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_referral_redeem"
+            app:layout_constraintStart_toEndOf="@id/im_special"
+            app:layout_constraintTop_toTopOf="@id/im_special"
             tools:text="Get Two shots free worth ₹ 375.00 On a minimum bill of ₹ 500.00" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/tv_referral_redeem"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_bestseller"
             android:translationX="@dimen/spacing_tiny"
-            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
+            app:layout_constraintBottom_toBottomOf="@id/tv_referral_description"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
