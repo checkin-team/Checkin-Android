@@ -161,6 +161,7 @@
         <TextView
             android:id="@+id/tv_restaurant_banner_referrals"
             android:layout_width="0dp"
+            style="@style/GreySmallTextStyle"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_referrals"
