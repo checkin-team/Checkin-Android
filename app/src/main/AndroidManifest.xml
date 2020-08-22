@@ -38,7 +38,8 @@
         tools:replace="android:theme">
         <activity
             android:name=".auth.activities.AuthenticationActivity"
-            android:theme="@style/AuthTheme"></activity>
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AuthTheme" />
         <activity
             android:name=".home.activities.AboutUsActivity"
             android:theme="@style/AppThemeWhiteActionBar" />

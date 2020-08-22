@@ -295,6 +295,6 @@
 
     <string name="resend_otp">&lt;u&gt;Resend Again&lt;/u&gt;</string>
     <string name="terms_and_condition_underlined">&lt;u&gt;Terms and conditions&lt;/u&gt;</string>
-    <string name="referral_default_message">Get Two shorts worth ₹375.00 on a minimum bill of ₹500.00</string><!-- cause license agreement dosen't worj-->
+    <string name="referral_default_message">Get Two shorts worth ₹375.00 on a minimum bill of ₹500.00</string><!-- cause license agreement won't work-->
 
 </resources>
