@@ -30,11 +30,11 @@ import com.checkin.app.checkin.auth.fragments.AuthOtpFragmentDirections
 import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.activities.HomeActivity
 import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.Utils.logErrors
 import com.checkin.app.checkin.utility.pass
 import com.checkin.app.checkin.utility.toast
 import com.facebook.login.LoginResult
@@ -42,12 +42,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseError.ERROR_USER_NOT_FOUND
 import com.google.firebase.auth.*
 import java.util.*
 
 class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragment.AuthCallback {
     @BindView(R.id.fl_circle_progress_container)
     internal lateinit var flLoadingContainer: FrameLayout
+
     @BindView(R.id.tv_auth_terms_conditions)
     internal lateinit var tvTermsAndConditions: TextView
 
@@ -104,7 +106,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                     }
                     else -> {
                         hideProgress()
-                        Utils.toast(this, resource.message)
+                        toast resource.message)
                     }
                 }
             }
@@ -127,7 +129,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                         }
                     } else if (task.exception != null) {
                         Utils.logErrors(TAG, task.exception, "Authentication failed")
-                        Toast.makeText(applicationContext, R.string.error_authentication, Toast.LENGTH_SHORT).show()
+                        toast( R.string.error_authentication)
                     }
                 }
     }
@@ -136,7 +138,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
     private fun askUserDetails() {
         val user = firebaseAuth.currentUser
         if (user == null) {
-            Log.e(TAG, "Logged-in user is NULL")
+            logErrors(TAG, FirebaseAuthInvalidUserException(ERROR_USER_NOT_FOUND.toString(), "Logged-in user is NULL"), "Logged-in user is NULL")
             return
         }
         val name = user.displayName
@@ -217,7 +219,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                                 //name firebase gave otherwise if the username is Checkin(default name) then the case would be that the name would be checked
                                 //if so that the name is checkin then the details screen would be fetched
                             } else {
-                                openHome()
+                                Utils.navigateBackToHome(this)
                             }
                         }
                     }
@@ -227,10 +229,6 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
         }
     }
 
-    private fun openHome() {
-        startActivity(Intent(this, HomeActivity::class.java))
-        finish()
-    }
 
     override fun onSuccessVerification(credential: PhoneAuthCredential, idToken: String, phone: String) {
         authViewModel.setFireBaseIdToken(idToken)
@@ -244,15 +242,18 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
     }
 
     override fun onFailedVerification(exception: Exception) {
-        toast(exception.message ?: getString(R.string.error_authentication_phone))
         if (exception !is InvalidOTPException) {
             toast("Invalid OTP try Again")
+        } else {
+            toast(exception.message ?: getString(R.string.error_authentication_phone))
         }
     }
 
     override fun onBackPressed() {
         if (goBack) {
             super.onBackPressed()
+        } else {
+            toast("Authenticating the user, please wait!")
         }
     }
 
@@ -271,9 +272,9 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
                     authenticateWithCredential(credential)
                 } catch (e: ApiException) {
-                    Log.e(TAG, "GoogleAuth - Verification Failed: ", e)
+                    logErrors(TAG, e, "GoogleAuth - Verification Failed: ")
                     hideProgress()
-                    Toast.makeText(applicationContext, R.string.error_authentication_google, Toast.LENGTH_SHORT).show()
+                    toast(R.string.error_authentication_google)
                 }
             }
             else -> super.onActivityResult(requestCode, resultCode, data)

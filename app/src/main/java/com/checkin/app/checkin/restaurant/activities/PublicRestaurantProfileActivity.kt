@@ -413,8 +413,12 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             tvReferrals.visibility = View.VISIBLE
             imReferrals.visibility = View.VISIBLE
             tvReferrals.text = it
-
         }
+
+        //for now
+        tvReferrals.visibility = View.VISIBLE
+        imReferrals.visibility = View.VISIBLE
+        tvReferrals.setText(R.string.referral_default_message)
 
         imDistance.setImageResource(if (restaurantModel.distance > 1.5) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)
     }

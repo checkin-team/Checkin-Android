@@ -2,7 +2,6 @@ package com.checkin.app.checkin.auth.fragments
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.navigation.fragment.navArgs
@@ -16,6 +15,7 @@ import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.views.OtpView
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.Utils.logErrors
 import com.checkin.app.checkin.utility.parentActivityDelegate
 import com.checkin.app.checkin.utility.toast
 import com.google.firebase.FirebaseException
@@ -40,10 +40,13 @@ class AuthOtpFragment : BaseFragment() {
 
     @BindView(R.id.tv_auth_otp_resend)
     internal lateinit var tvResendOtp: TextView
+
     @BindView(R.id.tv_auth_otp_time)
     internal lateinit var tvRemainingTime: TextView
+
     @BindView(R.id.otp_auth_otp_otp)
     internal lateinit var otpView: OtpView
+
     @BindView(R.id.tv_auth_otp_number)
     internal lateinit var otpNumber: TextView
 
@@ -54,7 +57,7 @@ class AuthOtpFragment : BaseFragment() {
             }
 
             override fun onVerificationError(e: FirebaseException) {
-                Log.e(TAG, "PhoneAuth - Verification Failed: ", e)
+                logErrors(TAG, e, "PhoneAuth - Verification Failed: ")
                 val err = if (e is FirebaseNetworkException) NoConnectivityException() else e
                 mobileAuthCallBack.onFailedVerification(err)
             }
