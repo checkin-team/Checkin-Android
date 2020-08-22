@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -106,7 +105,7 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                     }
                     else -> {
                         hideProgress()
-                        toast resource.message)
+                        toast(resource.message)
                     }
                 }
             }
