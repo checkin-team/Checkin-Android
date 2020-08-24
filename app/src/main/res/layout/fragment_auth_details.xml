@@ -30,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@id/im_auth_details_profile_photo" />
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/tv_auth_details_first"
         style="@style/WhiteSmallTextStyle"
         android:layout_width="wrap_content"
@@ -46,6 +47,8 @@
         android:id="@+id/tv_auth_details_chips"
         style="@style/WhiteSmallTextStyle"
         android:layout_width="wrap_content"
+
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensans_bold"
         android:text="500 Checkin CHIPS "
@@ -58,6 +61,7 @@
         android:id="@+id/tv_auth_details_chips_info"
         style="@style/WhiteTextStyle"
         android:layout_width="wrap_content"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="ⓘ"
@@ -72,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_large"
+        android:visibility="invisible"
         android:text="Earn 1000 Checkin Chips more with a Referal Code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +99,6 @@
             style="@style/WhiteTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,7 +116,6 @@
             style="@style/WhiteTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>

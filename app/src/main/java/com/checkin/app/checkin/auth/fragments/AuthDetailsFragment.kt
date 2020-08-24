@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import butterknife.BindView
 import butterknife.OnClick
@@ -51,8 +50,7 @@ class AuthDetailsFragment : BaseFragment() {
                 when (it.status) {
                     Resource.Status.SUCCESS -> {
                         if (signUpComplete) {
-                            val action = AuthDetailsFragmentDirections.actionAuthDetailsFragmentToAuthReferralFragment()
-                            findNavController().navigate(action)
+                            Utils.navigateBackToHome(context)
                         }
                         setupData(it.data)
                     }

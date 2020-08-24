@@ -212,13 +212,11 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                 it?.let {
                     when (it.status) {
                         Resource.Status.SUCCESS -> {
-                            if (it.data?.firstName == defaultFirstName) {
-                                fetchUserDetails(name = null)
-                                //so if the firebase has  a name then that name would be the default name and the app will next time open with the
-                                //name firebase gave otherwise if the username is Checkin(default name) then the case would be that the name would be checked
-                                //if so that the name is checkin then the details screen would be fetched
-                            } else {
+                            if (it.data?.firstName != defaultFirstName) {
                                 Utils.navigateBackToHome(this)
+                                finish()
+                            } else {
+                                toast("Login error!")
                             }
                         }
                     }
