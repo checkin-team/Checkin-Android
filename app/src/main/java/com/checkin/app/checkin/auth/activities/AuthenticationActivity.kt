@@ -215,8 +215,6 @@ class AuthenticationActivity : AppCompatActivity(), AuthFragmentInteraction, Aut
                             if (it.data?.firstName != defaultFirstName) {
                                 Utils.navigateBackToHome(this)
                                 finish()
-                            } else {
-                                toast("Login error!")
                             }
                         }
                     }
