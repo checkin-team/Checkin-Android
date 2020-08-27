@@ -3,6 +3,7 @@ package com.checkin.app.checkin.auth.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -63,7 +64,7 @@ class AuthDetailsFragment : BaseFragment() {
                 when (it.status) {
                     Resource.Status.SUCCESS -> userViewModel.updateResults()
                     Resource.Status.LOADING -> {
-                        toast("Image Uploading")
+                        Log.d(TAG, "Image Uploading")
                     }
                     Resource.Status.ERROR_UNKNOWN -> toast(it.message)
                     else -> toast(it.message)
