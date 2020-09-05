@@ -15,6 +15,7 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.activities.SelectCropImageActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.toast
@@ -27,13 +28,10 @@ class AuthDetailsFragment : BaseFragment() {
 
     @BindView(R.id.til_auth_details_firstname)
     internal lateinit var tilFirstName: TextInputLayout
-
     @BindView(R.id.til_auth_details_lastname)
     internal lateinit var tilLastName: TextInputLayout
-
     @BindView(R.id.btn_auth_userinfo_proceed)
     internal lateinit var btnProceed: Button
-
     @BindView(R.id.im_auth_details_profile_photo)
     internal lateinit var imProfilePhoto: ImageView
 
@@ -45,7 +43,8 @@ class AuthDetailsFragment : BaseFragment() {
             it.let {
                 when (it.status) {
                     Resource.Status.SUCCESS -> {
-                        Utils.navigateBackToHome(context)
+                        if (userViewModel.hasRequestedUpdate) Utils.navigateBackToHome(context)
+                        setupData(it.data!!)
                     }
                     else -> toast(it.message)
                 }
@@ -54,7 +53,7 @@ class AuthDetailsFragment : BaseFragment() {
         userViewModel.imageUploadResult.observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it.status) {
-                    Resource.Status.SUCCESS -> userViewModel.updateResults()
+                    Resource.Status.SUCCESS -> toast("Profile picture updated!")
                     Resource.Status.LOADING -> {
                         Log.d(TAG, "Image Uploading")
                     }
@@ -65,12 +64,12 @@ class AuthDetailsFragment : BaseFragment() {
         })
     }
 
-    private fun setupData() {
-        firebaseAuth.currentUser?.photoUrl?.also {
-            Utils.loadImageOrDefault(imProfilePhoto, it.toString(), R.drawable.ic_auth_profile)
+    private fun setupData(data: UserModel? = null) {
+        (data?.profilePic ?: firebaseAuth.currentUser?.photoUrl?.toString())?.also {
+            Utils.loadImageOrDefault(imProfilePhoto, it, R.drawable.ic_auth_profile)
         }
 
-        val fullName = arrayOf(defaultFirstName, "")
+        val fullName = if (data != null) arrayOf(data.firstName, data.lastName) else arrayOf(defaultFirstName, "")
         firebaseAuth.currentUser?.displayName?.also {
             it.split("\\s+".toRegex()).toTypedArray().copyInto(fullName, endIndex = 2)
         }

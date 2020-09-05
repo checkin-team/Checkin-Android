@@ -3,6 +3,8 @@ package com.checkin.app.checkin.auth.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import androidx.core.widget.doAfterTextChanged
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
@@ -53,26 +55,44 @@ class AuthOptionsFragment : BaseFragment() {
 
                 override fun onError(error: FacebookException) {
                     Utils.logErrors(TAG, error, "FacebookAuth - Verification Failed")
-                    context?.toast(R.string.error_authentication_facebook)
+                    toast(R.string.error_authentication_facebook)
                 }
             })
         }
 
         tilContactNo.setEndIconOnClickListener {
-            val phone = tilContactNo.editText?.text.toString()
-            when {
-                phone.isEmpty() -> {
-                    tilContactNo.error = "Phone cannot be empty"
-                }
-                phone.length <= 12 -> {
-                    tilContactNo.error = "Invalid phone number."
-                }
-                isNetworkUnavailable -> pass
-                else -> {
-                    interaction.onPhoneAuth(phone)
+            validatePhoneSubmit()?.also { interaction.onPhoneAuth(it) }
+        }
+
+        tilContactNo.editText?.doAfterTextChanged {
+            // to reset once errored before
+            if (validatePhoneSubmit() != null) tilContactNo.error = null
+        }
+
+        tilContactNo.editText?.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                validatePhoneSubmit()?.also {
+                    interaction.onPhoneAuth(it)
+                    return@setOnEditorActionListener true
                 }
             }
+            return@setOnEditorActionListener false
         }
+    }
+
+    private fun validatePhoneSubmit(): String? {
+        val phone = tilContactNo.editText?.text.toString()
+        when {
+            phone.isEmpty() -> {
+                tilContactNo.error = "Phone cannot be empty"
+            }
+            phone.length <= 12 -> {
+                tilContactNo.error = "Invalid phone number."
+            }
+            isNetworkUnavailable -> pass
+            else -> return phone
+        }
+        return null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,5 +109,4 @@ class AuthOptionsFragment : BaseFragment() {
     companion object {
         private val TAG = AuthDetailsFragment::class.java.simpleName
     }
-
 }

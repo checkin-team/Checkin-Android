@@ -43,7 +43,6 @@ import java.util.*
 class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragment.AuthCallback {
     @BindView(R.id.fl_circle_progress_container)
     internal lateinit var flLoadingContainer: FrameLayout
-
     @BindView(R.id.tv_auth_terms_conditions)
     internal lateinit var tvTermsAndConditions: TextView
 

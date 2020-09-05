@@ -30,6 +30,9 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
 
     private var mLastData: ObjectNode? = null
 
+    val hasRequestedUpdate: Boolean
+        get() = mLastData != null
+
     override fun updateResults() {
         fetchUserData()
     }
