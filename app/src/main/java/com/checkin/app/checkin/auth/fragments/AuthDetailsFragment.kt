@@ -7,21 +7,19 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.navArgs
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.auth.activities.AuthenticationActivity.Companion.defaultFirstName
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.activities.SelectCropImageActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
-import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.toast
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import java.io.File
 
 class AuthDetailsFragment : BaseFragment() {
@@ -29,31 +27,25 @@ class AuthDetailsFragment : BaseFragment() {
 
     @BindView(R.id.til_auth_details_firstname)
     internal lateinit var tilFirstName: TextInputLayout
+
     @BindView(R.id.til_auth_details_lastname)
     internal lateinit var tilLastName: TextInputLayout
+
     @BindView(R.id.btn_auth_userinfo_proceed)
     internal lateinit var btnProceed: Button
+
     @BindView(R.id.im_auth_details_profile_photo)
     internal lateinit var imProfilePhoto: ImageView
 
-    private val args: AuthDetailsFragmentArgs by navArgs()
-    private val userViewModel: UserViewModel by viewModels()
-
-    private val name: List<String> by lazy {
-        args.name?.split("\\s+".toRegex()) ?: listOf(defaultFirstName)
-    }
-    private val mobileNo: String by lazy { args.phone }
-    private var signUpComplete = false
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     private fun setupObservers() {
         userViewModel.userData.observe(viewLifecycleOwner, Observer {
             it.let {
                 when (it.status) {
                     Resource.Status.SUCCESS -> {
-                        if (signUpComplete) {
-                            Utils.navigateBackToHome(context)
-                        }
-                        setupData(it.data)
+                        Utils.navigateBackToHome(context)
                     }
                     else -> toast(it.message)
                 }
@@ -73,33 +65,33 @@ class AuthDetailsFragment : BaseFragment() {
         })
     }
 
-    private fun setupData(data: UserModel?) {
-        Utils.loadImageOrDefault(imProfilePhoto, data?.profilePic, R.drawable.ic_auth_profile)
+    private fun setupData() {
+        firebaseAuth.currentUser?.photoUrl?.also {
+            Utils.loadImageOrDefault(imProfilePhoto, it.toString(), R.drawable.ic_auth_profile)
+        }
+
+        val fullName = arrayOf(defaultFirstName, "")
+        firebaseAuth.currentUser?.displayName?.also {
+            it.split("\\s+".toRegex()).toTypedArray().copyInto(fullName, endIndex = 2)
+        }
+        tilFirstName.editText?.setText(fullName[0])
+        tilLastName.editText?.setText(fullName[1])
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupObservers()
-        name.takeIf { it.size > 1 }?.let {
-            val s = it
-            tilFirstName.editText?.setText(s[0])
-            tilLastName.editText?.setText(s[1])
-        }
+        setupData()
     }
 
     @OnClick(R.id.btn_auth_userinfo_proceed)
     fun onProceedClicked() {
-        if (args.phoneToken == null) {
-            toast("FireBaseAuthToken Is NULL")
-            return
-        }
-
-        if (!tilFirstName.editText?.text.isNullOrEmpty()) {
-            val firstName = tilFirstName.editText?.text.toString()
-            val lastName = tilLastName.editText?.text.toString()
-            signUpComplete = true
-            userViewModel.postUserData(firstName, lastName, args.phoneToken ?: "", null)
-        }
-
+        val firstName = tilFirstName.editText?.text.takeUnless { it.isNullOrBlank() }?.toString()
+                ?: kotlin.run {
+                    toast("Atleast provide a first name")
+                    return
+                }
+        val lastName = tilLastName.editText?.text?.toString() ?: ""
+        userViewModel.postUserData(firstName, lastName, null, null)
     }
 
     @OnClick(R.id.im_auth_details_profile_photo)
@@ -107,16 +99,17 @@ class AuthDetailsFragment : BaseFragment() {
         val intent = Intent(requireContext(), SelectCropImageActivity::class.java)
         intent.putExtra(SelectCropImageActivity.KEY_FILE_SIZE_IN_MB, 4L)
         startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SelectCropImageActivity.RC_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
-            if (data?.extras != null) {
-                val image = data.extras[SelectCropImageActivity.KEY_IMAGE] as File
-                userViewModel.updateProfilePic(image, requireContext())
-            }
+            val image = data?.extras?.get(SelectCropImageActivity.KEY_IMAGE) as? File
+                    ?: kotlin.run {
+                        Log.e(TAG, "Nothing in bundle: ${data?.extras}")
+                        return
+                    }
+            context?.also { userViewModel.updateProfilePic(image, it) }
         } else {
             userViewModel.updateResults()
         }
@@ -124,5 +117,7 @@ class AuthDetailsFragment : BaseFragment() {
 
     companion object {
         val TAG = AuthDetailsFragment::class.simpleName
+
+        private const val defaultFirstName = "Anonymous"
     }
 }

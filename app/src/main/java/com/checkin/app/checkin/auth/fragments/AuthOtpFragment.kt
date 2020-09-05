@@ -13,11 +13,8 @@ import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
 import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.views.OtpView
-import com.checkin.app.checkin.utility.Constants
-import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.*
 import com.checkin.app.checkin.utility.Utils.logErrors
-import com.checkin.app.checkin.utility.parentActivityDelegate
-import com.checkin.app.checkin.utility.toast
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
@@ -124,7 +121,7 @@ class AuthOtpFragment : BaseFragment() {
                     err = InvalidOTPException()
                 err?.let {
                     mobileAuthCallBack.onFailedVerification(it)
-                    Utils.logErrors(TAG, it, requireContext().getString(R.string.error_authentication_phone))
+                    it.log(TAG, "Phone authentication failed")
                 }
             }
         }

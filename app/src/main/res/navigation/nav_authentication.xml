@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.checkin.app.checkin.auth.fragments.AuthOptionFragment"
+        android:name="com.checkin.app.checkin.auth.fragments.AuthOptionsFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_auth_option">
         <action
@@ -34,19 +34,7 @@
         android:id="@+id/authDetailsFragment"
         android:name="com.checkin.app.checkin.auth.fragments.AuthDetailsFragment"
         android:label="AuthDetailsFragment"
-        tools:layout="@layout/fragment_auth_details">
-        <argument
-            android:name="name"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="phone"
-            app:argType="string" />
-        <argument
-            android:name="phoneToken"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
+        tools:layout="@layout/fragment_auth_details" />
     <fragment
         android:id="@+id/authReferralFragment"
         android:name="com.checkin.app.checkin.auth.fragments.AuthReferralFragment"

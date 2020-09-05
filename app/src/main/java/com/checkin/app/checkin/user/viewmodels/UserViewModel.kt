@@ -77,13 +77,13 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
                 .execute(mRepository.postUserProfilePic(pictureFile, listener))
     }
 
-    fun postUserData(firstName: String?, lastName: String?, phoneToken: String, bio: String?) {
+    fun postUserData(firstName: String?, lastName: String?, phoneToken: String?, bio: String?) {
         val data = objectMapper.createObjectNode()
         data.put("first_name", firstName)
         data.put("last_name", lastName)
         data.put("bio", bio)
         data.put("is_public", true)
-        if (phoneToken.isNotEmpty()) data.put("phone_token", phoneToken)
+        if (!phoneToken.isNullOrEmpty()) data.put("phone_token", phoneToken)
         mLastData = data
         mUserData.addSource(mRepository.postUserData(data), mUserData::setValue)
     }

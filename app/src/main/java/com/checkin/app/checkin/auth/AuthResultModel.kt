@@ -6,5 +6,7 @@ data class AuthResultModel(
         @JsonProperty("user_id")
         val userId: Long,
         @JsonProperty("token")
-        val token: String
+        val token: String,
+        @JsonProperty("is_profile_ready")
+        val isProfileReady: Boolean
 )

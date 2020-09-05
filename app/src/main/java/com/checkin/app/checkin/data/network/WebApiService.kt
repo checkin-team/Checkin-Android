@@ -16,6 +16,7 @@ import com.checkin.app.checkin.Shop.Private.MemberModel
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
 import com.checkin.app.checkin.Waiter.Model.*
 import com.checkin.app.checkin.accounts.AccountModel
+import com.checkin.app.checkin.auth.AuthRequestModel
 import com.checkin.app.checkin.auth.AuthResultModel
 import com.checkin.app.checkin.home.model.*
 import com.checkin.app.checkin.manager.models.*
@@ -189,11 +190,8 @@ interface WebApiService {
     // endregion
 
     // region AUTH
-    @POST("auth/login/")
-    fun postLogin(@Body credentials: ObjectNode): Call<AuthResultModel>
-
-    @POST("auth/register/")
-    fun postRegister(@Body credentials: ObjectNode): Call<AuthResultModel>
+    @POST("/auth/authenticate/")
+    fun postAuthenticate(@Body credentials: AuthRequestModel): Call<AuthResultModel>
 
     @PUT("auth/devices/self/update/")
     fun postFCMToken(@Body tokenData: ObjectNode): Call<ObjectNode>
