@@ -392,26 +392,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 it.slice(0 until maxLen).joinToString(" ")
             } else "-"
         } ?: "-"
-        tvRating.text = restaurantModel.formatRating()
-            
-            if(restaurantModel.rating in 4.0..5.0)
-        {
-
-            tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_green_400));
-
-    }
-      if(restaurantModel.rating in 3.0..4.0){
-        tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_deep_orange_300));
-
-    }
-      else{
-        tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.red_500));
-
-
-    }
-            
-            
-        tvDistance.text = restaurantModel.formatDistance
+        tvRating.text = restaurantModel.formatRating()            
+       tvDistance.text = restaurantModel.formatDistance
 
         imDistance.setImageResource(if (restaurantModel.distance > 1.5) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)
     }
