@@ -393,21 +393,21 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             } else "-"
         } ?: "-"
         tvRating.text = restaurantModel.formatRating()
-          val ratingtext: String = tvRating.text.toString();
-        val ratenumber: Float = ratingtext.toFloat()
-        if(ratenumber in 4.0..5.0){
+          if(restaurantModel.rating in 4.0..5.0)
+        {
+
             tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_green_400));
 
-        }
-        if(ratenumber in 3.0..4.0){
-            tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_deep_orange_300));
+    }
+      if(restaurantModel.rating in 3.0..4.0){
+        tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_deep_orange_300));
 
-        }
-        if(ratenumber in 1.0..3.0){
-            tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.red_500));
+    }
+      else{
+        tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.red_500));
 
 
-        }
+    }
 
         tvDistance.text = restaurantModel.formatDistance
 
