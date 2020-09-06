@@ -399,11 +399,11 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_green_400));
 
     }
-      if(restaurantModel.rating in 3.0..4.0){
+     else if(restaurantModel.rating in 3.0..4.0){
         tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_deep_orange_300));
 
     }
-      else{
+      else if(restaurantModel.rating<=3){
         tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.red_500));
 
 
