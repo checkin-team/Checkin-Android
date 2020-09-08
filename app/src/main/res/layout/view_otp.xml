@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/otp1"
+            style="@style/OtpTextBox"
+            app:layout_constraintEnd_toStartOf="@id/otp2"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp2"
+            style="@style/OtpTextBox"
+            app:layout_constraintEnd_toStartOf="@id/otp3"
+            app:layout_constraintStart_toEndOf="@id/otp1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp3"
+            style="@style/OtpTextBox"
+            app:layout_constraintEnd_toStartOf="@id/otp4"
+            app:layout_constraintStart_toEndOf="@id/otp2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp4"
+            style="@style/OtpTextBox"
+            app:layout_constraintEnd_toStartOf="@id/otp5"
+            app:layout_constraintStart_toEndOf="@id/otp3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp5"
+            style="@style/OtpTextBox"
+            app:layout_constraintEnd_toStartOf="@id/otp6"
+            app:layout_constraintStart_toEndOf="@id/otp4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/otp6"
+            style="@style/OtpTextBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/otp5"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

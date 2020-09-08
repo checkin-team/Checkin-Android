@@ -164,10 +164,12 @@
         <item name="android:layout_width">@dimen/size_logo_large</item>
         <item name="android:layout_height">@dimen/size_logo_large</item>
     </style>
+
     <style name="LogoSmallImageStyle">
         <item name="android:layout_width">@dimen/size_logo_small</item>
         <item name="android:layout_height">@dimen/size_logo_small</item>
     </style>
+
     <style name="InputLabelGreyLargeStyle" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textColor">@color/pinkish_grey</item>
@@ -247,19 +249,35 @@
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
+    <style name="WhiteLargerTextStyle" parent="WhiteTextStyle">
+        <item name="android:textSize">@dimen/font_larger</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="WhiteLargestTextStyle" parent="WhiteTextStyle">
+        <item name="android:textSize">@dimen/font_largest</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
     <style name="GreyLargeTextStyle" parent="GreyTextStyle">
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
-    
+
     <style name="GreyLargeBoldTextStyle" parent="GreyTextStyle">
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:fontFamily">@font/opensans_bold</item>
     </style>
+
     <style name="WhiteTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="WhiteBoldTextStyle" parent="WhiteTextStyle">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="WhiteSmallTextStyle" parent="WhiteTextStyle">
@@ -269,7 +287,7 @@
     <style name="WhiteExtraSmallTextStyle" parent="WhiteTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
-    
+
     <style name="WhiteTinySmallTextStyle" parent="WhiteTextStyle">
         <item name="android:textSize">@dimen/font_tiny</item>
     </style>
@@ -291,7 +309,7 @@
     <style name="GreyRoundedSmallTextStyle" parent="GreySmallTextStyle">
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
-    
+
     <style name="GreySmallBoldTextStyle" parent="GreySmallTextStyle">
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
@@ -299,7 +317,7 @@
     <style name="GreyBoldTextStyle" parent="GreyTextStyle">
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
-    
+
     <style name="PinkishGreySmallTextStyle" parent="PinkishGreyTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
@@ -315,22 +333,22 @@
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textAllCaps">false</item>
     </style>
-    
+
     <style name="BlackTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
-    
+
     <style name="BlackSmallTextStyle" parent="BlackTextStyle">
         <item name="android:textSize">@dimen/font_small</item>
     </style>
-    
+
     <style name="BlackRoundedSmallTextStyle" parent="BlackSmallTextStyle">
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
-    
-    
+
+
     <style name="RougeProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:height">10dp</item>
     </style>
@@ -354,7 +372,7 @@
     <style name="AquaBlueSmallTextStyle" parent="TealBlueTextStyle">
         <item name="android:textSize">@dimen/font_small</item>
     </style>
-    
+
     <style name="TealLargeBoldTextStyle" parent="TealBlueTextStyle">
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:fontFamily">@font/opensans_bold</item>
@@ -672,4 +690,50 @@
         <item name="biv_selectorOnPress">@color/material_drawer_primary</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
+
+    <style name="WhiteOutlinedTextBoxStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="placeholderTextColor">@color/lightest_grey</item>
+
+    </style>
+
+    <style name="AuthTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary_red</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/authentication_red</item>
+        <item name="android:fontFamily">@font/opensans</item>
+    </style>
+
+    <style name="FacebookLoginButton">
+        <item name="android:paddingTop">@dimen/spacing_small</item>
+        <item name="android:paddingBottom">@dimen/spacing_small</item>
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
+    <style name="LighterRedTextStyle" parent="GreyTextStyle">
+        <item name="android:textColor">@color/authentication_red</item>
+    </style>
+
+    <style name="LighterRedLargerTextStyle" parent="LighterRedTextStyle">
+        <item name="android:textSize">@dimen/font_largest</item>
+    </style>
+
+    <style name="OtpTextBox" parent="WhiteLargerTextStyle">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/layout_border_white_round</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>"
+    </style>
+
+    <style name="WhiteLighterRedButtonStyle">
+        <item name="android:textColor">@color/authentication_red</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="cornerRadius">@dimen/card_corner_radius_small</item>
+    </style>
+
 </resources>

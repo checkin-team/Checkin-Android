@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/im_auth_details_profile_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/check_in_logo_large"
+        app:layout_constraintBottom_toTopOf="@id/tv_auth_signin_welcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_upload"
+        style="@style/LighterRedLargerTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="@id/im_auth_details_profile_photo"
+        app:layout_constraintStart_toStartOf="@id/im_auth_details_profile_photo"
+        app:layout_constraintTop_toBottomOf="@id/im_auth_details_profile_photo" />
+
+    <TextView
+        android:id="@+id/tv_auth_signin_welcome"
+        style="@style/WhiteLargestTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans"
+        android:text="Welcome,"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/tv_auth_signin_info"
+        style="@style/WhiteTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:text="Login to access your account info"
+        app:layout_constraintEnd_toEndOf="@id/tv_auth_signin_welcome"
+        app:layout_constraintStart_toStartOf="@id/tv_auth_signin_welcome"
+        app:layout_constraintTop_toBottomOf="@id/tv_auth_signin_welcome" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_auth_contact_no"
+        style="@style/WhiteOutlinedTextBoxStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_extra_large"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:layout_marginEnd="@dimen/spacing_extra_large"
+        android:hint="Contact No."
+        app:endIconContentDescription="Verify"
+        app:endIconDrawable="@drawable/ic_auth_continue"
+        app:endIconMode="custom"
+        app:endIconTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_auth_signin_info">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/WhiteTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="13"
+            android:text="@string/prefix_country_code" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_auth_or"
+        style="@style/WhiteLargeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="OR"
+        app:layout_constraintEnd_toEndOf="@id/til_auth_contact_no"
+        app:layout_constraintStart_toStartOf="@id/til_auth_contact_no"
+        app:layout_constraintTop_toBottomOf="@id/til_auth_contact_no" />
+
+    <com.facebook.login.widget.LoginButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_unit"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_auth_google"
+        app:layout_constraintEnd_toStartOf="@id/btn_auth_google"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_auth_google"
+        android:id="@+id/btn_auth_fb"
+        style="@style/FacebookLoginButton" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_auth_google"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_unit"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        app:buttonSize="wide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_auth_fb"
+        app:layout_constraintTop_toBottomOf="@+id/tv_auth_or" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

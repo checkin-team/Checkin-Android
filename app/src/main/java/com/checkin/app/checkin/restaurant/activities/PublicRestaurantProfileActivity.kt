@@ -81,22 +81,37 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     internal lateinit var tvName: TextView
     @BindView(R.id.vp_restaurant_public_covers)
     internal lateinit var vpRestaurantCovers: ViewPager2
+
     @BindView(R.id.tv_restaurant_public_cuisines)
     internal lateinit var tvRestaurantCuisines: TextView
+
     @BindView(R.id.tv_restaurant_public_count_checkins)
     internal lateinit var tvCountCheckins: TextView
+
     @BindView(R.id.tv_restaurant_public_rating)
     internal lateinit var tvRating: TextView
+
     @BindView(R.id.tv_restaurant_public_distance)
     internal lateinit var tvDistance: TextView
+
     @BindView(R.id.im_restaurant_banner_distance)
     internal lateinit var imDistance: ImageView
+
+    @BindView(R.id.im_restaurant_banner_referrals)
+    internal lateinit var imReferrals: ImageView
+
+    @BindView(R.id.tv_restaurant_banner_referrals)
+    internal lateinit var tvReferrals: TextView
+
     @BindView(R.id.appbar_restaurant_public)
     internal lateinit var appbar: AppBarLayout
+
     @BindView(R.id.toolbar_restaurant_public)
     internal lateinit var toolbar: Toolbar
+
     @BindView(R.id.nested_sv_restaurant_public)
     internal lateinit var nestedSv: NestedScrollView
+
     @BindView(R.id.scheduled_cart_restaurant_public)
     internal lateinit var scheduledCartView: ScheduledSessionCartView
 
@@ -394,6 +409,11 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         } ?: "-"
         tvRating.text = restaurantModel.formatRating()
         tvDistance.text = restaurantModel.formatDistance
+        restaurantModel.restaurantOffers?.let {
+            tvReferrals.visibility = View.VISIBLE
+            imReferrals.visibility = View.VISIBLE
+            tvReferrals.text = it
+        }
 
         imDistance.setImageResource(if (restaurantModel.distance > 1.5) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)
     }

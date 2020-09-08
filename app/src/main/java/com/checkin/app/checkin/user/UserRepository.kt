@@ -85,5 +85,13 @@ class UserRepository private constructor(context: Context) : BaseRepository() {
         return mWebService.postUserLocation(data)
     }
 
+    fun postUserReferralCode(data: ObjectNode): LiveData<Resource<UserModel>> {
+        return object : NetworkBoundResource<UserModel, UserModel>() {
+            override fun createCall(): LiveData<ApiResponse<UserModel>>? {
+                return RetrofitLiveData(mWebService.postUserReferralCode(data))
+            }
+        }.asLiveData
+    }
+
     companion object : SingletonHolder<UserRepository, Application>({ UserRepository(it.applicationContext) })
 }
