@@ -10,6 +10,7 @@ import butterknife.OnClick
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.auth.AuthFragmentInteraction
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.misc.views.PrefixerTextWatcher
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.parentActivityDelegate
 import com.checkin.app.checkin.utility.pass
@@ -64,9 +65,12 @@ class AuthOptionsFragment : BaseFragment() {
             validatePhoneSubmit()?.also { interaction.onPhoneAuth(it) }
         }
 
-        tilContactNo.editText?.doAfterTextChanged {
-            // to reset once errored before
-            if (validatePhoneSubmit() != null) tilContactNo.error = null
+        tilContactNo.editText?.apply {
+            addTextChangedListener(PrefixerTextWatcher(getString(R.string.prefix_country_code), this))
+            doAfterTextChanged {
+                // to reset once errored before
+                if (validatePhoneSubmit() != null) tilContactNo.error = null
+            }
         }
 
         tilContactNo.editText?.setOnEditorActionListener { _, actionId, _ ->
