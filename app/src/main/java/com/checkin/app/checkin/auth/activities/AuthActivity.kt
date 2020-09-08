@@ -16,16 +16,15 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.navOptions
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.auth.AuthFragmentInteraction
 import com.checkin.app.checkin.auth.AuthResultModel
 import com.checkin.app.checkin.auth.AuthViewModel
-import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
 import com.checkin.app.checkin.auth.fragments.AuthOptionsFragmentDirections
 import com.checkin.app.checkin.auth.fragments.AuthOtpFragment
-import com.checkin.app.checkin.auth.fragments.AuthOtpFragmentDirections
 import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.resource.Resource
@@ -43,6 +42,7 @@ import java.util.*
 class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragment.AuthCallback {
     @BindView(R.id.fl_circle_progress_container)
     internal lateinit var flLoadingContainer: FrameLayout
+
     @BindView(R.id.tv_auth_terms_conditions)
     internal lateinit var tvTermsAndConditions: TextView
 
@@ -76,6 +76,7 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragme
             it?.let { resource ->
                 when (resource.status) {
                     Resource.Status.SUCCESS -> {
+                        Log.e(TAG, "calling successAuth")
                         successAuth(resource.data!!)
                         hideProgress()
                         toast("Welcome!")
@@ -118,8 +119,7 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragme
     }
 
     private fun askUserDetails() {
-        val action = AuthOtpFragmentDirections.actionAddUserDetails()
-        navController.navigate(action)
+        navController.navigate(R.id.authDetailsFragment, null, navOptions { popUpTo(R.id.signInFragment) { inclusive = true } })
     }
 
     private fun showProgress() {
@@ -177,12 +177,8 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragme
     }
 
     override fun onFailedVerification(exception: Exception) {
-        if (exception !is InvalidOTPException) {
-            toast("Invalid OTP try Again")
-        } else {
-            exception.log(TAG, "Authentication failed")
-            toast(exception.message ?: getString(R.string.error_authentication_phone))
-        }
+        exception.log(TAG, "Authentication failed")
+        toast(exception.message ?: getString(R.string.error_authentication_phone))
     }
 
     private fun finishAuth() {

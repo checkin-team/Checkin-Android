@@ -53,7 +53,10 @@ class AuthDetailsFragment : BaseFragment() {
         userViewModel.imageUploadResult.observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it.status) {
-                    Resource.Status.SUCCESS -> toast("Profile picture updated!")
+                    Resource.Status.SUCCESS -> {
+                        userViewModel.fetchUserData()
+                        toast("Profile picture updated!")
+                    }
                     Resource.Status.LOADING -> {
                         Log.d(TAG, "Image Uploading")
                     }

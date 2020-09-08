@@ -25,16 +25,6 @@ import com.google.firebase.auth.PhoneAuthProvider
 class AuthOtpFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_auth_otp_verification
 
-    val args: AuthOtpFragmentArgs by navArgs()
-    private val mobileAuthCallBack: AuthCallback by parentActivityDelegate()
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val phone: String by lazy {
-        args.phone
-    }
-
-    //global variable for otpTimer in case the fragment is destroyed
-    private lateinit var otpTimer: CountDownTimer
-
     @BindView(R.id.tv_auth_otp_resend)
     internal lateinit var tvResendOtp: TextView
 
@@ -46,6 +36,15 @@ class AuthOtpFragment : BaseFragment() {
 
     @BindView(R.id.tv_auth_otp_number)
     internal lateinit var otpNumber: TextView
+
+    // global variable for otpTimer in case the fragment is destroyed
+    private lateinit var otpTimer: CountDownTimer
+
+    private val mobileAuthCallBack: AuthCallback by parentActivityDelegate()
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val phone: String by lazy {
+        navArgs<AuthOtpFragmentArgs>().value.phone
+    }
 
     private val phoneAuth: PhoneAuth by lazy {
         object : PhoneAuth(firebaseAuth) {
@@ -132,7 +131,6 @@ class AuthOtpFragment : BaseFragment() {
         onResendOtpRequest()
         tvRemainingTime.visibility = View.VISIBLE
         tvResendOtp.visibility = View.GONE
-
     }
 
     private fun onResendOtpRequest() {
@@ -183,7 +181,6 @@ class AuthOtpFragment : BaseFragment() {
         fun onCancelVerification()
         fun onFailedVerification(exception: Exception)
     }
-
 
     companion object {
         private val TAG = AuthOtpFragment::class.java.simpleName

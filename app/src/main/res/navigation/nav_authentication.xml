@@ -16,6 +16,7 @@
             app:popUpTo="@id/otpFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/otpFragment"
         android:name="com.checkin.app.checkin.auth.fragments.AuthOtpFragment"
@@ -24,12 +25,8 @@
         <argument
             android:name="phone"
             app:argType="string" />
-        <action
-            android:id="@+id/action_add_user_details"
-            app:destination="@id/authDetailsFragment"
-            app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/authDetailsFragment"
         android:name="com.checkin.app.checkin.auth.fragments.AuthDetailsFragment"
