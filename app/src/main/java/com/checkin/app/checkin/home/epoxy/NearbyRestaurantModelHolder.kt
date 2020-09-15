@@ -66,21 +66,8 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
             }
 
             tvRating.text = data.formatRating
-             if(data.ratings in 4.0..5.0)
-            {
+               changerating(data.ratings,tvRating)
 
-                tvRating.setBackgroundColor(ContextCompat.getColor(context,R.color.md_green_400));
-
-            }
-           else if(data.ratings in 3.0..4.0){
-                tvRating.setBackgroundColor(ContextCompat.getColor(context,R.color.md_deep_orange_300));
-
-            }
-            else if(data.ratings<=3.0){
-                tvRating.setBackgroundColor(ContextCompat.getColor(context,R.color.red_500));
-
-
-            }
             tvDistance.text = data.formatDistance
 
             imDistance.setImageResource(if (data.distance > 1.5) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)

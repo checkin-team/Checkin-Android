@@ -393,21 +393,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             } else "-"
         } ?: "-"
         tvRating.text = restaurantModel.formatRating()
-          if(restaurantModel.rating in 4.0..5.0)
-        {
-
-            tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_green_400));
-
-    }
-     else if(restaurantModel.rating in 3.0..4.0){
-        tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.md_deep_orange_300));
-
-    }
-      else if(restaurantModel.rating<=3){
-        tvRating.setBackgroundColor(ContextCompat.getColor(this,R.color.red_500));
-
-
-    }
+          
+          changerating(restaurantModel.rating,tvRating)
 
         tvDistance.text = restaurantModel.formatDistance
 
