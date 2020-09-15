@@ -11,6 +11,7 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Shop.changerating
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
@@ -66,7 +67,8 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
             }
 
             tvRating.text = data.formatRating
-               changerating(data.ratings,tvRating)
+
+             changerating(data.ratings,tvRating)
 
             tvDistance.text = data.formatDistance
 
