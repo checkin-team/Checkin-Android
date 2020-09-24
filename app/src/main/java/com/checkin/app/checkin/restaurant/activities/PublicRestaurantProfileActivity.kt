@@ -24,6 +24,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Shop.changerating
 import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
 import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog
 import com.checkin.app.checkin.auth.fragments.PhoneEditDialog

@@ -14,41 +14,33 @@ import io.objectbox.BoxStore.context
 
 
     fun NearbyRestaurantModelHolder.changerating(ratings:Double, tvRating :TextView){
-        if(ratings in 4.0..5.0)
-        {
-
-            tvRating.setBackgroundColor(ContextCompat.getColor(context as Context, R.color.apple_green));
-
-        }
-        else if(ratings in 3.0..4.0){
-            tvRating.setBackgroundColor(ContextCompat.getColor(context as Context, R.color.orange_red));
-
-        }
-        else if(ratings< 3.0){
-            tvRating.setBackgroundColor(ContextCompat.getColor(context as Context, R.color.primary_red));
-
-
-        }
+       rate(ratings.toFloat(),tvRating)
     }
 
 fun PublicRestaurantProfileActivity.changerating(ratings:Float, tvRating :TextView){
-    if(ratings in 4.0..5.0)
-    {
+    rate(ratings,tvRating)
 
-        tvRating.setBackgroundColor(ContextCompat.getColor(context as Context, R.color.apple_green));
+}
 
-    }
-    else if(ratings in 3.0..4.0){
-        tvRating.setBackgroundColor(ContextCompat.getColor(context as Context, R.color.orange_red));
-
-    }
-    else if(ratings< 3.0){
-        tvRating.setBackgroundColor(ContextCompat.getColor(context as Context, R.color.primary_red));
-
+fun rate(ratings:Float, tvrating :TextView){
+    when(ratings){
+        in 4.0..5.0 -> tvrating.setBackgroundResource(R.color.apple_green)
+        in 3.0..4.0 ->  tvrating.setBackgroundResource(R.color.orange_red)
+        else -> tvrating.setBackgroundResource(R.color.primary_red)
 
     }
 }
 
+/*fun ratingvalue(rating: Float,color: Int): Int {
 
+    when(rating){
+        in 4.0..5.0 -> color== R.color.apple_green
+        in 3.0..4.0 -> color==R.color.orange_red
+        else -> color == R.color.primary_red
+    }
+    return color
+}
+
+ */
 
 
