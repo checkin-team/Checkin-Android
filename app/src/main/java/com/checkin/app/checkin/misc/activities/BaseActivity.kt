@@ -1,12 +1,14 @@
 package com.checkin.app.checkin.misc.activities
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Status
 import com.checkin.app.checkin.misc.fragments.DataStatusFragment
@@ -27,6 +29,13 @@ open class BaseActivity : AppCompatActivity() {
     private var progressBar: ProgressBar? = null
 
     private var doublePressedBackToExit: Boolean = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Initializing the DB
+        AppDatabase.init(applicationContext)
+    }
 
     fun init(@IdRes groupId: Int, isNetworkRequired: Boolean) {
         if (mFragment != null) {

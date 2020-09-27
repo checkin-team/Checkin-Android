@@ -3,7 +3,6 @@ package com.checkin.app.checkin.home.activities
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import com.checkin.app.checkin.Cook.CookWorkActivity
 import com.checkin.app.checkin.R
@@ -14,9 +13,8 @@ import com.checkin.app.checkin.auth.AuthPreferences
 import com.checkin.app.checkin.auth.activities.AuthActivity
 import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.config.AnalyticsUtil
-import com.checkin.app.checkin.data.config.RemoteConfig
-import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
+import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.coroutineLifecycleScope
@@ -24,7 +22,7 @@ import com.checkin.app.checkin.utility.firebaseAnalytics
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
 //    @BindView(R.id.lottie_splash)
 //    internal lateinit var lottieSplash: LottieAnimationView
 
@@ -35,11 +33,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         ButterKnife.bind(this)
-        // Activates the fetched config from Firebase Remote Config
-        RemoteConfig.activate()
-
-        // Initializing the DB
-        AppDatabase.init(applicationContext)
+        // Activates the fetched config from Firebase Remote Config        RemoteConfig.activate()
 
         // Setting App ENVIRONMENT User Property
         AnalyticsUtil.setAppBuild(firebaseAnalytics)

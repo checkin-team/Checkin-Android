@@ -14,7 +14,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.auth.PhoneAuth
-import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
 import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.utility.Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT
 import com.checkin.app.checkin.utility.Utils
@@ -22,7 +21,6 @@ import com.checkin.app.checkin.utility.toast
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 
@@ -109,11 +107,9 @@ class OtpVerificationDialog internal constructor(val activity: Activity, authCal
                 result
             } ?: false else false
             if (!status) {
-                if (err is FirebaseAuthInvalidCredentialsException)
-                    err = InvalidOTPException()
                 err?.let {
-                    mListener?.onFailedVerification(this, it)
                     Utils.logErrors(TAG, it, context.getString(R.string.error_authentication_phone))
+                    mListener?.onFailedVerification(this, it)
                 }
             }
         }
