@@ -2,197 +2,132 @@ package com.checkin.app.checkin.auth.activities
 
 import android.accounts.Account
 import android.accounts.AccountManager
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
+import android.widget.FrameLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.navOptions
 import butterknife.BindView
 import butterknife.ButterKnife
-import butterknife.OnClick
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.auth.AuthFragmentInteraction
 import com.checkin.app.checkin.auth.AuthResultModel
 import com.checkin.app.checkin.auth.AuthViewModel
-import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
-import com.checkin.app.checkin.auth.fragments.AuthOptionsFragment
-import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog
-import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog.AuthCallback
-import com.checkin.app.checkin.auth.fragments.SignupUserInfoFragment
-import com.checkin.app.checkin.auth.fragments.SignupUserInfoFragment.Companion.KEY_NAME
+import com.checkin.app.checkin.auth.fragments.AuthOptionsFragmentDirections
+import com.checkin.app.checkin.auth.fragments.AuthOtpFragment
 import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.home.activities.HomeActivity
-import com.checkin.app.checkin.misc.EulaDialog
-import com.checkin.app.checkin.user.models.UserModel.GENDER
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
-import com.checkin.app.checkin.utility.inTransaction
+import com.checkin.app.checkin.utility.log
 import com.checkin.app.checkin.utility.toast
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import java.util.*
 
-class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback {
-    @BindView(R.id.circle_progress)
-    internal lateinit var vCircleProgress: ProgressBar
-    @BindView(R.id.dark_back)
-    internal lateinit var mDarkBack: View
-    @BindView(R.id.tv_read_eula)
-    internal lateinit var cbReadEula: TextView
+class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragment.AuthCallback {
+    @BindView(R.id.fl_circle_progress_container)
+    internal lateinit var flLoadingContainer: FrameLayout
 
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    @BindView(R.id.tv_auth_terms_conditions)
+    internal lateinit var tvTermsAndConditions: TextView
+
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val authViewModel: AuthViewModel by viewModels()
-    private val eulaDialog: EulaDialog by lazy { EulaDialog(this) }
+    private val navController: NavController by lazy { findNavController(R.id.nav_host_authentication) }
 
-    private var goBack = true
-
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
+        setContentView(R.layout.activity_authentication)
         ButterKnife.bind(this)
 
         // Refresh and activate the remote config
         RemoteConfig.refreshAndActivate()
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.inTransaction {
-                add(R.id.fragment_container, AuthOptionsFragment.newInstance())
-            }
-        }
-        val user = mAuth.currentUser
+        val user = firebaseAuth.currentUser
         if (user != null && !PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
             Log.v(TAG, "User already exists.")
         }
+
+        tvTermsAndConditions.apply {
+            text = Utils.fromHtml(getString(R.string.terms_and_condition_underlined))
+            setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.url_app_terms_conditions).toUri())) }
+        }
+
+        setupObservers()
+    }
+
+    private fun setupObservers() {
         authViewModel.authResult.observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
                     Resource.Status.SUCCESS -> {
+                        Log.e(TAG, "calling successAuth")
+                        successAuth(resource.data!!)
                         hideProgress()
                         toast("Welcome!")
-                        successAuth(resource.data!!)
                     }
                     Resource.Status.LOADING -> showProgress()
-                    Resource.Status.ERROR_INVALID_REQUEST -> if (authViewModel.isLoginAttempt) {
-                        askUserDetails()
-                    } else {
+                    Resource.Status.ERROR_INVALID_REQUEST -> {
                         val error = resource.errorBody ?: return@Observer
                         when {
                             error.has("errors") -> {
                                 val msg = error["errors"][0].asText()
                                 toast(String.format(Locale.ENGLISH, "%s\nTry again.", msg))
                             }
-                            error.has("username") -> {
-                                authViewModel.showError(error)
-                            }
                             resource.message != null -> toast(resource.message)
                         }
+                        hideProgress()
                     }
                     else -> {
                         hideProgress()
-                        Utils.toast(this, resource.message)
+                        toast(resource.message)
                     }
                 }
             }
         })
-        mDarkBack.setOnTouchListener { _, _ -> true }
-    }
-
-    private fun showProgress() {
-        vCircleProgress.visibility = View.VISIBLE
-    }
-
-    private fun hideProgress() {
-        vCircleProgress.visibility = View.GONE
     }
 
     private fun authenticateWithCredential(credential: AuthCredential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this) { task: Task<AuthResult?> ->
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        assert(mAuth.currentUser != null)
-                        mAuth.currentUser!!.getIdToken(false).addOnSuccessListener { tokenResult: GetTokenResult ->
-                            authViewModel.setFireBaseIdToken(tokenResult.token)
-                            authViewModel.login()
+                        firebaseAuth.currentUser!!.getIdToken(false).addOnSuccessListener {
+                            it.token?.also { token ->
+                                authViewModel.authenticate(token)
+                            } ?: Log.e(TAG, "Got null ID Token")
                         }
-                    } else if (task.exception != null) {
-                        Utils.logErrors(TAG, task.exception, "Authentication failed")
-                        Toast.makeText(applicationContext, R.string.error_authentication, Toast.LENGTH_SHORT).show()
+                    } else {
+                        task.exception?.log(TAG, "Authentication failed")
+                        toast(R.string.error_authentication)
                     }
                 }
     }
 
     private fun askUserDetails() {
-        val user = mAuth.currentUser
-        val fragment: Fragment = SignupUserInfoFragment.newInstance()
-        if (user == null) {
-            Log.e(TAG, "Logged-in user is NULL")
-            return
-        }
-        val name = user.displayName
-        if (name != null) {
-            val bundle = Bundle()
-            bundle.putString(KEY_NAME, name)
-            fragment.arguments = bundle
-        }
-        goBack = false
-        showDarkBack()
-        hideProgress()
-        replaceFragmentContainer(fragment)
+        navController.navigate(R.id.authDetailsFragment, null, navOptions { popUpTo(R.id.signInFragment) { inclusive = true } })
     }
 
-    private fun replaceFragmentContainer(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+    private fun showProgress() {
+        flLoadingContainer.visibility = View.VISIBLE
     }
 
-    private fun showDarkBack() {
-        mDarkBack.animate()
-                .alpha(0.67f)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator) {
-                        mDarkBack.visibility = View.VISIBLE
-                    }
-                })
-    }
-
-    private fun hideDarkBack() {
-        mDarkBack.animate()
-                .alpha(0.0f)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator) {
-                        mDarkBack.visibility = View.GONE
-                    }
-                })
-    }
-
-    @OnClick(R.id.tv_read_eula)
-    fun readEula() {
-        eulaDialog.show()
-    }
-
-    override fun onUserInfoProcess(firstName: String, lastName: String, username: String, gender: GENDER) {
-        authViewModel.register(firstName, lastName, gender, username)
+    private fun hideProgress() {
+        flLoadingContainer.visibility = View.GONE
     }
 
     override fun onGoogleAuth() {
@@ -209,18 +144,14 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback 
     override fun onFacebookAuth(loginResult: LoginResult) {
         showProgress()
         val accessToken = loginResult.accessToken
-        authViewModel.setProviderIdToken(accessToken.token)
+        authViewModel.providerIdToken = accessToken.token
         val credential = FacebookAuthProvider.getCredential(accessToken.token)
         authenticateWithCredential(credential)
     }
 
     override fun onPhoneAuth(phoneNo: String) {
-        val dialog = OtpVerificationDialog.Builder.with(this)
-                .setAuthCallback(this)
-                .build()
-        dialog.verifyPhoneNumber(phoneNo)
-        dialog.show()
-        showDarkBack()
+        val action = AuthOptionsFragmentDirections.actionVerifyOtp(phoneNo)
+        navController.navigate(action)
     }
 
     private fun successAuth(data: AuthResultModel) {
@@ -232,51 +163,42 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback 
             userData.putLong(Constants.ACCOUNT_UID, data.userId)
             accountManager.addAccountExplicitly(account, null, userData)
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken)
+
             startService(Intent(applicationContext, DeviceTokenService::class.java))
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
         }
+
+        if (!data.isProfileReady) askUserDetails()
+        else finishAuth()
     }
 
-    override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential, idToken: String) {
-        authViewModel.setFireBaseIdToken(idToken)
-        authViewModel.login()
-        dialog?.dismiss()
-        hideDarkBack()
+    override fun onSuccessVerification(credential: PhoneAuthCredential, idToken: String, phone: String) = authViewModel.authenticate(idToken)
+
+    override fun onCancelVerification() {
     }
 
-    override fun onCancelVerification(dialog: DialogInterface?) {
-        hideDarkBack()
-    }
-
-    override fun onFailedVerification(dialog: DialogInterface?, exception: Exception) {
+    override fun onFailedVerification(exception: Exception) {
+        exception.log(TAG, "Authentication failed")
         toast(exception.message ?: getString(R.string.error_authentication_phone))
-        if (exception !is InvalidOTPException) {
-            dialog?.dismiss()
-            hideDarkBack()
-        }
     }
 
-    override fun onBackPressed() {
-        if (goBack) {
-            hideDarkBack()
-            super.onBackPressed()
-        }
+    private fun finishAuth() {
+        Utils.navigateBackToHome(this)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             RC_AUTH_GOOGLE -> {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                try {
-                    val account = task.getResult(ApiException::class.java)
-                    authViewModel.setProviderIdToken(account!!.idToken)
+                GoogleSignIn.getSignedInAccountFromIntent(data).runCatching {
+                    val account = getResult(ApiException::class.java)
+                            ?: error("Null google account obtained")
+                    authViewModel.providerIdToken = account.idToken
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
                     authenticateWithCredential(credential)
-                } catch (e: ApiException) {
-                    Log.e(TAG, "GoogleAuth - Verification Failed: ", e)
+                }.onFailure { e ->
+                    e.log(TAG, "GoogleAuth - Verification Failed: ")
                     hideProgress()
-                    Toast.makeText(applicationContext, R.string.error_authentication_google, Toast.LENGTH_SHORT).show()
+                    if (e is ApiException) toast(R.string.error_authentication_google)
                 }
             }
             else -> super.onActivityResult(requestCode, resultCode, data)

@@ -38,6 +38,7 @@ data class RestaurantModel(
         override val location: LocationModel?,
         val cuisines: ArrayList<String>?,
         val categories: ArrayList<String>?,
+        val restaurantOffers: String?,
         @JsonProperty("has_nonveg") val hasNonVeg: Boolean = false,
         @JsonProperty("has_home_delivery") val hasHomeDelivery: Boolean = false,
         @JsonProperty("no_followers") val followers: Long,

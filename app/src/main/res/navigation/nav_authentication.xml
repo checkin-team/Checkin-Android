@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_authentication"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.checkin.app.checkin.auth.fragments.AuthOptionsFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_auth_option">
+        <action
+            android:id="@+id/action_verifyOtp"
+            app:destination="@id/otpFragment"
+            app:popUpTo="@id/otpFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="com.checkin.app.checkin.auth.fragments.AuthOtpFragment"
+        android:label="OtpFragment"
+        tools:layout="@layout/fragment_auth_otp_verification">
+        <argument
+            android:name="phone"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authDetailsFragment"
+        android:name="com.checkin.app.checkin.auth.fragments.AuthDetailsFragment"
+        android:label="AuthDetailsFragment"
+        tools:layout="@layout/fragment_auth_details" />
+    <fragment
+        android:id="@+id/authReferralFragment"
+        android:name="com.checkin.app.checkin.auth.fragments.AuthReferralFragment"
+        android:label="AuthReferralFragment"
+        tools:layout="@layout/fragment_auth_referral" />
+</navigation>

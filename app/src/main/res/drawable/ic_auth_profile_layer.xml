@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="@dimen/spacing_small"
+        android:drawable="@drawable/ic_auth_profile"
+        android:left="@dimen/spacing_normal"
+        android:right="@dimen/spacing_normal"
+        android:top="@dimen/spacing_large" />
+</layer-list>

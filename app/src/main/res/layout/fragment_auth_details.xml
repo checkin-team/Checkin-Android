@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="@color/authentication_red">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_auth_details_profile_photo"
+        android:layout_width="@dimen/auth_profile_size"
+        android:layout_height="@dimen/auth_profile_size"
+        android:src="@drawable/ic_auth_profile_layer"
+        app:civ_border_color="@color/pinkish_grey"
+        app:civ_border_width="@dimen/spacing_unit"
+        app:layout_constraintBottom_toTopOf="@id/tv_auth_details_first"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_upload"
+        style="@style/GreyLargeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Profile Photo"
+        app:layout_constraintEnd_toEndOf="@id/im_auth_details_profile_photo"
+        app:layout_constraintStart_toStartOf="@id/im_auth_details_profile_photo"
+        app:layout_constraintTop_toBottomOf="@id/im_auth_details_profile_photo" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_auth_details_first"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="One step away from your first "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_auth_details_chips"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_chips"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_bold"
+        android:text="500 Checkin CHIPS "
+        app:layout_constraintEnd_toStartOf="@id/tv_auth_details_chips_info"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/tv_auth_details_first"
+        app:layout_constraintTop_toTopOf="@id/tv_auth_details_first" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_chips_info"
+        style="@style/WhiteTextStyle"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ⓘ"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_auth_details_chips"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_auth_details_chips"
+        app:layout_constraintTop_toTopOf="@id/tv_auth_details_chips" />
+
+    <TextView
+        android:id="@+id/tv_auth_details_referal"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:visibility="invisible"
+        android:text="Earn 1000 Checkin Chips more with a Referal Code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_auth_userinfo_proceed" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_auth_details_firstname"
+        style="@style/WhiteOutlinedTextBoxStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:enabled="true"
+        android:hint="First Name"
+        app:layout_constraintEnd_toStartOf="@id/til_auth_details_lastname"
+        app:layout_constraintStart_toStartOf="@id/tv_auth_details_first"
+        app:layout_constraintTop_toBottomOf="@id/tv_auth_details_first">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/WhiteTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_auth_details_lastname"
+        style="@style/WhiteOutlinedTextBoxStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Last Name"
+        app:layout_constraintEnd_toEndOf="@id/tv_auth_details_chips_info"
+        app:layout_constraintStart_toEndOf="@id/til_auth_details_firstname"
+        app:layout_constraintTop_toTopOf="@id/til_auth_details_firstname">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/WhiteTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_auth_userinfo_proceed"
+        style="@style/WhiteLighterRedButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:text="Proceed"
+        app:layout_constraintEnd_toEndOf="@id/til_auth_details_lastname"
+        app:layout_constraintStart_toStartOf="@id/til_auth_details_firstname"
+        app:layout_constraintTop_toBottomOf="@id/til_auth_details_firstname" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

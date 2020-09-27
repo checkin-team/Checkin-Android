@@ -150,9 +150,7 @@ class HomeActivity : BaseAccountActivity() {
         explainQr()
 
         // Refresh Remote Config
-        RemoteConfig.refresh().addOnSuccessListener {
-            RemoteConfig.activate()
-        }
+        RemoteConfig.refreshAndActivate()
         supportFragmentManager.inTransaction {
             add(R.id.frg_container_activity, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
         }

@@ -25,7 +25,7 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
-    <!--  Fixes Manifest Merge error with Razorpay library  -->
+    <!-- Fixes Manifest Merge error with Razorpay library -->
     <uses-sdk tools:overrideLibrary="com.razorpay" />
 
     <application
@@ -36,6 +36,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
+
         <activity
             android:name=".home.activities.AboutUsActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
@@ -56,8 +57,9 @@
 
         <activity
             android:name=".auth.activities.AuthActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AuthTheme" />
+
         <activity
             android:name=".home.activities.HomeActivity"
             android:screenOrientation="sensorPortrait"
