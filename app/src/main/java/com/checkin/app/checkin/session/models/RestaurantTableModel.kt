@@ -12,9 +12,6 @@ data class RestaurantTableModel(
         val table: String? = null,
         @Transient @JsonProperty("session") val tableSession: TableSessionModel? = null
 ) {
-    @JsonProperty("pending_orders")
-    var pendingOrders: Int = 0
-
     var eventCount: Int = 0
 
     val isSessionActive: Boolean = tableSession != null
@@ -35,7 +32,7 @@ data class RestaurantTableModel(
     val formatOrderStatus: String
         get() = when {
             eventCount > 0 -> "New Order!"
-            pendingOrders > 0 -> String.format(Locale.getDefault(), "%d orders in line. Mark ready after preparation.", pendingOrders)
+            tableSession?.pendingOrders ?: 0 > 0 -> String.format(Locale.getDefault(), "%d orders in line. Mark ready after preparation.", tableSession!!.pendingOrders)
             else -> "No active orders."
         }
 

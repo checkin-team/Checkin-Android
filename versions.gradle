@@ -16,7 +16,7 @@ ext.versions = [
         paging            : '2.1.0',
         objectBox         : '2.5.0',
         // 2.9.7+ changes minSdk to API 26+
-        jackson           : '2.9.6',
+        jackson           : '2.11.2',
         facebook          : '[5,6)',
         butterknife       : '10.2.0',
         glide             : '4.10.0',
