@@ -38,10 +38,12 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
             if (tableModel.tableSession != null) result.add(tableModel)
         }
         result.sortWith(Comparator { t1: RestaurantTableModel, t2: RestaurantTableModel ->
-            if (t2.tableSession!!.event != null && t1.tableSession!!.event != null) {
-                t2.tableSession.event.timestamp.compareTo(t1.tableSession.event.timestamp)
+            val t1Event = t1.tableSession?.event
+            val t2Event = t2.tableSession?.event
+            if (t1Event != null && t2Event != null) {
+                t2Event.timestamp.compareTo(t1Event.timestamp)
             } else {
-                t2.tableSession.created.compareTo(t1.tableSession!!.created)
+                t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
             }
         })
         Resource.cloneResource(input, result)

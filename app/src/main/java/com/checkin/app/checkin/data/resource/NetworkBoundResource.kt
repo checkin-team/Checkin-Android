@@ -19,25 +19,34 @@ import com.checkin.app.checkin.data.resource.Resource.Companion.successCached
 // RequestType: Type for the API response
 abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constructor() {
     private val mResult = MediatorLiveData<Resource<ResultType>>()
-    protected var `val`: Any? = null
+
+    // returns a LiveData that represents the resource, implemented
+    // in the base class.
+    val asLiveData: LiveData<Resource<ResultType>> = mResult
+
+    init {
+        fetchData()
+    }
 
     private fun fetchFromNetwork(dbSource: LiveData<ResultType>?) {
         val apiResponse = createCall()!!
-        val useDb = shouldUseLocalDb() && dbSource != null
-        if (useDb) {
+        if (dbSource != null) {
             // we re-attach dbSource as a new source, it will dispatch its latest value quickly
-            mResult.addSource(dbSource!!) { mResult.setValue(loading(it)) }
+            mResult.addSource(dbSource) {
+                mResult.removeSource(dbSource)
+                mResult.value = loading(it)
+            }
         }
         mResult.addSource(apiResponse) { response ->
             mResult.removeSource(apiResponse)
-            if (useDb) mResult.removeSource(dbSource!!)
             if (response != null) {
                 val resource = createResource(response)
-                if (useDb && resource.status == Resource.Status.SUCCESS) saveResultAndReInit(resource) else postResultDirectly(resource, response.requestUrl)
+                if (shouldUseLocalDb() && resource.status == Resource.Status.SUCCESS) saveResultAndReInit(resource)
+                else postResultDirectly(resource, response.requestUrl)
                 if (!response.isSuccessful) {
                     onFetchFailed(response)
-                    if (useDb) {
-                        mResult.addSource(dbSource!!) {
+                    if (dbSource != null) {
+                        mResult.addSource(dbSource) {
                             if (it == null || (it is List<*> && it.isEmpty())) mResult.value = errorNotFoundCached<ResultType>(resource.message)
                             else mResult.value = errorButLoadedCached(resource.message, it)
                         }
@@ -45,6 +54,24 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
                 }
             }
         }
+    }
+
+    protected open fun fetchData() {
+        mResult.value = loading(null)
+        val dbSource = if (shouldUseLocalDb()) loadFromDb() else null
+        if (dbSource != null) {
+            mResult.addSource(dbSource) { data ->
+                mResult.removeSource(dbSource)
+                if (shouldFetch(data)) {
+                    fetchFromNetwork(dbSource)
+                } else {
+                    mResult.addSource(dbSource) {
+                        if (it == null || (it is List<*> && it.isEmpty())) mResult.value = errorNotFoundCached<ResultType>(null)
+                        else mResult.value = successCached(it)
+                    }
+                }
+            }
+        } else fetchFromNetwork(null)
     }
 
     @MainThread
@@ -59,10 +86,12 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
                 // we specially request a new live data,
                 // otherwise we will get immediately last cached value,
                 // which may not be updated with latest results received from network.
-                mResult.addSource(loadFromDb()!!) {
-                    if (it != null) mResult.setValue(success(it))
+                val dbResponse = loadFromDb()
+                if (dbResponse != null) mResult.addSource(dbResponse) {
+                    mResult.removeSource(dbResponse)
+                    if (it != null) mResult.value = success(it)
                     else mResult.value = cloneResource(resource, null)
-                }
+                } else mResult.value = resource as? Resource<ResultType>
             }
         }.execute()
     }
@@ -105,29 +134,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
     protected fun onFetchFailed(response: ApiResponse<RequestType>?) {
     }
 
-    // returns a LiveData that represents the resource, implemented
-    // in the base class.
-    val asLiveData: LiveData<Resource<ResultType>>
-        get() = mResult
-
     companion object {
         private val TAG = NetworkBoundResource::class.java.simpleName
-    }
-
-    init {
-        mResult.value = loading(null)
-        loadFromDb()?.let { dbSource ->
-            mResult.addSource(dbSource) { data ->
-                mResult.removeSource(dbSource)
-                if (shouldFetch(data)) {
-                    fetchFromNetwork(dbSource)
-                } else {
-                    mResult.addSource(dbSource) {
-                        if (it != null) mResult.setValue(successCached(it))
-                        else mResult.value = errorNotFoundCached<ResultType>(null)
-                    }
-                }
-            }
-        } ?: fetchFromNetwork(null)
     }
 }

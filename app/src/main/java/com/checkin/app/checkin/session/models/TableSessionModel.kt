@@ -16,7 +16,7 @@ data class TableSessionModel(
     var host: BriefModel? = null
 
     @Transient
-    lateinit var event: EventBriefModel
+    var event: EventBriefModel? = null
 
     lateinit var created: Date
 

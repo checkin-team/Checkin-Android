@@ -99,9 +99,8 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
         }
         mViewModel.activeTables.observe(viewLifecycleOwner, Observer {
             it?.let { input ->
-                if (input.status === Resource.Status.SUCCESS && input.data != null) {
-                    updateUi(input.data)
-                } else if (input.status !== Resource.Status.LOADING) {
+                if (input.data != null) updateUi(input.data)
+                else if (input.status !== Resource.Status.LOADING) {
                     Utils.toast(requireContext(), input.message)
                 }
             }
@@ -143,10 +142,11 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
 
     override fun onClickTable(tableModel: RestaurantTableModel) {
         val intent = Intent(context, CookSessionActivity::class.java)
-        intent.putExtra(CookSessionActivity.KEY_SESSION_PK, tableModel.sessionPk ?: return)
+        val sessionPk = tableModel.sessionPk ?: return
+        intent.putExtra(CookSessionActivity.KEY_SESSION_PK, sessionPk)
                 .putExtra(CookSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
         startActivity(intent)
-        val pos = mViewModel.getTablePositionWithPk(tableModel.sessionPk)
+        val pos = mViewModel.getTablePositionWithPk(sessionPk)
         tableModel.resetEvents()
         mAdapter.updateSession(pos)
     }

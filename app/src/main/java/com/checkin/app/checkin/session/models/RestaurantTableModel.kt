@@ -1,37 +1,50 @@
 package com.checkin.app.checkin.session.models
 
+import com.checkin.app.checkin.data.db.dbStore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonSetter
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
-import io.objectbox.annotation.Transient
 import io.objectbox.relation.ToOne
 import java.util.*
 
 @Entity
 data class RestaurantTableModel(
-        @Id(assignable = true) @JsonProperty("qr_pk") var qrPk: Long,
-        val table: String? = null,
-        @Transient @JsonProperty("session") val tableSession: TableSessionModel? = null
+        @Id(assignable = true) @JsonProperty("qr_pk") var qrPk: Long = 0,
+        val table: String? = null
 ) {
+    constructor(qrPk: Long, table: String?, sessionModel: TableSessionModel?) : this(qrPk, table) {
+        setSession(sessionModel)
+    }
+
+    @delegate:Transient
+    val tableSession: TableSessionModel? by lazy { relTableSession.target }
+
     var eventCount: Int = 0
 
-    val isSessionActive: Boolean = tableSession != null
+    @delegate:Transient
+    val isSessionActive: Boolean by lazy { tableSession != null }
 
     val formatEventCount = eventCount.toString()
 
-    val sessionPk: Long? = tableSession?.pk
+    @delegate:Transient
+    val sessionPk: Long? by lazy { tableSession?.pk }
 
-    @JsonIgnore
     lateinit var relTableSession: ToOne<TableSessionModel>
-
-    init {
-        relTableSession.target = tableSession
-    }
 
     // saved only in local DB
     @JsonIgnore
     var restaurantPk: Long = 0
+
+    @JsonSetter("session")
+    fun setSession(sessionModel: TableSessionModel?) {
+        tableBox.attach(this)
+        if (!relTableSession.isNull) sessionBox.remove(relTableSession.targetId)
+        if (sessionModel != null) sessionBox.put(sessionModel)
+        relTableSession.target = sessionModel
+        tableBox.put(this)
+    }
 
     fun addEvent(event: EventBriefModel) {
         tableSession?.event = event
@@ -51,5 +64,8 @@ data class RestaurantTableModel(
 
     companion object {
         const val NO_QR_ID: Long = -1
+
+        private val tableBox by dbStore<RestaurantTableModel>()
+        private val sessionBox by dbStore<TableSessionModel>()
     }
 }

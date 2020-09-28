@@ -29,7 +29,13 @@ class CookWorkViewModel(application: Application) : BaseViewModel(application) {
         if (input?.data == null || input.status !== Resource.Status.SUCCESS) return@map input
         val results = input.data.apply {
             sortedWith(Comparator { t1: RestaurantTableModel, t2: RestaurantTableModel ->
-                t2.tableSession!!.event.timestamp.compareTo(t1.tableSession!!.event.timestamp)
+                val t1Event = t1.tableSession?.event
+                val t2Event = t2.tableSession?.event
+                if (t1Event != null && t2Event != null) {
+                    t2Event.timestamp.compareTo(t1Event.timestamp)
+                } else {
+                    t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
+                }
             })
         }
         cloneResource(input, results)

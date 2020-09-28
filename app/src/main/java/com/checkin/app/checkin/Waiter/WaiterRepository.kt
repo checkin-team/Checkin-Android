@@ -83,7 +83,7 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
 
     fun getShopTables(shopId: Long): LiveData<Resource<List<RestaurantTableModel>>> {
         return object : NetworkBoundResource<List<RestaurantTableModel>, List<RestaurantTableModel>>() {
-            override fun shouldUseLocalDb(): Boolean = false
+            override fun shouldUseLocalDb(): Boolean = true
 
             override fun loadFromDb(): LiveData<List<RestaurantTableModel>>? {
                 return ObjectBoxLiveData(tableBox.query()
@@ -94,8 +94,9 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
             override fun createCall(): LiveData<ApiResponse<List<RestaurantTableModel>>> = RetrofitLiveData(mWebService.getRestaurantTables(shopId))
 
             override fun saveCallResult(data: List<RestaurantTableModel>?) = data?.run {
-                tableSessionBox.put(mapNotNull { it.tableSession })
-                forEach { it.restaurantPk = shopId }
+                forEach {
+                    it.restaurantPk = shopId
+                }
                 tableBox.put(this)
             } ?: Unit
         }.asLiveData
@@ -103,7 +104,7 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
 
     fun filterShopTables(shopId: Long, activeQuery: Boolean): LiveData<Resource<List<RestaurantTableModel>>> {
         return object : NetworkBoundResource<List<RestaurantTableModel>, List<RestaurantTableModel>>() {
-            override fun shouldUseLocalDb(): Boolean = false
+            override fun shouldUseLocalDb(): Boolean = true
 
             override fun loadFromDb(): LiveData<List<RestaurantTableModel>>? {
                 return ObjectBoxLiveData(tableBox.query()
@@ -118,8 +119,9 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
             override fun createCall(): LiveData<ApiResponse<List<RestaurantTableModel>>> = RetrofitLiveData(mWebService.filterRestaurantTables(shopId, activeQuery))
 
             override fun saveCallResult(data: List<RestaurantTableModel>?) = data?.run {
-                tableSessionBox.put(mapNotNull { it.tableSession })
-                forEach { it.restaurantPk = shopId }
+                forEach {
+                    it.restaurantPk = shopId
+                }
                 tableBox.put(this)
             } ?: Unit
         }.asLiveData

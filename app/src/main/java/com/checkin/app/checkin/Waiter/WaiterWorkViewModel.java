@@ -141,7 +141,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
         for (int i = 0, length = resource.getData().size(); i < length; i++) {
             RestaurantTableModel table = resource.getData().get(i);
             if (newTable.getQrPk() == RestaurantTableModel.NO_QR_ID ? newTable.getTable().equals(table.getTable()) : table.getQrPk() == newTable.getQrPk()) {
-                resource.getData().set(i, newTable.copy(newTable.getQrPk(), newTable.getTable(), newTable.getTableSession()));
+                resource.getData().set(i, newTable);
                 break;
             }
         }
@@ -168,7 +168,8 @@ public class WaiterWorkViewModel extends BaseViewModel {
                 RestaurantTableModel tableModel = shopTableResource.getData().get(i);
                 TableSessionModel sessionModel = tableModel.getTableSession();
                 if (sessionModel != null && sessionModel.getPk() == sessionPk) {
-                    shopTableResource.getData().set(i, tableModel.copy(tableModel.getQrPk(), tableModel.getTable(), null));
+                    tableModel.setSession(null);
+                    shopTableResource.getData().set(i, tableModel);
                     mShopTables.setValue(Resource.Companion.cloneResource(shopTableResource, shopTableResource.getData()));
                     break;
                 }
