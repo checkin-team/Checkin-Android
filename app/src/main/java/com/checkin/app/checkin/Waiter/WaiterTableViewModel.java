@@ -43,7 +43,7 @@ public class WaiterTableViewModel extends BaseViewModel {
 
     public WaiterTableViewModel(@NonNull Application application) {
         super(application);
-        mWaiterRepository = WaiterRepository.getInstance(application);
+        mWaiterRepository = WaiterRepository.Companion.getInstance(application);
         mSessionRepository = SessionRepository.Companion.getInstance(application);
     }
 

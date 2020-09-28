@@ -1,9 +1,11 @@
 package com.checkin.app.checkin.session.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import io.objectbox.annotation.Transient
+import io.objectbox.relation.ToOne
 import java.util.*
 
 @Entity
@@ -19,6 +21,17 @@ data class RestaurantTableModel(
     val formatEventCount = eventCount.toString()
 
     val sessionPk: Long? = tableSession?.pk
+
+    @JsonIgnore
+    lateinit var relTableSession: ToOne<TableSessionModel>
+
+    init {
+        relTableSession.target = tableSession
+    }
+
+    // saved only in local DB
+    @JsonIgnore
+    var restaurantPk: Long = 0
 
     fun addEvent(event: EventBriefModel) {
         tableSession?.event = event

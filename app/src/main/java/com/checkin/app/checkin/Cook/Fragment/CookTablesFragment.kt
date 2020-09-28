@@ -29,7 +29,6 @@ import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
 import com.checkin.app.checkin.session.models.TableSessionModel
 import com.checkin.app.checkin.utility.Utils
-import java.util.*
 
 class CookTablesFragment : BaseFragment(), CookTableInteraction {
     override val rootLayout: Int = R.layout.fragment_shop_cook_tables
@@ -60,9 +59,7 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
                         type = SessionChatModel.CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN
                     }
                     val sessionData = message.sessionDetail ?: return
-                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel).apply {
-                        created = Calendar.getInstance().time
-                    }
+                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel)
                     val tableModel = RestaurantTableModel(qrPk, tableName, tableSessionModel).apply {
                         addEvent(eventModel)
                         if (actor.type == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {

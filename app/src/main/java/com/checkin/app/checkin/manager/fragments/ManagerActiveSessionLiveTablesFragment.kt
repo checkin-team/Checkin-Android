@@ -32,7 +32,6 @@ import com.checkin.app.checkin.session.models.RestaurantTableModel
 import com.checkin.app.checkin.session.models.TableSessionModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.isNotEmpty
-import java.util.*
 
 class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInteraction {
     override val rootLayout: Int = R.layout.fragment_manager_active_session_live_tables
@@ -61,9 +60,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                             ?: return).apply {
                         type = SessionChatModel.CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN
                     }
-                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel).apply {
-                        created = Calendar.getInstance().time
-                    }
+                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel)
                     val tableModel = RestaurantTableModel(qrPk, tableName, tableSessionModel)
                     if (actor.type == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         tableModel.tableSession?.host = message.actor.briefModel

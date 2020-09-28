@@ -34,7 +34,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public WaiterWorkViewModel(@NonNull Application application) {
         super(application);
-        mWaiterRepository = WaiterRepository.getInstance(application);
+        mWaiterRepository = WaiterRepository.Companion.getInstance(application);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public void fetchShopTables(long shopId) {
         mShopPk = shopId;
-        mShopTables.addSource(mWaiterRepository.filterShopTables(shopId, false), mShopTables::setValue);
+        mShopTables.addSource(mWaiterRepository.getShopTables(shopId), mShopTables::setValue);
     }
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopAssignedTables() {
