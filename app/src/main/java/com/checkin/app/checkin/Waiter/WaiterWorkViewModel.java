@@ -53,7 +53,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public void fetchShopTables(long shopId) {
         mShopPk = shopId;
-        mShopTables.addSource(mWaiterRepository.getShopTables(shopId, false), mShopTables::setValue);
+        mShopTables.addSource(mWaiterRepository.filterShopTables(shopId, false), mShopTables::setValue);
     }
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopAssignedTables() {
@@ -131,16 +131,17 @@ public class WaiterWorkViewModel extends BaseViewModel {
         return mShopPk;
     }
 
-    public void addRestaurantTable(RestaurantTableModel tableModel) {
+    public void addRestaurantTable(RestaurantTableModel newTable) {
         Resource<List<RestaurantTableModel>> resource = mShopTables.getValue();
         if (resource == null || resource.getData() == null)
             return;
 
-        if (resource.getData().contains(tableModel))
+        if (resource.getData().contains(newTable))
             return;
-        for (RestaurantTableModel table : resource.getData()) {
-            if (tableModel.getQrPk() == RestaurantTableModel.NO_QR_ID ? tableModel.getTable().equals(table.getTable()) : table.getQrPk() == tableModel.getQrPk()) {
-                table.setTableSession(tableModel.getTableSession());
+        for (int i = 0, length = resource.getData().size(); i < length; i++) {
+            RestaurantTableModel table = resource.getData().get(i);
+            if (newTable.getQrPk() == RestaurantTableModel.NO_QR_ID ? newTable.getTable().equals(table.getTable()) : table.getQrPk() == newTable.getQrPk()) {
+                resource.getData().set(i, newTable.copy(newTable.getQrPk(), newTable.getTable(), newTable.getTableSession()));
                 break;
             }
         }
@@ -164,9 +165,10 @@ public class WaiterWorkViewModel extends BaseViewModel {
         Resource<List<RestaurantTableModel>> shopTableResource = mShopTables.getValue();
         if (shopTableResource != null && shopTableResource.getData() != null) {
             for (int i = 0, length = shopTableResource.getData().size(); i < length; i++) {
-                TableSessionModel sessionModel = shopTableResource.getData().get(i).getTableSession();
+                RestaurantTableModel tableModel = shopTableResource.getData().get(i);
+                TableSessionModel sessionModel = tableModel.getTableSession();
                 if (sessionModel != null && sessionModel.getPk() == sessionPk) {
-                    shopTableResource.getData().get(i).setTableSession(null);
+                    shopTableResource.getData().set(i, tableModel.copy(tableModel.getQrPk(), tableModel.getTable(), null));
                     mShopTables.setValue(Resource.Companion.cloneResource(shopTableResource, shopTableResource.getData()));
                     break;
                 }

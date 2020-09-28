@@ -6,18 +6,18 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.checkin.app.checkin.data.network.ApiClient;
-import com.checkin.app.checkin.data.network.ApiResponse;
-import com.checkin.app.checkin.data.BaseRepository;
-import com.checkin.app.checkin.data.resource.NetworkBoundResource;
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.data.network.RetrofitLiveData;
-import com.checkin.app.checkin.data.network.WebApiService;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.checkin.app.checkin.data.BaseRepository;
+import com.checkin.app.checkin.data.network.ApiClient;
+import com.checkin.app.checkin.data.network.ApiResponse;
+import com.checkin.app.checkin.data.network.RetrofitLiveData;
+import com.checkin.app.checkin.data.network.WebApiService;
+import com.checkin.app.checkin.data.resource.NetworkBoundResource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.session.models.CheckoutStatusModel;
 import com.checkin.app.checkin.session.models.QRResultModel;
@@ -129,7 +129,7 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<RestaurantTableModel>>> getShopTables(long shopId,boolean activeQuery) {
+    public LiveData<Resource<List<RestaurantTableModel>>> getShopTables(long shopId) {
         return new NetworkBoundResource<List<RestaurantTableModel>, List<RestaurantTableModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -139,7 +139,27 @@ public class WaiterRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<RestaurantTableModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getRestaurantTables(shopId,activeQuery));
+                return new RetrofitLiveData<>(mWebService.getRestaurantTables(shopId));
+            }
+
+            @Override
+            protected void saveCallResult(List<RestaurantTableModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<RestaurantTableModel>>> filterShopTables(long shopId, boolean activeQuery) {
+        return new NetworkBoundResource<List<RestaurantTableModel>, List<RestaurantTableModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<RestaurantTableModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.filterRestaurantTables(shopId, activeQuery));
             }
 
             @Override

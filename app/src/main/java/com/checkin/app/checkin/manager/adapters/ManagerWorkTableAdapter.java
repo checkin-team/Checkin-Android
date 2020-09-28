@@ -124,7 +124,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                     tvShopManagerTableName.setText(R.string.waiter_unassigned);
                 }
                 if (data.getEventCount() > 0) {
-                    tvEventBadge.setText(data.formatEventCount());
+                    tvEventBadge.setText(data.getFormatEventCount());
                     tvEventBadge.setVisibility(View.VISIBLE);
                     tvShopManagerTableBill.setVisibility(View.GONE);
                     tvShopManagerTableDetail.setText(tableSessionModel.getEvent().getMessage());

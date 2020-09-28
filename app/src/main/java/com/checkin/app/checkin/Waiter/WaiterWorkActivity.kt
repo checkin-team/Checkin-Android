@@ -374,7 +374,7 @@ class WaiterWorkActivity : BaseAccountActivity(), WaiterTableInteraction, OnTabl
 
     override fun onTableClick(restaurantTableModel: RestaurantTableModel) {
         endDrawer.closeDrawer()
-        newWaiterSessionDialog(restaurantTableModel.qrPk, restaurantTableModel.table)
+        newWaiterSessionDialog(restaurantTableModel.qrPk, restaurantTableModel.table ?: "UNKNOWN")
     }
 
     private fun newWaiterSessionDialog(qrPk: Long, tableName: String) {
