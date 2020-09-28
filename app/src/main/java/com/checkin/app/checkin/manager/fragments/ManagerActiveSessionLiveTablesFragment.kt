@@ -136,7 +136,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                     .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
             startActivity(intent)
             val pos = mViewModel.getTablePositionWithPk(tableModel.tableSession!!.pk)
-            tableModel.eventCount = 0
+            tableModel.unseenEventCount = 0
             mAdapter.updateSession(pos)
         }
     }
@@ -164,7 +164,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
 
     // region UI-Update
     private fun addTable(tableModel: RestaurantTableModel) {
-        tableModel.eventCount = 1
+        tableModel.unseenEventCount = 1
         mViewModel.addRestaurantTable(tableModel)
     }
 

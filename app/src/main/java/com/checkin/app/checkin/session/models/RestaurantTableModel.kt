@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.session.models
 
 import com.checkin.app.checkin.data.db.dbStore
-import com.fasterxml.jackson.annotation.JsonIgnore
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonSetter
 import io.objectbox.annotation.Entity
@@ -21,43 +21,46 @@ data class RestaurantTableModel(
     @delegate:Transient
     val tableSession: TableSessionModel? by lazy { relTableSession.target }
 
-    var eventCount: Int = 0
-
     @delegate:Transient
     val isSessionActive: Boolean by lazy { tableSession != null }
-
-    val formatEventCount = eventCount.toString()
 
     @delegate:Transient
     val sessionPk: Long? by lazy { tableSession?.pk }
 
+    // below are saved only in local DB
+    var restaurantPk: Long = 0
+    var unseenEventCount: Int = 0
+
     lateinit var relTableSession: ToOne<TableSessionModel>
 
-    // saved only in local DB
-    @JsonIgnore
-    var restaurantPk: Long = 0
+    val formatEventCount
+        get() = unseenEventCount.toString()
 
     @JsonSetter("session")
-    fun setSession(sessionModel: TableSessionModel?) {
-        tableBox.attach(this)
+    fun setSession(sessionModel: TableSessionModel?) = inTransaction {
         if (!relTableSession.isNull) sessionBox.remove(relTableSession.targetId)
         if (sessionModel != null) sessionBox.put(sessionModel)
         relTableSession.target = sessionModel
-        tableBox.put(this)
     }
 
-    fun addEvent(event: EventBriefModel) {
+    fun addEvent(event: EventBriefModel) = inTransaction {
         tableSession?.event = event
-        eventCount++
+        unseenEventCount++
+        // increase pending orders if order event
+        if (event.type == SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM) tableSession?.pendingOrders?.inc()
     }
 
-    fun resetEvents() {
-        eventCount = 0
+    fun resetEvents() = inTransaction {
+        unseenEventCount = 0
     }
 
+    /**
+     * Only to be used for cook screen
+     * since cook events are always related to order
+     */
     val formatOrderStatus: String
         get() = when {
-            eventCount > 0 -> "New Order!"
+            unseenEventCount > 0 -> "New Order!"
             tableSession?.pendingOrders ?: 0 > 0 -> String.format(Locale.getDefault(), "%d orders in line. Mark ready after preparation.", tableSession!!.pendingOrders)
             else -> "No active orders."
         }
@@ -67,5 +70,21 @@ data class RestaurantTableModel(
 
         private val tableBox by dbStore<RestaurantTableModel>()
         private val sessionBox by dbStore<TableSessionModel>()
+
+        private fun RestaurantTableModel.inTransaction(block: RestaurantTableModel.() -> Unit) {
+            tableBox.attach(this)
+            block()
+            tableBox.put(this)
+        }
+
+        val sortComparator = Comparator<RestaurantTableModel> { t1, t2 ->
+            val t1EventTime = t1.tableSession?.event?.timestamp
+            val t2EventTime = t2.tableSession?.event?.timestamp
+            if (t1EventTime != null && t2EventTime != null) {
+                t2EventTime.compareTo(t1EventTime)
+            } else {
+                t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
+            }
+        }
     }
 }

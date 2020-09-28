@@ -123,7 +123,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                     ivShopManagerTableImage.setImageDrawable(ivShopManagerTableIcon.getContext().getResources().getDrawable(R.drawable.ic_waiter));
                     tvShopManagerTableName.setText(R.string.waiter_unassigned);
                 }
-                if (data.getEventCount() > 0) {
+                if (data.getUnseenEventCount() > 0) {
                     tvEventBadge.setText(data.getFormatEventCount());
                     tvEventBadge.setVisibility(View.VISIBLE);
                     tvShopManagerTableBill.setVisibility(View.GONE);

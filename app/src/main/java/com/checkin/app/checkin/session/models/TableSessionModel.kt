@@ -5,12 +5,11 @@ import com.checkin.app.checkin.utility.Utils
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
-import io.objectbox.annotation.Transient
 import java.util.*
 
 @Entity
 data class TableSessionModel(
-        @Id(assignable = true) @JsonProperty("pk") var pk: Long = 0
+        @Id(assignable = true) var pk: Long = 0
 ) {
     @Transient
     var host: BriefModel? = null
@@ -26,7 +25,7 @@ data class TableSessionModel(
     var bill: Double = 0.0
 
     @JsonProperty("pending_orders")
-    val pendingOrders: Int = 0
+    var pendingOrders: Int = 0
 
     constructor(pk: Long, host: BriefModel?, event: EventBriefModel) : this(pk) {
         this.host = host

@@ -13,8 +13,7 @@ import com.checkin.app.checkin.session.models.CheckoutStatusModel
 import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
-import java.util.ArrayList
-import kotlin.Comparator
+import java.util.*
 
 class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(application) {
     private val mManagerRepository: ManagerRepository = ManagerRepository.getInstance(application)
@@ -37,15 +36,7 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
             val tableModel = input.data[i]
             if (tableModel.tableSession != null) result.add(tableModel)
         }
-        result.sortWith(Comparator { t1: RestaurantTableModel, t2: RestaurantTableModel ->
-            val t1Event = t1.tableSession?.event
-            val t2Event = t2.tableSession?.event
-            if (t1Event != null && t2Event != null) {
-                t2Event.timestamp.compareTo(t1Event.timestamp)
-            } else {
-                t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
-            }
-        })
+        result.sortWith(RestaurantTableModel.sortComparator)
         Resource.cloneResource(input, result)
     }
 

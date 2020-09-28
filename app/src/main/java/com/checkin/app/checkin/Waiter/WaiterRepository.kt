@@ -120,10 +120,28 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
 
             override fun saveCallResult(data: List<RestaurantTableModel>?) = data?.run {
                 forEach {
+                    val savedTable = tableBox.get(it.qrPk)
+                    if (savedTable != null) it.unseenEventCount = savedTable.unseenEventCount
                     it.restaurantPk = shopId
                 }
                 tableBox.put(this)
             } ?: Unit
+
+            override fun transformResult(networkResult: Resource<List<RestaurantTableModel>>, dbResult: Resource<List<RestaurantTableModel>>?): Resource<List<RestaurantTableModel>> {
+                return dbResult?.data?.let { dbList ->
+                    if (networkResult.data == null) dbResult
+                    else {
+                        val result = networkResult.data.map { targetTable ->
+                            val savedTable = dbList.find { it == targetTable }
+                                    ?: return@map targetTable
+                            targetTable.restaurantPk = savedTable.restaurantPk
+                            targetTable.unseenEventCount = savedTable.unseenEventCount
+                            targetTable
+                        }
+                        Resource.cloneResource(networkResult, result)
+                    }
+                } ?: networkResult
+            }
         }.asLiveData
     }
 

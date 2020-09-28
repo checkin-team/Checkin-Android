@@ -103,7 +103,7 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
                 tvShopManagerTableName.setText(R.string.waiter_unassigned);
             }
             tvShopManagerTableDetail.setText(data.getFormatOrderStatus());
-            if (data.getEventCount() > 0) {
+            if (data.getUnseenEventCount() > 0) {
                 tvEventBadge.setText(data.getFormatEventCount());
                 tvEventBadge.setVisibility(View.VISIBLE);
             } else {
