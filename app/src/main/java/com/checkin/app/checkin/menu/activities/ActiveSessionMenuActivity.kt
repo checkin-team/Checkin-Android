@@ -24,10 +24,13 @@ import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.coroutineLifecycleScope
 import com.checkin.app.checkin.utility.inTransaction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
     @BindView(R.id.view_as_menu_cart)
     internal lateinit var cartView: ActiveSessionCartView
+
     @BindView(R.id.nested_sv_active_session_menu)
     internal lateinit var nestedSv: NestedScrollView
 
@@ -84,8 +87,10 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
         val itemPk = intent.getLongExtra(KEY_PRE_SELECTED_ITEM, 0L)
         if (itemPk > 0L) {
             coroutineLifecycleScope.launchWhenStarted {
-                // Busy waiting for data to come... Since it's on another thread no issues.
-                while (menuFragment.menuViewModel.originalMenuGroups.value?.data?.isEmpty() != false) {
+                withContext(Dispatchers.IO) {
+                    // Busy waiting for data to come... Since it's on another thread no issues.
+                    while (menuFragment.menuViewModel.originalMenuGroups.value?.data?.isEmpty() != false) {
+                    }
                 }
                 menuFragment.menuViewModel.getMenuItemById(itemPk)?.let {
                     menuFragment.onMenuItemAdded(it)

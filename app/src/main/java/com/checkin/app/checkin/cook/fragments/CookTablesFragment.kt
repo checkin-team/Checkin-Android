@@ -35,7 +35,6 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
 
     @BindView(R.id.rv_shop_cook_tables)
     internal lateinit var rvShopManagerTable: RecyclerView
-
     @BindView(R.id.ll_no_orders)
     internal lateinit var llNoLiveOrders: LinearLayout
 
@@ -140,7 +139,7 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
         unregisterLocalReceiver(requireContext(), mReceiver)
     }
 
-    override fun onClickTable(tableModel: RestaurantTableModel) {
+    fun openTableDetails(tableModel: RestaurantTableModel) {
         val intent = Intent(context, CookSessionActivity::class.java)
         val sessionPk = tableModel.sessionPk ?: return
         intent.putExtra(CookSessionActivity.KEY_SESSION_PK, sessionPk)
@@ -150,6 +149,8 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
         tableModel.resetEvents()
         mAdapter.updateSession(pos)
     }
+
+    override fun onClickTable(tableModel: RestaurantTableModel) = openTableDetails(tableModel)
 
     companion object {
         fun newInstance(): CookTablesFragment = CookTablesFragment()

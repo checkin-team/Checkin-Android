@@ -103,7 +103,7 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
                     RestaurantOrdersFragmentType.PRE_ORDER -> ManagerPreOrderDetailActivity.withSessionIntent(this, sessionPk)
                     else -> null
                 }
-                intent?.let { startActivityForResult(it, RC_INTENT_RESULT_SESSION_DETAIL) }
+                intent?.also { startActivityForResult(it, RC_INTENT_RESULT_SESSION_DETAIL) }
             }
         }
         supportFragmentManager.inTransaction {
