@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Cook;
+package com.checkin.app.checkin.cook.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,9 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.Cook.Fragment.CookSessionOrderFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.cook.fragments.CookSessionOrderFragment;
+import com.checkin.app.checkin.cook.viewmodels.CookSessionViewModel;
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
 import com.checkin.app.checkin.data.notifications.MessageObjectModel;

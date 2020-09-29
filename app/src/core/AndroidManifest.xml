@@ -65,8 +65,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
 
-        <activity android:name=".Cook.CookSessionActivity" />
-        <activity android:name=".Cook.CookWorkActivity" />
+        <activity android:name=".cook.activities.CookSessionActivity" />
+        <activity android:name=".cook.activities.CookWorkActivity" />
 
         <activity
             android:name=".home.activities.ClosedTransactionsActivity"

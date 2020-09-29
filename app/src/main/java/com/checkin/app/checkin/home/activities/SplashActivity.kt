@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import butterknife.ButterKnife
-import com.checkin.app.checkin.Cook.CookWorkActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
@@ -12,6 +11,7 @@ import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.auth.AuthPreferences
 import com.checkin.app.checkin.auth.activities.AuthActivity
 import com.checkin.app.checkin.auth.services.DeviceTokenService
+import com.checkin.app.checkin.cook.activities.CookWorkActivity
 import com.checkin.app.checkin.data.config.AnalyticsUtil
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 import com.checkin.app.checkin.misc.activities.BaseActivity

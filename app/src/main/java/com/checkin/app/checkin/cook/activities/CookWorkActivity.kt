@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Cook
+package com.checkin.app.checkin.cook.activities
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,10 +7,11 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.ButterKnife
 import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
-import com.checkin.app.checkin.Cook.Fragment.CookTablesFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.accounts.BaseAccountActivity
+import com.checkin.app.checkin.cook.fragments.CookTablesFragment
+import com.checkin.app.checkin.cook.viewmodels.CookWorkViewModel
 import com.checkin.app.checkin.data.resource.Resource
 
 class CookWorkActivity : BaseAccountActivity() {

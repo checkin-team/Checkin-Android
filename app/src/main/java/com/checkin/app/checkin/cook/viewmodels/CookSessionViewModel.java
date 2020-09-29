@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Cook;
+package com.checkin.app.checkin.cook.viewmodels;
 
 import android.app.Application;
 

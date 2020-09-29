@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Cook.Fragment;
+package com.checkin.app.checkin.cook.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Cook.Adapter.CookSessionOrderAdapter;
-import com.checkin.app.checkin.Cook.CookSessionViewModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.cook.adapters.CookSessionOrderAdapter;
+import com.checkin.app.checkin.cook.viewmodels.CookSessionViewModel;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;

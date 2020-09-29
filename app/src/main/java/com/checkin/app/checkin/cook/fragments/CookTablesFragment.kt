@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Cook.Fragment
+package com.checkin.app.checkin.cook.fragments
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -11,11 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
-import com.checkin.app.checkin.Cook.Adapter.CookWorkTableAdapter
-import com.checkin.app.checkin.Cook.Adapter.CookWorkTableAdapter.CookTableInteraction
-import com.checkin.app.checkin.Cook.CookSessionActivity
-import com.checkin.app.checkin.Cook.CookWorkViewModel
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.cook.activities.CookSessionActivity
+import com.checkin.app.checkin.cook.adapters.CookWorkTableAdapter
+import com.checkin.app.checkin.cook.adapters.CookWorkTableAdapter.CookTableInteraction
+import com.checkin.app.checkin.cook.viewmodels.CookWorkViewModel
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageObjectModel
 import com.checkin.app.checkin.data.notifications.MessageUtils.parseMessage
