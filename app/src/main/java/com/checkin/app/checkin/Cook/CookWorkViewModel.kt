@@ -26,7 +26,7 @@ class CookWorkViewModel(application: Application) : BaseViewModel(application) {
 
     val activeTables: LiveData<Resource<List<RestaurantTableModel>>> = Transformations.map(mTablesData) { input ->
         if (input?.data == null) return@map input
-        val results = input.data.apply {
+        val results = input.data.run {
             sortedWith(RestaurantTableModel.sortComparator)
         }
         cloneResource(input, results)
@@ -49,7 +49,11 @@ class CookWorkViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun updateRemoveTable(sessionPk: Long) {
-        val result = mTablesData.value?.data?.filterNot { it.sessionPk == sessionPk } ?: return
+        val pos = getTablePositionWithPk(sessionPk)
+        getTableWithPosition(pos)?.removeFromDb()
+        val result = mTablesData.value?.data?.toMutableList()?.apply {
+            removeAt(pos)
+        }
         mTablesData.value = cloneResource(mTablesData.value, result)
     }
 

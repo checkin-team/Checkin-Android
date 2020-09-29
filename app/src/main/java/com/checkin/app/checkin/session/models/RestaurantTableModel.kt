@@ -15,7 +15,7 @@ data class RestaurantTableModel(
         val table: String? = null
 ) {
     constructor(qrPk: Long, table: String?, sessionModel: TableSessionModel?) : this(qrPk, table) {
-        setSession(sessionModel)
+        commitSession(sessionModel)
     }
 
     @delegate:Transient
@@ -30,6 +30,7 @@ data class RestaurantTableModel(
     // below are saved only in local DB
     var restaurantPk: Long = 0
     var unseenEventCount: Int = 0
+    var lastEventTimestamp: Date? = null
 
     lateinit var relTableSession: ToOne<TableSessionModel>
 
@@ -37,21 +38,30 @@ data class RestaurantTableModel(
         get() = unseenEventCount.toString()
 
     @JsonSetter("session")
-    fun setSession(sessionModel: TableSessionModel?) = inTransaction {
+    fun setSession(sessionModel: TableSessionModel?) {
         if (!relTableSession.isNull) sessionBox.remove(relTableSession.targetId)
         if (sessionModel != null) sessionBox.put(sessionModel)
         relTableSession.target = sessionModel
+        lastEventTimestamp = sessionModel?.event?.timestamp
     }
+
+    fun commitSession(sessionModel: TableSessionModel?) = inTransaction { setSession(sessionModel) }
 
     fun addEvent(event: EventBriefModel) = inTransaction {
         tableSession?.event = event
         unseenEventCount++
+        lastEventTimestamp = event.timestamp
         // increase pending orders if order event
         if (event.type == SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM) tableSession?.pendingOrders?.inc()
     }
 
     fun resetEvents() = inTransaction {
         unseenEventCount = 0
+    }
+
+    fun removeFromDb() {
+        tableSession?.also { sessionBox.remove(it) }
+        tableBox.remove(this)
     }
 
     /**
@@ -78,8 +88,8 @@ data class RestaurantTableModel(
         }
 
         val sortComparator = Comparator<RestaurantTableModel> { t1, t2 ->
-            val t1EventTime = t1.tableSession?.event?.timestamp
-            val t2EventTime = t2.tableSession?.event?.timestamp
+            val t1EventTime = t1.lastEventTimestamp ?: t1.tableSession?.event?.timestamp
+            val t2EventTime = t2.lastEventTimestamp ?: t2.tableSession?.event?.timestamp
             if (t1EventTime != null && t2EventTime != null) {
                 t2EventTime.compareTo(t1EventTime)
             } else {

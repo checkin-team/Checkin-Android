@@ -96,7 +96,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rvShopManagerTable.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvShopManagerTable.adapter = mAdapter
-        mViewModel.activeTables.observe(this, Observer {
+        mViewModel.activeTables.observe(viewLifecycleOwner, Observer {
             it?.let { input ->
                 if (input.status === Resource.Status.SUCCESS && input.data != null) {
                     updateUi(input.data)
@@ -105,8 +105,8 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                 }
             }
         })
-        mViewModel.checkoutData.observe(this, Observer {
-            it?.let { resource ->
+        mViewModel.checkoutData.observe(viewLifecycleOwner, Observer {
+            it?.also { resource ->
                 if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
                     Utils.toast(requireContext(), resource.data.message)
                     if (resource.data.isCheckout) mViewModel.updateRemoveTable(resource.data.sessionPk) else mViewModel.updateResults()
@@ -115,7 +115,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                 }
             }
         })
-        mViewModel.sessionInitiated.observe(this, Observer {
+        mViewModel.sessionInitiated.observe(viewLifecycleOwner, Observer {
             it?.let { qrResultModelResource ->
                 if (qrResultModelResource.status === Resource.Status.SUCCESS && qrResultModelResource.data != null) {
                     mViewModel.fetchActiveTables(mViewModel.shopPk)
@@ -124,7 +124,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                 }
             }
         })
-        mViewModel.inactiveTables.observe(this, Observer { })
+        mViewModel.inactiveTables.observe(viewLifecycleOwner, Observer { })
 
         mViewModel.fetchActiveTables(workViewModel.shopPk)
     }
@@ -136,7 +136,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                     .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
             startActivity(intent)
             val pos = mViewModel.getTablePositionWithPk(tableModel.tableSession!!.pk)
-            tableModel.unseenEventCount = 0
+            tableModel.resetEvents()
             mAdapter.updateSession(pos)
         }
     }
@@ -164,7 +164,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
 
     // region UI-Update
     private fun addTable(tableModel: RestaurantTableModel) {
-        tableModel.unseenEventCount = 1
+        tableModel.addEvent(tableModel.tableSession?.event ?: return)
         mViewModel.addRestaurantTable(tableModel)
     }
 

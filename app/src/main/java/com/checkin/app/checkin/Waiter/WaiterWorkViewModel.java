@@ -168,7 +168,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
                 RestaurantTableModel tableModel = shopTableResource.getData().get(i);
                 TableSessionModel sessionModel = tableModel.getTableSession();
                 if (sessionModel != null && sessionModel.getPk() == sessionPk) {
-                    tableModel.setSession(null);
+                    tableModel.commitSession(null);
                     shopTableResource.getData().set(i, tableModel);
                     mShopTables.setValue(Resource.Companion.cloneResource(shopTableResource, shopTableResource.getData()));
                     break;

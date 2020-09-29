@@ -474,15 +474,9 @@
     },
     {
       "id": "32:7489899660733714038",
-      "lastPropertyId": "13:932045614967953760",
+      "lastPropertyId": "14:760664859784518275",
       "name": "RestaurantTableModel",
       "properties": [
-        {
-          "id": "2:1154163968128900031",
-          "name": "eventCount",
-          "type": 5,
-          "flags": 4
-        },
         {
           "id": "6:5837004814864102455",
           "name": "qrPk",
@@ -509,9 +503,10 @@
           "relationTarget": "TableSessionModel"
         },
         {
-          "id": "13:932045614967953760",
-          "name": "lastEventTimestamp",
-          "type": 10
+          "id": "14:760664859784518275",
+          "name": "unseenEventCount",
+          "type": 5,
+          "flags": 4
         }
       ],
       "relations": []
@@ -748,7 +743,9 @@
     7977535581045997269,
     1626309840383306190,
     2250286871414771210,
-    2915898364883465174
+    2915898364883465174,
+    1154163968128900031,
+    932045614967953760
   ],
   "retiredRelationUids": [
     1392243414364918450,

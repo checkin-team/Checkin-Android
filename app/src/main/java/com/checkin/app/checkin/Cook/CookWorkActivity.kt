@@ -12,7 +12,6 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.accounts.BaseAccountActivity
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.utility.Utils
 
 class CookWorkActivity : BaseAccountActivity() {
     @BindView(R.id.toolbar_cook_work)
@@ -46,12 +45,9 @@ class CookWorkActivity : BaseAccountActivity() {
     private fun setupObservers(shopId: Long) {
         mViewModel.fetchActiveTables(shopId)
         mViewModel.activeTables.observe(this, Observer { input ->
-            if (input.status === Resource.Status.SUCCESS && input.data != null) {
-                stopRefreshing()
-            } else if (input.status === Resource.Status.LOADING) startRefreshing() else {
-                stopRefreshing()
-                Utils.toast(this, input.message)
-            }
+            if (input.status === Resource.Status.SUCCESS && input.data != null) stopRefreshing()
+            else if (input.status === Resource.Status.LOADING) startRefreshing()
+            else stopRefreshing()
         })
     }
 

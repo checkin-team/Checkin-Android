@@ -58,17 +58,8 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
         mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId), mTablesData::setValue)
     }
 
-    fun getTablePositionWithPk(sessionPk: Long): Int {
-        val resource = mTablesData.value
-        if (resource?.data == null) return -1
-        for (i in resource.data.indices) {
-            val tableSessionModel = resource.data[i].tableSession
-            if (tableSessionModel != null && tableSessionModel.pk == sessionPk) {
-                return i
-            }
-        }
-        return -1
-    }
+    fun getTablePositionWithPk(sessionPk: Long): Int = mTablesData.value?.data?.indexOfFirst { it.sessionPk == sessionPk }
+            ?: -1
 
     fun getTableWithPosition(position: Int): RestaurantTableModel? {
         val resource = mTablesData.value
@@ -80,26 +71,20 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
         val resource = mTablesData.value
         if (resource?.data == null) return
         if (resource.data.contains(tableModel)) return
-        mTablesData.setValue(Resource.cloneResource(resource, resource.data.toMutableList().apply { add(0, tableModel) }))
+        mTablesData.value = Resource.cloneResource(resource, resource.data.toMutableList().apply { add(0, tableModel) })
     }
 
     override fun updateResults() {
         if (mTablesData.value?.status != Resource.Status.LOADING) fetchActiveTables(shopPk)
     }
 
-    fun updateRemoveTable(sessionPk: Long) {
-        val resource = mTablesData.value
-        if (resource?.data == null) return
-        var pos = -1
-        for (i in resource.data.indices) {
-            val tableSessionModel = resource.data[i].tableSession
-            if (tableSessionModel != null && tableSessionModel.pk == sessionPk) {
-                pos = i
-                break
-            }
+    fun updateRemoveTable(sessionPk: Long) = mTablesData.value?.data?.run {
+        val pos = indexOfFirst { it.sessionPk == sessionPk }
+        get(pos).removeFromDb()
+        val result = toMutableList().apply {
+            removeAt(pos)
         }
-        if (pos > -1)
-            mTablesData.value = Resource.cloneResource(resource, resource.data.toMutableList().apply { removeAt(pos) })
+        mTablesData.value = Resource.cloneResource(mTablesData.value, result)
     }
 
     fun updateTable(sessionPk: Long, event: EventBriefModel) {
