@@ -22,6 +22,7 @@ import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.accounts.AccountUtil
+import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.CartOrderedItemController
@@ -78,6 +79,8 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     internal lateinit var tvRestaurantName: TextView
     @BindView(R.id.tv_cart_header_restaurant_locality)
     internal lateinit var tvRestaurantLocality: TextView
+    @BindView(R.id.container_cart_referral)
+    internal lateinit var checkinrewards: ViewGroup
 
     lateinit var activity: FragmentActivity
     lateinit var viewModel: ScheduledCartViewModel
@@ -97,7 +100,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         billHolder = BillHolder(this)
         setupUi()
     }
-
+    private val supportrewards by lazy { RemoteConfig[RemoteConfig.Constants.ENABLED_REWARDS].asBoolean() }
     private fun setupUi() {
         nestedSvCart.setOnTouchListener { v, event ->
             val action = event.action
@@ -258,6 +261,10 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         resetPromoCards()
         containerRemovePromo.visibility = View.VISIBLE
         tvAppliedPromoDetails.text = data.details
+    }
+    private fun enablerewards(){
+        if (supportrewards)
+            checkinrewards.visibility = View.GONE
     }
 
     private fun resetPromoCards() {
