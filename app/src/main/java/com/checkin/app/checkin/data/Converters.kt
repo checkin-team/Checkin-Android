@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.data
 
 import android.util.Log
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.core.type.TypeReference
@@ -13,6 +15,7 @@ import java.io.IOException
 
 object Converters {
     val objectMapper = jacksonObjectMapper().apply {
+        setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
         disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) // Serialize Date object to ISO-8601 standard
         disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) // Ignore unknown properties when deserializing data
     }

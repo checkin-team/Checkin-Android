@@ -65,18 +65,10 @@ object MessageUtils {
         }
     }
 
-    fun createManagerChannels(notificationManager: NotificationManager) {
+    fun createMemberChannels(channel: CHANNEL, notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER)
-            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER)
-            notificationManager.createNotificationChannels(channels)
-        }
-    }
-
-    fun createWaiterChannels(notificationManager: NotificationManager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER)
-            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, channel)
             notificationManager.createNotificationChannels(channels)
         }
     }
@@ -192,8 +184,7 @@ object MessageUtils {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         when (channel) {
             CHANNEL.ADMIN, CHANNEL.MEMBER -> createAdminChannels(notificationManager)
-            CHANNEL.WAITER -> createWaiterChannels(notificationManager)
-            CHANNEL.MANAGER -> createManagerChannels(notificationManager)
+            CHANNEL.WAITER, CHANNEL.COOK, CHANNEL.MANAGER -> createMemberChannels(channel, notificationManager)
             CHANNEL.ORDERS -> createOrderChannels(context, notificationManager)
             CHANNEL.ACTIVE_SESSION_PERSISTENT -> createActiveCustomerChannels(notificationManager)
             CHANNEL.SCHEDULED_SESSION -> createScheduledSessionChannel(notificationManager)

@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.data.db
 
-import com.checkin.app.checkin.data.BaseRepository
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 import kotlin.reflect.KClass
@@ -16,4 +15,4 @@ class DatabaseDelegate<T : Any>(private val boxClass: KClass<T>) : Lazy<Box<T>> 
     override fun isInitialized(): Boolean = cached != null
 }
 
-inline fun <reified T : Any> BaseRepository.dbStore(): Lazy<Box<T>> = DatabaseDelegate(T::class)
+inline fun <reified T : Any> dbStore(): Lazy<Box<T>> = DatabaseDelegate(T::class)

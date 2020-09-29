@@ -63,6 +63,7 @@ object Constants {
         ADMIN("channel.restaurant_admin", "Restaurant Admin"),
         MANAGER("channel.restaurant_manager", "Restaurant Manager"),
         WAITER("channel.restaurant_waiter", "Restaurant Waiter"),
+        COOK("channel.restaurant_cook", "Restaurant Cook"),
 
         // Misc group
         MEDIA_UPLOAD("channel.media_upload", "Media upload progress"),

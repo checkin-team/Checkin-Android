@@ -13,8 +13,7 @@ import com.checkin.app.checkin.session.models.CheckoutStatusModel
 import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
-import java.util.ArrayList
-import kotlin.Comparator
+import java.util.*
 
 class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(application) {
     private val mManagerRepository: ManagerRepository = ManagerRepository.getInstance(application)
@@ -37,13 +36,7 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
             val tableModel = input.data[i]
             if (tableModel.tableSession != null) result.add(tableModel)
         }
-        result.sortWith(Comparator { t1: RestaurantTableModel, t2: RestaurantTableModel ->
-            if (t2.tableSession!!.event != null && t1.tableSession!!.event != null) {
-                t2.tableSession!!.event.timestamp.compareTo(t1.tableSession!!.event.timestamp)
-            } else {
-                t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
-            }
-        })
+        result.sortWith(RestaurantTableModel.sortComparator)
         Resource.cloneResource(input, result)
     }
 
@@ -62,20 +55,11 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
 
     fun fetchActiveTables(restaurantId: Long) {
         shopPk = restaurantId
-        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId, false), mTablesData::setValue)
+        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId), mTablesData::setValue)
     }
 
-    fun getTablePositionWithPk(sessionPk: Long): Int {
-        val resource = mTablesData.value
-        if (resource?.data == null) return -1
-        for (i in resource.data.indices) {
-            val tableSessionModel = resource.data[i].tableSession
-            if (tableSessionModel != null && tableSessionModel.pk == sessionPk) {
-                return i
-            }
-        }
-        return -1
-    }
+    fun getTablePositionWithPk(sessionPk: Long): Int = mTablesData.value?.data?.indexOfFirst { it.sessionPk == sessionPk }
+            ?: -1
 
     fun getTableWithPosition(position: Int): RestaurantTableModel? {
         val resource = mTablesData.value
@@ -87,48 +71,32 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
         val resource = mTablesData.value
         if (resource?.data == null) return
         if (resource.data.contains(tableModel)) return
-        mTablesData.setValue(Resource.cloneResource(resource, resource.data.toMutableList().apply { add(0, tableModel) }))
+        mTablesData.value = Resource.cloneResource(resource, resource.data.toMutableList().apply { add(0, tableModel) })
     }
 
     override fun updateResults() {
         if (mTablesData.value?.status != Resource.Status.LOADING) fetchActiveTables(shopPk)
     }
 
-    fun updateRemoveTable(sessionPk: Long) {
-        val resource = mTablesData.value
-        if (resource?.data == null) return
-        var pos = -1
-        for (i in resource.data.indices) {
-            val tableSessionModel = resource.data[i].tableSession
-            if (tableSessionModel != null && tableSessionModel.pk == sessionPk) {
-                pos = i
-                break
-            }
+    fun updateRemoveTable(sessionPk: Long) = mTablesData.value?.data?.run {
+        val pos = indexOfFirst { it.sessionPk == sessionPk }
+        get(pos).removeFromDb()
+        val result = toMutableList().apply {
+            removeAt(pos)
         }
-        if (pos > -1)
-            mTablesData.value = Resource.cloneResource(resource, resource.data.toMutableList().apply { removeAt(pos) })
+        mTablesData.value = Resource.cloneResource(mTablesData.value, result)
     }
 
     fun updateTable(sessionPk: Long, event: EventBriefModel) {
-        val listResource = mTablesData.value
-        if (listResource?.data == null) return
-        var pos = 0
-        for (i in listResource.data.indices) {
-            val tableSessionModel = listResource.data[i].tableSession
-            if (tableSessionModel != null && tableSessionModel.pk == sessionPk) {
-                pos = i
-                val table = listResource.data[pos]
-                if (table != null) {
-                    tableSessionModel.event = event
-                    if (event.type == SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT) tableSessionModel.isRequestedCheckout = true
-                    table.addEventCount()
-                    mTablesData.setValue(Resource.cloneResource(listResource, listResource.data.toMutableList().apply {
-                        removeAt(pos)
-                        add(0, table)
-                    }))
-                }
-            }
-        }
+        val result = mTablesData.value?.data?.toMutableList()?.apply {
+            val pos = indexOfFirst { it.sessionPk == sessionPk }
+            val table = get(pos)
+            table.addEvent(event)
+            if (event.type == SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT) table.tableSession?.isRequestedCheckout = true
+            removeAt(pos)
+            add(0, table)
+        } ?: return
+        mTablesData.setValue(Resource.cloneResource(mTablesData.value, result))
     }
 
     fun processQrPk(qrPk: Long) {

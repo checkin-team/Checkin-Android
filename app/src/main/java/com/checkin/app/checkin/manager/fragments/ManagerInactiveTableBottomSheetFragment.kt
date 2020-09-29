@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.manager.fragments
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -30,7 +29,7 @@ class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), Manag
         rvTable.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         rvTable.adapter = mInactiveAdapter
 
-        viewModel.inactiveTables.observe(this, Observer {
+        viewModel.inactiveTables.observe(viewLifecycleOwner, Observer {
             if (it?.status == Resource.Status.SUCCESS && it.data != null) mInactiveAdapter.setData(it.data)
         })
     }
@@ -38,8 +37,8 @@ class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), Manag
     override fun onClickInactiveTable(tableModel: RestaurantTableModel) {
         val builder = AlertDialog.Builder(requireContext()).setTitle(tableModel.table)
                 .setMessage("Do you want to initiate the session?")
-                .setPositiveButton("Done") { dialog: DialogInterface?, which: Int -> viewModel.processQrPk(tableModel.qrPk) }
-                .setNegativeButton("Cancel") { dialog: DialogInterface, which: Int -> dialog.cancel() }
+                .setPositiveButton("Done") { _, _ -> viewModel.processQrPk(tableModel.qrPk) }
+                .setNegativeButton("Cancel") { _, _ -> dialog?.cancel() }
         builder.show()
     }
 }

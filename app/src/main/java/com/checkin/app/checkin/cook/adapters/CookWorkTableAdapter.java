@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Cook.Adapter;
+package com.checkin.app.checkin.cook.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Cook.Model.CookTableModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.misc.models.BriefModel;
+import com.checkin.app.checkin.session.models.RestaurantTableModel;
 import com.checkin.app.checkin.utility.Utils;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdapter.ShopCookTableHolder> {
-    private List<CookTableModel> mList;
+    private List<RestaurantTableModel> mList;
     private CookTableInteraction mListener;
 
     public CookWorkTableAdapter(CookTableInteraction listener) {
@@ -53,13 +53,13 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
         return mList != null ? mList.size() : 0;
     }
 
-    public void setRestaurantTableList(List<CookTableModel> mList) {
+    public void setRestaurantTableList(List<RestaurantTableModel> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
 
     public interface CookTableInteraction {
-        void onClickTable(CookTableModel tableModel);
+        void onClickTable(RestaurantTableModel tableModel);
     }
 
     class ShopCookTableHolder extends RecyclerView.ViewHolder {
@@ -79,7 +79,7 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
         @BindView(R.id.container_manager_table_active)
         ViewGroup containerSessionActive;
 
-        private CookTableModel mTableModel;
+        private RestaurantTableModel mTableModel;
 
         ShopCookTableHolder(View itemView) {
             super(itemView);
@@ -89,11 +89,11 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
             itemView.findViewById(R.id.container_manager_table_event_icon).setVisibility(View.GONE);
         }
 
-        public void bindData(CookTableModel data) {
+        public void bindData(RestaurantTableModel data) {
             mTableModel = data;
 
             tvShopManagerTableNumber.setText(data.getTable());
-            BriefModel host = data.getHost();
+            BriefModel host = data.getTableSession().getHost();
 
             if (host != null) {
                 tvShopManagerTableName.setText(host.getDisplayName());
@@ -102,9 +102,9 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
                 ivShopManagerTableImage.setImageDrawable(ivShopManagerTableImage.getContext().getResources().getDrawable(R.drawable.ic_waiter));
                 tvShopManagerTableName.setText(R.string.waiter_unassigned);
             }
-            tvShopManagerTableDetail.setText(data.formatOrderStatus());
-            if (data.getEventCount() > 0) {
-                tvEventBadge.setText(data.formatEventCount());
+            tvShopManagerTableDetail.setText(data.getFormatOrderStatus());
+            if (data.getUnseenEventCount() > 0) {
+                tvEventBadge.setText(data.getFormatEventCount());
                 tvEventBadge.setVisibility(View.VISIBLE);
             } else {
                 tvEventBadge.setVisibility(View.GONE);

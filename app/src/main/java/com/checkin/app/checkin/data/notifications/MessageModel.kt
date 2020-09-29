@@ -5,11 +5,12 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.os.bundleOf
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
+import com.checkin.app.checkin.cook.activities.CookWorkActivity
 import com.checkin.app.checkin.data.notifications.Constants.CHANNEL
 import com.checkin.app.checkin.data.notifications.MessageDataModel.MessageDataDeserializer
 import com.checkin.app.checkin.data.notifications.MessageObjectModel.MESSAGE_OBJECT_TYPE
@@ -51,8 +52,8 @@ data class MessageModel(
 
     val formatDescription: String? = description?.let { Utils.fromHtml(it).toString() }
 
-    val channel: CHANNEL
-        get() = when (type) {
+    val channel: CHANNEL by lazy {
+        when (type) {
             MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH, MESSAGE_TYPE.COOK_SESSION_ORDERS_PUSH, MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH,
             MESSAGE_TYPE.WAITER_ORDER_COOKED_NOTIFY_HOST,
             MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID, MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID
@@ -62,10 +63,12 @@ data class MessageModel(
                 isUserActiveSessionNotification -> CHANNEL.ACTIVE_SESSION
                 isShopManagerNotification -> CHANNEL.MANAGER
                 isShopWaiterNotification -> CHANNEL.WAITER
+                isShopCookNotification -> CHANNEL.COOK
                 isUserCBYGSessionNotification or isUserQSRSessionNotification -> CHANNEL.SCHEDULED_SESSION
                 else -> CHANNEL.DEFAULT
             }
         }
+    }
 
     private fun getDefaultIntent(context: Context): Intent? = when {
         type == MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE && sessionDetail != null -> QSRFoodReadyActivity.withSessionIntent(context, sessionDetail!!.pk)
@@ -103,13 +106,17 @@ data class MessageModel(
         } else if (isShopWaiterNotification && shopDetail != null) {
             intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.pk)
                     .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail?.pk ?: 0L)
-        } else if (isUserReviewNotification && sessionDetail != null)
+        } else if (isShopCookNotification && shopDetail != null)
+            intent.putExtra(CookWorkActivity.KEY_RESTAURANT_PK, shopDetail.pk)
+                    .putExtra(CookWorkActivity.KEY_NOTIF_SESSION_PK, sessionDetail?.pk ?: 0L)
+        else if (isUserReviewNotification && sessionDetail != null)
             intent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionDetail.pk)
     }
 
     private fun getTargetComponent(context: Context) = when {
         isUserActiveSessionNotification -> ComponentName(context, ActiveSessionActivity::class.java)
         isShopWaiterNotification -> ComponentName(context, WaiterWorkActivity::class.java)
+        isShopCookNotification -> ComponentName(context, CookWorkActivity::class.java)
         isShopManagerNotification -> ComponentName(context, ManagerWorkActivity::class.java)
         isUserReviewNotification -> ComponentName(context, SuccessfulTransactionActivity::class.java)
         else -> null
@@ -135,8 +142,8 @@ data class MessageModel(
     }
 
     private fun addNotificationExtra(context: Context, builder: NotificationCompat.Builder, pendingIntent: PendingIntent) {
-        if (isShopWaiterNotification || isShopManagerNotification) builder.priority = Notification.PRIORITY_HIGH
-        if (type == MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH || type == MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH) {
+        if (isFullScreenNotification) builder.priority = NotificationManagerCompat.IMPORTANCE_MAX
+        if (type == MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH || type == MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH || type == MESSAGE_TYPE.COOK_SESSION_ORDERS_PUSH) {
             builder.setSound(Constants.getAlertOrdersSoundUri(context))
                     .setFullScreenIntent(pendingIntent, true)
         } else if (type == MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE) {
@@ -184,8 +191,9 @@ data class MessageModel(
             return if (objectModel != null) Constants.getNotificationTag(objectModel.type, objectModel.pk) else Constants.getNotificationTag(MESSAGE_OBJECT_TYPE.NONE, 0)
         }
 
-    val isGroupedNotification: Boolean
-        get() = isShopManagerNotification || isShopWaiterNotification || isUserActiveSessionNotification || isUserQSRSessionNotification || isUserCBYGSessionNotification
+    val isGroupedNotification: Boolean by lazy {
+        isShopManagerNotification || isShopWaiterNotification || isShopCookNotification || isUserActiveSessionNotification || isUserQSRSessionNotification || isUserCBYGSessionNotification
+    }
 
     val groupSummaryID: Int
         get() {
@@ -201,14 +209,26 @@ data class MessageModel(
             val shopDetail = shopDetail
             val sessionDetail = sessionDetail
             if (shopDetail == null) return intent
-            if (isShopManagerNotification) {
-                val bundle = Bundle()
-                bundle.putLong(ManagerSessionActivity.KEY_SESSION_PK, sessionDetail?.pk ?: 0L)
-                intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.pk)
-                        .putExtra(ManagerWorkActivity.KEY_SESSION_NOTIFICATION_BUNDLE, bundle)
-            } else if (isShopWaiterNotification) {
-                intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.pk)
-                        .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail?.pk ?: 0L)
+            when {
+                isShopManagerNotification -> {
+                    val sessionType = when {
+                        type.id > 670 -> RestaurantOrdersFragmentType.MASTER_QR
+                        type.id > 650 -> RestaurantOrdersFragmentType.PRE_ORDER
+                        else -> RestaurantOrdersFragmentType.ACTIVE_SESSION
+                    }
+                    val bundle = bundleOf(
+                            ManagerWorkActivity.KEY_NOTIF_SESSION_PK to sessionDetail?.pk,
+                            ManagerWorkActivity.KEY_NOTIF_LIVE_ORDER_TYPE to sessionType
+                    )
+                    intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.pk)
+                            .putExtra(ManagerWorkActivity.KEY_SESSION_NOTIFICATION_BUNDLE, bundle)
+                }
+                isShopWaiterNotification -> {
+                    intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.pk)
+                            .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail?.pk ?: 0L)
+                }
+                isShopCookNotification -> intent.putExtra(CookWorkActivity.KEY_RESTAURANT_PK, shopDetail.pk)
+                        .putExtra(CookWorkActivity.KEY_NOTIF_SESSION_PK, sessionDetail?.pk ?: 0L)
             }
         }
         return intent
@@ -275,9 +295,13 @@ data class MessageModel(
 
     private val isShopWaiterNotification: Boolean = type.id in 701..799
 
+    private val isShopCookNotification: Boolean = type.id in 801..899
+
     private val isShopManagerNotification: Boolean = type.id in 601..699
 
     private val isUserReviewNotification: Boolean = type == MESSAGE_TYPE.USER_ACTIVITY_REQUEST_REVIEW
+
+    private val isFullScreenNotification: Boolean = isShopWaiterNotification || isShopManagerNotification || isShopCookNotification
 
     val shopDetail: MessageObjectModel?
         get() = target?.takeIf { it.type == MESSAGE_OBJECT_TYPE.RESTAURANT }

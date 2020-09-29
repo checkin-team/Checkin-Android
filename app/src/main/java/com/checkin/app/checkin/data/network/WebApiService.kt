@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.data.network
 
-import com.checkin.app.checkin.Cook.Model.CookTableModel
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
 import com.checkin.app.checkin.Inventory.Model.InventoryModel
 import com.checkin.app.checkin.Search.SearchResultPeopleModel
@@ -290,20 +289,16 @@ interface WebApiService {
     fun getSessionOrders(@Path("session_id") sessionId: Long): Call<List<SessionOrderedItemModel>>
     // endregion
 
-    // region COOK
-
-    @GET("sessions/restaurants/{restaurant_id}/active/")
-    fun getCookActiveTables(@Path("restaurant_id") restaurantId: Long): Call<List<CookTableModel>>
-
-    // endregion
-
     // region WAITER
 
     @POST("sessions/waiter/new/")
     fun postNewWaiterSession(@Body data: ObjectNode): Call<QRResultModel>
 
     @GET("restaurants/{restaurant_id}/tables/")
-    fun getRestaurantTables(@Path("restaurant_id") restaurantId: Long, @Query("active") query: Boolean): Call<List<RestaurantTableModel>>
+    fun getRestaurantTables(@Path("restaurant_id") restaurantId: Long): Call<List<RestaurantTableModel>>
+
+    @GET("restaurants/{restaurant_id}/tables/")
+    fun filterRestaurantTables(@Path("restaurant_id") restaurantId: Long, @Query("active") query: Boolean): Call<List<RestaurantTableModel>>
 
     @GET("sessions/{session_id}/events/waiter/")
     fun getWaiterSessionEvents(@Path("session_id") sessionId: Long): Call<List<WaiterEventModel>>

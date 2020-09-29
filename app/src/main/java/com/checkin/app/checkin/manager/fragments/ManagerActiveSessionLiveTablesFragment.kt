@@ -32,7 +32,6 @@ import com.checkin.app.checkin.session.models.RestaurantTableModel
 import com.checkin.app.checkin.session.models.TableSessionModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.isNotEmpty
-import java.util.*
 
 class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInteraction {
     override val rootLayout: Int = R.layout.fragment_manager_active_session_live_tables
@@ -61,9 +60,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                             ?: return).apply {
                         type = SessionChatModel.CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN
                     }
-                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel).apply {
-                        created = Calendar.getInstance().time
-                    }
+                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel)
                     val tableModel = RestaurantTableModel(qrPk, tableName, tableSessionModel)
                     if (actor.type == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         tableModel.tableSession?.host = message.actor.briefModel
@@ -99,7 +96,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rvShopManagerTable.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvShopManagerTable.adapter = mAdapter
-        mViewModel.activeTables.observe(this, Observer {
+        mViewModel.activeTables.observe(viewLifecycleOwner, Observer {
             it?.let { input ->
                 if (input.status === Resource.Status.SUCCESS && input.data != null) {
                     updateUi(input.data)
@@ -108,8 +105,8 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                 }
             }
         })
-        mViewModel.checkoutData.observe(this, Observer {
-            it?.let { resource ->
+        mViewModel.checkoutData.observe(viewLifecycleOwner, Observer {
+            it?.also { resource ->
                 if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
                     Utils.toast(requireContext(), resource.data.message)
                     if (resource.data.isCheckout) mViewModel.updateRemoveTable(resource.data.sessionPk) else mViewModel.updateResults()
@@ -118,7 +115,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                 }
             }
         })
-        mViewModel.sessionInitiated.observe(this, Observer {
+        mViewModel.sessionInitiated.observe(viewLifecycleOwner, Observer {
             it?.let { qrResultModelResource ->
                 if (qrResultModelResource.status === Resource.Status.SUCCESS && qrResultModelResource.data != null) {
                     mViewModel.fetchActiveTables(mViewModel.shopPk)
@@ -127,7 +124,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                 }
             }
         })
-        mViewModel.inactiveTables.observe(this, Observer { })
+        mViewModel.inactiveTables.observe(viewLifecycleOwner, Observer { })
 
         mViewModel.fetchActiveTables(workViewModel.shopPk)
     }
@@ -139,7 +136,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                     .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
             startActivity(intent)
             val pos = mViewModel.getTablePositionWithPk(tableModel.tableSession!!.pk)
-            tableModel.eventCount = 0
+            tableModel.resetEvents()
             mAdapter.updateSession(pos)
         }
     }
@@ -167,7 +164,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
 
     // region UI-Update
     private fun addTable(tableModel: RestaurantTableModel) {
-        tableModel.eventCount = 1
+        tableModel.addEvent(tableModel.tableSession?.event ?: return)
         mViewModel.addRestaurantTable(tableModel)
     }
 

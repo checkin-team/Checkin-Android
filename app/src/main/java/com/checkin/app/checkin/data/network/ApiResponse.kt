@@ -76,7 +76,7 @@ class ApiResponse<T>(
     }
 
     companion object {
-        fun getErrorThrowable(error: Throwable): Throwable = if (error !is NoConnectivityException && error is IOException) {
+        fun getErrorThrowable(error: Throwable): Throwable = if (error !is NoConnectivityException && error is IOException && error !is JsonProcessingException) {
             if ("Canceled" == error.message) RequestCanceledException(error) else NetworkIssueException(error)
         } else {
             (error as? JsonProcessingException)?.let { JacksonProcessingException(it) } ?: error

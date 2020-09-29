@@ -15,10 +15,10 @@ import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.profile.profile
 import co.zsmb.materialdrawerkt.imageloader.drawerImageLoader
-import com.checkin.app.checkin.Cook.CookWorkActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
+import com.checkin.app.checkin.cook.activities.CookWorkActivity
 import com.checkin.app.checkin.home.activities.AboutUsActivity
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel

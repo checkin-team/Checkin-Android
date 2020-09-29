@@ -63,7 +63,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         super(application);
         mManagerRepository = ManagerRepository.Companion.getInstance(application);
         mSessionRepository = SessionRepository.Companion.getInstance(application);
-        mWaiterRepository = WaiterRepository.getInstance(application);
+        mWaiterRepository = WaiterRepository.Companion.getInstance(application);
     }
 
     public void putSessionCheckout() {

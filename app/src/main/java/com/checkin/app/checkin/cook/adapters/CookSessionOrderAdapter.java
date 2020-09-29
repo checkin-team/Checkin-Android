@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Cook.Adapter;
+package com.checkin.app.checkin.cook.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
