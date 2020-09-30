@@ -39,11 +39,11 @@ import com.checkin.app.checkin.auth.AuthPreferences;
 import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService;
 import com.checkin.app.checkin.home.activities.HomeActivity;
 import com.checkin.app.checkin.home.activities.SplashActivity;
-import com.crashlytics.android.Crashlytics;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -79,6 +79,8 @@ public final class Utils {
     private static final Handler sHandler = new Handler(Looper.getMainLooper());
     public static final String DOCUMENTS_DIR = "documents";
     public static final String TAG = Utils.class.getSimpleName();
+
+    public static final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
 
     /* ============================================================
      * Display
@@ -518,8 +520,8 @@ public final class Utils {
     public static void logErrors(String TAG, Throwable error, @Nullable String errMsg) {
         String msg = errMsg != null ? errMsg : error.getLocalizedMessage();
         Log.e(TAG, msg, error);
-        Crashlytics.log(Log.ERROR, TAG, msg);
-        Crashlytics.logException(error);
+        crashlytics.log(String.format("E/%s: %s", TAG, msg));
+        crashlytics.recordException(error);
     }
 
     public static void logErrors(String TAG, Throwable error) {

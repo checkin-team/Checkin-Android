@@ -1,12 +1,10 @@
 package com.checkin.app.checkin.data.resource
 
-import android.util.Log
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.misc.exceptions.NetworkIssueException
 import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.misc.exceptions.RequestCanceledException
 import com.checkin.app.checkin.utility.Utils
-import com.crashlytics.android.Crashlytics
 import com.fasterxml.jackson.databind.JsonNode
 import java.net.HttpURLConnection.*
 
@@ -96,8 +94,7 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
                 apiResponse.hasStatus(HTTP_FORBIDDEN) -> error(Status.ERROR_FORBIDDEN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_NOT_ACCEPTABLE) -> error(Status.ERROR_NOT_ACCEPTABLE, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 else -> {
-                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
-                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorData?.toString())
+                    Utils.crashlytics.log("E/$TAG: ${apiResponse.errorMessage}\nData: ${apiResponse.errorData}")
                     error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 }
             }
