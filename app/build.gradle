@@ -209,7 +209,8 @@ dependencies {
     kapt "com.airbnb.android:epoxy-processor:$versions.epoxy"
 
     // Lottie
-    implementation "com.airbnb.android:lottie:$versions.lottie"
+//    UNUSED RIGHT NOW
+//    implementation "com.airbnb.android:lottie:$versions.lottie"
 
     // ObjectBox components
     implementation "io.objectbox:objectbox-android:$versions.objectBox"

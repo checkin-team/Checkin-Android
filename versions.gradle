@@ -7,14 +7,14 @@ ext.versions = [
 
         gradlePlugin      : '3.5.3',
 
-        kotlin            : '1.3.72',
+        kotlin            : '1.4.10',
         ktx               : '1.1.0',
 
         playService       : '17.0.0',
 
         lifecycle         : '2.2.0-rc03',
         paging            : '2.1.0',
-        objectBox         : '2.5.0',
+        objectBox         : '2.5.1',
         // 2.9.7+ changes minSdk to API 26+
         jackson           : '2.11.2',
         facebook          : '[5,6)',
@@ -24,9 +24,9 @@ ext.versions = [
         okhttp            : '3.12.0',
         // Retrofit versions > 2.6.4 uses okhttp3 3.14.x
         retrofit          : '2.6.4',
-        epoxy             : '3.9.0',
-        lottie            : '3.3.1',
+        epoxy             : '4.1.0',
+//        lottie            : '3.3.1',
         paytm             : '1.4.4',
-        koin              : '2.1.0-alpha-8',
+        koin              : '2.1.6',
         navigation        : '2.2.0'
 ]

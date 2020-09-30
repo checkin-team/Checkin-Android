@@ -39,7 +39,9 @@ class PaymentRepository private constructor(val context: Context) : BaseReposito
             cachedPaymentMethods = liveData {
                 kotlin.runCatching {
                     paymentService.getPaymentMethods()
-                }.onFailure { emit(Resource.error(it)) }.onSuccess { emit(Resource.success(it)) }
+                }
+                        .onFailure { emit(Resource.error<PaymentMethods>(it)) }
+                        .onSuccess { emit(Resource.success(it)) }
             }
         return cachedPaymentMethods
     }
@@ -56,14 +58,18 @@ class PaymentRepository private constructor(val context: Context) : BaseReposito
                     }
                     it.copy(iconRes = iconRes)
                 }
-            }.onFailure { emit(Resource.error(it)) }.onSuccess { emit(Resource.success(it)) }
+            }
+                    .onFailure { emit(Resource.error<List<NetBankingPaymentOptionModel>>(it)) }
+                    .onSuccess { emit(Resource.success(it)) }
         }
 
     val UPIAppOptions: LiveData<Resource<List<UPIPushPaymentOptionModel>>>
         get() = liveData {
             kotlin.runCatching {
                 paymentService.getUPIAppOptions(context)
-            }.onFailure { emit(Resource.error(it)) }.onSuccess { emit(Resource.success(it)) }
+            }
+                    .onFailure { emit(Resource.error<List<UPIPushPaymentOptionModel>>(it)) }
+                    .onSuccess { emit(Resource.success(it)) }
         }
 
     val UPIIdOptions: LiveData<Resource<List<UPICollectPaymentOptionModel>>>
