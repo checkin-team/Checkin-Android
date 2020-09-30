@@ -40,7 +40,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                        "objectbox.myObjectBoxPackage": "com.checkin.app.checkin"
+                        "objectbox.myObjectBoxPackage": "com.checkin.app.checkin",
+                        "objectbox.incremental" : "true",
+                        "enableParallelEpoxyProcessing" : "true"
                 ]
             }
         }
