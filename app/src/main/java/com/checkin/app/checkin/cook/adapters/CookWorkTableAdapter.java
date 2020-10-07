@@ -93,7 +93,7 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
             mTableModel = data;
 
             tvShopManagerTableNumber.setText(data.getTable());
-            BriefModel host = data.getTableSession().getHost();
+            BriefModel host = data.getTableSession() != null ? data.getTableSession().getHost() : null;
 
             if (host != null) {
                 tvShopManagerTableName.setText(host.getDisplayName());

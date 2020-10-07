@@ -36,6 +36,8 @@ inline fun <T> Collection<T>?.isNotEmpty(): Boolean = this != null && !this.isEm
 
 inline fun <T> Collection<T>?.hasAtleastSize(minSize: Int): Boolean = this != null && this.size >= minSize
 
+inline fun <T> Collection<T>.indexOfFirstOrNull(predicate: (T) -> Boolean) = indexOfFirst(predicate).takeIf { it != -1 }
+
 /*
     Views
  */

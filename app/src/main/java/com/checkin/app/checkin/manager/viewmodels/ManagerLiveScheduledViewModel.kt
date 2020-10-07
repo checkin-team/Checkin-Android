@@ -10,6 +10,7 @@ import com.checkin.app.checkin.manager.ManagerRepository
 import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.indexOfFirstOrNull
 import com.checkin.app.checkin.utility.isNotEmpty
 import java.util.*
 
@@ -51,8 +52,8 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
                 mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy().apply { status = ScheduledSessionStatus.ACCEPTED }))
             }
             mScheduledOrders.value?.data?.let {
-                val index = it.indexOfFirst { it.pk == input.data.pk }
-                if (index != -1) mScheduledOrders.value = Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply {
+                val index = it.indexOfFirstOrNull { it.pk == input.data.pk } ?: return@let
+                mScheduledOrders.value = Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply {
                     this[index] = this[index].run { copy(scheduled = scheduled.copy().apply { status = ScheduledSessionStatus.ACCEPTED }) }
                 })
             }
@@ -78,15 +79,13 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
                 mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy(modified = currTime).apply { status = ScheduledSessionStatus.DONE }))
             }
             mScheduledOrders.value?.data?.let {
-                val index = it.indexOfFirst { it.pk == input.data.pk }
-                if (index != -1) {
-                    mScheduledOrders.value = if (input.data.isCheckedOut) Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply { removeAt(index) })
-                    else {
-                        val data = it.toMutableList().apply {
-                            this[index] = this[index].run { copy(scheduled = scheduled.copy(modified = currTime).apply { status = ScheduledSessionStatus.DONE }) }
-                        }
-                        Resource.cloneResource(mScheduledOrders.value, data)
+                val index = it.indexOfFirstOrNull { it.pk == input.data.pk } ?: return@let
+                mScheduledOrders.value = if (input.data.isCheckedOut) Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply { removeAt(index) })
+                else {
+                    val data = it.toMutableList().apply {
+                        this[index] = this[index].run { copy(scheduled = scheduled.copy(modified = currTime).apply { status = ScheduledSessionStatus.DONE }) }
                     }
+                    Resource.cloneResource(mScheduledOrders.value, data)
                 }
             }
         }
@@ -134,7 +133,7 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
 
     fun updateSessionStatus(pk: Long, status: ScheduledSessionStatus) {
         mScheduledOrders.value?.data?.let {
-            val index = it.indexOfFirst { it.pk == pk }
+            val index = it.indexOfFirstOrNull { it.pk == pk } ?: return@let
             mScheduledOrders.value = Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply {
                 this[index] = this[index].let { it.copy(scheduled = it.scheduled.apply { this.status = status }) }
             })

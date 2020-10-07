@@ -92,9 +92,9 @@ data class RestaurantTableModel(
             val t2EventTime = t2.lastEventTimestamp ?: t2.tableSession?.event?.timestamp
             if (t1EventTime != null && t2EventTime != null) {
                 t2EventTime.compareTo(t1EventTime)
-            } else {
+            } else if (t2.tableSession != null && t1.tableSession != null) {
                 t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
-            }
+            } else 0
         }
     }
 }
