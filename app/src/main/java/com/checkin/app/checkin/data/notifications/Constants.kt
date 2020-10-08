@@ -2,7 +2,7 @@ package com.checkin.app.checkin.data.notifications
 
 import android.content.Context
 import android.net.Uri
-import com.checkin.app.checkin.R
+import androidx.annotation.RawRes
 import com.checkin.app.checkin.data.notifications.MessageObjectModel.MESSAGE_OBJECT_TYPE
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -38,14 +38,14 @@ object Constants {
         return ((type.id + objectPk) % 100).toInt()
     }
 
-    fun getAlertOrdersSoundUri(context: Context): Uri {
-        return Uri.parse("android.resource://" + context.packageName + "/" + R.raw.notif_alert_orders)
+    fun getAlertOrdersSoundUri(context: Context, @RawRes soundId: Int): Uri {
+        return Uri.parse("android.resource://" + context.packageName + "/" + soundId)
     }
 
     enum class CHANNEL_GROUP(val id: String, val title: String) {
         DEFAULT_USER("group.user", "User"),
-        RESTAURANT_CUSTOMER("group.customer", "Restaurant Customer"),
-        RESTAURANT_MEMBER("group.member", "Restaurant Member"),
+        RESTAURANT_CUSTOMER("group.customer", "Eatery Customer"),
+        RESTAURANT_MEMBER("group.member", "Eatery Staff"),
         MISC("group.misc", "Miscellaneous");
     }
 
@@ -58,12 +58,14 @@ object Constants {
         SCHEDULED_SESSION("channel.scheduled_session", "Scheduled Session"),
 
         // Restaurant Member group
-        MEMBER("channel.restaurant_member", "Restaurant Member"),
-        ORDERS("channel.restaurant.orders", "Restaurant New Orders"),
-        ADMIN("channel.restaurant_admin", "Restaurant Admin"),
-        MANAGER("channel.restaurant_manager", "Restaurant Manager"),
-        WAITER("channel.restaurant_waiter", "Restaurant Waiter"),
-        COOK("channel.restaurant_cook", "Restaurant Cook"),
+        MEMBER("channel.restaurant_member", "Eatery New Staff"),
+        ORDERS("channel.restaurant.orders", "New Orders"),
+        ORDER_COOKED("channel.session.order_cooked", "Order cooked"),
+        EVENT("channel.restaurant.events", "Manager Events"),
+        ADMIN("channel.restaurant_admin", "Admin"),
+        MANAGER("channel.restaurant_manager", "Manager"),
+        WAITER("channel.restaurant_waiter", "Waiter"),
+        COOK("channel.restaurant_cook", "Cook"),
 
         // Misc group
         MEDIA_UPLOAD("channel.media_upload", "Media upload progress"),

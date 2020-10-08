@@ -100,16 +100,21 @@ object MessageUtils {
         }
     }
 
-    fun createOrderChannels(context: Context, notificationManager: NotificationManager) {
+    fun createAlertChannels(channel: CHANNEL, context: Context, notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER)
             val audioAttributes = AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build()
-            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.ORDERS)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, channel)
+            val alertSound = when (channel) {
+                CHANNEL.ORDER_COOKED -> R.raw.notif_order_cooked_waiter
+                CHANNEL.ORDERS -> R.raw.notif_alert_orders
+                else -> R.raw.notif_alert_orders_manager
+            }
             channels.map {
-                it.setSound(getAlertOrdersSoundUri(context), audioAttributes)
+                it.setSound(getAlertOrdersSoundUri(context, alertSound), audioAttributes)
                 it.enableVibration(true)
                 it.enableLights(true)
                 it.setBypassDnd(true)
@@ -185,7 +190,7 @@ object MessageUtils {
         when (channel) {
             CHANNEL.ADMIN, CHANNEL.MEMBER -> createAdminChannels(notificationManager)
             CHANNEL.WAITER, CHANNEL.COOK, CHANNEL.MANAGER -> createMemberChannels(channel, notificationManager)
-            CHANNEL.ORDERS -> createOrderChannels(context, notificationManager)
+            CHANNEL.ORDERS, CHANNEL.ORDER_COOKED, CHANNEL.EVENT -> createAlertChannels(channel, context, notificationManager)
             CHANNEL.ACTIVE_SESSION_PERSISTENT -> createActiveCustomerChannels(notificationManager)
             CHANNEL.SCHEDULED_SESSION -> createScheduledSessionChannel(notificationManager)
             else -> createDefaultChannels(notificationManager)

@@ -54,10 +54,10 @@ data class MessageModel(
 
     val channel: CHANNEL by lazy {
         when (type) {
-            MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH, MESSAGE_TYPE.COOK_SESSION_ORDERS_PUSH, MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH,
-            MESSAGE_TYPE.WAITER_ORDER_COOKED_NOTIFY_HOST,
-            MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID, MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID
-            -> CHANNEL.ORDERS
+            MESSAGE_TYPE.COOK_SESSION_ORDERS_PUSH, MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH -> CHANNEL.ORDERS
+            MESSAGE_TYPE.WAITER_ORDER_COOKED_NOTIFY_HOST -> CHANNEL.ORDER_COOKED
+            MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID, MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID,
+            MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH -> CHANNEL.EVENT
             MESSAGE_TYPE.SHOP_MEMBER_ADDED -> CHANNEL.MEMBER
             else -> when {
                 isUserActiveSessionNotification -> CHANNEL.ACTIVE_SESSION
@@ -143,13 +143,18 @@ data class MessageModel(
 
     private fun addNotificationExtra(context: Context, builder: NotificationCompat.Builder, pendingIntent: PendingIntent) {
         if (isFullScreenNotification) builder.priority = NotificationManagerCompat.IMPORTANCE_MAX
-        if (type == MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH || type == MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH || type == MESSAGE_TYPE.COOK_SESSION_ORDERS_PUSH) {
-            builder.setSound(Constants.getAlertOrdersSoundUri(context))
-                    .setFullScreenIntent(pendingIntent, true)
-        } else if (type == MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE) {
-            builder.setFullScreenIntent(pendingIntent, true)
-        } else if (type == MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID || type == MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID)
-            builder.setFullScreenIntent(pendingIntent, true)
+        when (type) {
+            MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH, MESSAGE_TYPE.COOK_SESSION_ORDERS_PUSH ->
+                builder.setSound(Constants.getAlertOrdersSoundUri(context, R.raw.notif_alert_orders))
+                        .setFullScreenIntent(pendingIntent, true)
+            MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID, MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID ->
+                builder.setSound(Constants.getAlertOrdersSoundUri(context, R.raw.notif_alert_orders_manager))
+                        .setFullScreenIntent(pendingIntent, true)
+            MESSAGE_TYPE.WAITER_ORDER_COOKED_NOTIFY_HOST ->
+                builder.setSound(Constants.getAlertOrdersSoundUri(context, R.raw.notif_order_cooked_waiter))
+            MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE ->
+                builder.setFullScreenIntent(pendingIntent, true)
+        }
         if (type == MESSAGE_TYPE.WAITER_SESSION_NEW) {
             val waiterIntent = Intent(context, WaiterWorkActivity::class.java)
             waiterIntent.action = WaiterWorkActivity.ACTION_NEW_TABLE
