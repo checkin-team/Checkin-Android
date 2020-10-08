@@ -64,6 +64,10 @@ data class RestaurantTableModel(
         tableBox.remove(this)
     }
 
+    fun addToDb() {
+        tableBox.put(this)
+    }
+
     /**
      * Only to be used for cook screen
      * since cook events are always related to order
