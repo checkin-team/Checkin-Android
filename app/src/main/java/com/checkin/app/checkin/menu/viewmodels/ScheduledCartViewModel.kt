@@ -12,6 +12,7 @@ import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.SessionBillModel
+import com.checkin.app.checkin.utility.indexOfFirstOrNull
 import com.checkin.app.checkin.utility.pass
 import com.fasterxml.jackson.databind.node.ObjectNode
 import java.util.*
@@ -139,8 +140,8 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
 
     private fun updateCartFromServer(order: OrderedItemModel) {
         val orderedItems = mOrderedItems.value?.toMutableList() ?: mutableListOf()
-        val index = orderedItems.indexOfFirst { it.pk == order.pk }
-        if (index != -1) {
+        val index = orderedItems.indexOfFirstOrNull { it.pk == order.pk }
+        if (index != null) {
             orderedItems[index] = orderedItems[index].updateQuantity(order.quantity)
             if (orderedItems[index].quantity == 0) orderedItems.removeAt(index)
         } else orderedItems.add(order)

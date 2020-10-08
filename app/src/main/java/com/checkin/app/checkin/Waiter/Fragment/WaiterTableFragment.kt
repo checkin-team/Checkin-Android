@@ -43,6 +43,7 @@ class WaiterTableFragment : BaseFragment() {
     internal lateinit var containerMembersCount: ViewGroup
 
     private val mListener: WaiterTableInteraction by parentActivityDelegate()
+    private val eventsFragment by lazy { WaiterTableEventFragment.newInstance() }
     val viewModel: WaiterTableViewModel by viewModels()
 
     private val shopPk: Long by lazy { getSharedViewModel<WaiterWorkViewModel>().shopPk }
@@ -53,11 +54,12 @@ class WaiterTableFragment : BaseFragment() {
             return
 
         buildContactAddDialog()
+        showEventList()
         mContactAddDialog?.setOnDismissListener { Utils.setKeyboardVisibility(tvSessionBill, false) }
 
         viewModel.fetchSessionDetail(arguments!!.getLong(KEY_WAITER_TABLE_ID, 0))
 
-        viewModel.sessionDetail.observe(this, Observer {
+        viewModel.sessionDetail.observe(viewLifecycleOwner, Observer {
             it?.let { resource ->
                 if (resource.status === Status.SUCCESS && resource.data != null) {
                     setupTableData(resource.data)
@@ -66,7 +68,7 @@ class WaiterTableFragment : BaseFragment() {
                 }
             }
         })
-        viewModel.checkoutData.observe(this, Observer {
+        viewModel.checkoutData.observe(viewLifecycleOwner, Observer {
             it?.let { resource ->
                 if (resource.status === Status.SUCCESS && resource.data != null) {
                     Utils.toast(requireContext(), resource.data.message)
@@ -76,7 +78,7 @@ class WaiterTableFragment : BaseFragment() {
                 }
             }
         })
-        viewModel.observableData.observe(this, Observer {
+        viewModel.observableData.observe(viewLifecycleOwner, Observer {
             it?.let { input ->
                 if (input.status === Status.SUCCESS && input.data != null)
                     Utils.toast(requireContext(), "User contact details added successfully.")
@@ -87,7 +89,7 @@ class WaiterTableFragment : BaseFragment() {
 
         viewModel.fetchSessionContacts()
 
-        viewModel.sessionContactListData.observe(this, Observer {
+        viewModel.sessionContactListData.observe(viewLifecycleOwner, Observer {
             it?.let { input ->
                 if (input.status === Status.SUCCESS && input.data != null) {
                     if (input.data.size > 0) {
@@ -174,7 +176,7 @@ class WaiterTableFragment : BaseFragment() {
         if (data.isRequestedCheckout) {
             containerActions.visibility = View.GONE
             showCollectBill()
-        } else {
+        } else if (containerActions.visibility == View.GONE) {
             containerActions.visibility = View.VISIBLE
             showEventList()
         }
@@ -182,7 +184,7 @@ class WaiterTableFragment : BaseFragment() {
 
     private fun showEventList() {
         childFragmentManager.beginTransaction()
-                .replace(R.id.container_waiter_table_fragment, WaiterTableEventFragment.newInstance())
+                .replace(R.id.container_waiter_table_fragment, eventsFragment)
                 .commit()
     }
 

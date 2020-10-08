@@ -10,6 +10,7 @@ import com.checkin.app.checkin.data.resource.Resource.Companion.cloneResource
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
+import com.checkin.app.checkin.utility.indexOfFirstOrNull
 
 class CookWorkViewModel(application: Application) : BaseViewModel(application) {
     private val mWaiterRepository: WaiterRepository = WaiterRepository.getInstance(application)
@@ -59,7 +60,7 @@ class CookWorkViewModel(application: Application) : BaseViewModel(application) {
 
     fun updateTable(sessionPk: Long, newOrderPk: Long) {
         val result = mTablesData.value?.data?.toMutableList()?.apply {
-            val pos = indexOfFirst { it.sessionPk == sessionPk }
+            val pos = indexOfFirstOrNull { it.sessionPk == sessionPk } ?: return@apply
             val table = get(pos)
             table.addEvent(EventBriefModel(newOrderPk, SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM, "New order"))
 

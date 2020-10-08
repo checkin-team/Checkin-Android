@@ -13,6 +13,7 @@ import com.checkin.app.checkin.session.models.CheckoutStatusModel
 import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
+import com.checkin.app.checkin.utility.indexOfFirstOrNull
 import java.util.*
 
 class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(application) {
@@ -79,7 +80,7 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
     }
 
     fun updateRemoveTable(sessionPk: Long) = mTablesData.value?.data?.run {
-        val pos = indexOfFirst { it.sessionPk == sessionPk }
+        val pos = indexOfFirstOrNull { it.sessionPk == sessionPk } ?: return@run
         get(pos).removeFromDb()
         val result = toMutableList().apply {
             removeAt(pos)
@@ -89,7 +90,7 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
 
     fun updateTable(sessionPk: Long, event: EventBriefModel) {
         val result = mTablesData.value?.data?.toMutableList()?.apply {
-            val pos = indexOfFirst { it.sessionPk == sessionPk }
+            val pos = indexOfFirstOrNull { it.sessionPk == sessionPk } ?: return@apply
             val table = get(pos)
             table.addEvent(event)
             if (event.type == SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT) table.tableSession?.isRequestedCheckout = true

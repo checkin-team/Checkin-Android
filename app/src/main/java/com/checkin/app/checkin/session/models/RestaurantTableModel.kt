@@ -64,6 +64,10 @@ data class RestaurantTableModel(
         tableBox.remove(this)
     }
 
+    fun addToDb() {
+        tableBox.put(this)
+    }
+
     /**
      * Only to be used for cook screen
      * since cook events are always related to order
@@ -71,7 +75,7 @@ data class RestaurantTableModel(
     val formatOrderStatus: String
         get() = when {
             unseenEventCount > 0 -> "New Order!"
-            tableSession?.pendingOrders ?: 0 > 0 -> String.format(Locale.getDefault(), "%d orders in line. Mark ready after preparation.", tableSession!!.pendingOrders)
+            tableSession?.pendingOrders ?: 0 > 0 -> String.format(Locale.getDefault(), "<font color=#ff4f19><b>%d orders in line.</b></font> Mark ready after preparation.", tableSession!!.pendingOrders)
             else -> "No active orders."
         }
 
@@ -92,9 +96,9 @@ data class RestaurantTableModel(
             val t2EventTime = t2.lastEventTimestamp ?: t2.tableSession?.event?.timestamp
             if (t1EventTime != null && t2EventTime != null) {
                 t2EventTime.compareTo(t1EventTime)
-            } else {
+            } else if (t2.tableSession != null && t1.tableSession != null) {
                 t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
-            }
+            } else 0
         }
     }
 }

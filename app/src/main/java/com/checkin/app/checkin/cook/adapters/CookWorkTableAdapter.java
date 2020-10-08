@@ -93,7 +93,7 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
             mTableModel = data;
 
             tvShopManagerTableNumber.setText(data.getTable());
-            BriefModel host = data.getTableSession().getHost();
+            BriefModel host = data.getTableSession() != null ? data.getTableSession().getHost() : null;
 
             if (host != null) {
                 tvShopManagerTableName.setText(host.getDisplayName());
@@ -102,7 +102,7 @@ public class CookWorkTableAdapter extends RecyclerView.Adapter<CookWorkTableAdap
                 ivShopManagerTableImage.setImageDrawable(ivShopManagerTableImage.getContext().getResources().getDrawable(R.drawable.ic_waiter));
                 tvShopManagerTableName.setText(R.string.waiter_unassigned);
             }
-            tvShopManagerTableDetail.setText(data.getFormatOrderStatus());
+            tvShopManagerTableDetail.setText(Utils.fromHtml(data.getFormatOrderStatus()));
             if (data.getUnseenEventCount() > 0) {
                 tvEventBadge.setText(data.getFormatEventCount());
                 tvEventBadge.setVisibility(View.VISIBLE);

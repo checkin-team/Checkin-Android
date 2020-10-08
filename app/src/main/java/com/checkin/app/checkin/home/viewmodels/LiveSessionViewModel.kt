@@ -13,6 +13,7 @@ import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.CartStatusModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.indexOfFirstOrNull
 import com.checkin.app.checkin.utility.isNotEmpty
 import com.fasterxml.jackson.databind.node.ObjectNode
 
@@ -93,7 +94,7 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
 
     fun updateScheduledStatus(sessionPk: Long, status: ScheduledSessionStatus) {
         mScheduledSessionData.value?.data?.let { list ->
-            val index = list.indexOfFirst { it.pk == sessionPk }
+            val index = list.indexOfFirst { it.pk == sessionPk }.takeIf { it != -1 } ?: return@let
             if (index != -1) mScheduledSessionData.value = Resource.cloneResource(mScheduledSessionData.value, list.toMutableList().apply {
                 this[index] = this[index].run { copy(scheduled = scheduled.copy().apply { this.status = status }) }
             })
@@ -102,8 +103,8 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
 
     fun removeScheduledSession(pk: Long) {
         mScheduledSessionData.value?.data?.let {
-            val index = it.indexOfFirst { it.pk == pk }
-            if (index != -1) mScheduledSessionData.value = Resource.cloneResource(mScheduledSessionData.value, it.toMutableList().apply {
+            val index = it.indexOfFirstOrNull { it.pk == pk } ?: return@let
+            mScheduledSessionData.value = Resource.cloneResource(mScheduledSessionData.value, it.toMutableList().apply {
                 removeAt(index)
             })
         }

@@ -166,6 +166,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
     private fun addTable(tableModel: RestaurantTableModel) {
         tableModel.addEvent(tableModel.tableSession?.event ?: return)
         mViewModel.addRestaurantTable(tableModel)
+        tableModel.addToDb()
     }
 
     private fun updateSessionEventCount(sessionPk: Long, event: EventBriefModel) {

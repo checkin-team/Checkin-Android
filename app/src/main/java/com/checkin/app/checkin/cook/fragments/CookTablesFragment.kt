@@ -50,8 +50,8 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
             val user: BriefModel
             when (message.type) {
                 MESSAGE_TYPE.COOK_SESSION_NEW -> {
-                    val qrPk = message.`object`?.pk ?: return
-                    val tableName = message.rawData?.sessionTableName ?: return
+                    val qrPk = message.rawData?.sessionQRId ?: return
+                    val tableName = message.rawData.sessionTableName ?: return
                     val actor = message.actor ?: return
                     val eventModel = EventBriefModel.getFromManagerEventModel(message.rawData.sessionEventBrief
                             ?: return).apply {
@@ -109,6 +109,7 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
     // region UI-Update
     private fun addTable(tableModel: RestaurantTableModel) {
         mViewModel.addRestaurantTable(tableModel)
+        tableModel.addToDb()
     }
 
     private fun updateSessionNewOrder(sessionPk: Long, newOrderPk: Long) {

@@ -105,7 +105,6 @@
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/container_ms_order_remarks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_ms_order_item_name">
@@ -135,13 +134,12 @@
         android:id="@+id/container_ms_order_remarks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
         android:orientation="vertical"
         android:paddingTop="@dimen/spacing_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/container_ms_order_customizations">
 
         <include layout="@layout/incl_horizontal_line" />
 
