@@ -75,7 +75,7 @@ data class RestaurantTableModel(
     val formatOrderStatus: String
         get() = when {
             unseenEventCount > 0 -> "New Order!"
-            tableSession?.pendingOrders ?: 0 > 0 -> String.format(Locale.getDefault(), "%d orders in line. Mark ready after preparation.", tableSession!!.pendingOrders)
+            tableSession?.pendingOrders ?: 0 > 0 -> String.format(Locale.getDefault(), "<font color=#ff4f19><b>%d orders in line.</b></font> Mark ready after preparation.", tableSession!!.pendingOrders)
             else -> "No active orders."
         }
 
