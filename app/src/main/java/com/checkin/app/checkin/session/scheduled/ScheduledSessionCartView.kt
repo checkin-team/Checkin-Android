@@ -22,6 +22,7 @@ import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.accounts.AccountUtil
+import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.CartOrderedItemController
@@ -78,6 +79,8 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     internal lateinit var tvRestaurantName: TextView
     @BindView(R.id.tv_cart_header_restaurant_locality)
     internal lateinit var tvRestaurantLocality: TextView
+    @BindView(R.id.container_cart_referral)
+    internal lateinit var checkinrewards: ViewGroup
 
     lateinit var activity: FragmentActivity
     lateinit var viewModel: ScheduledCartViewModel
@@ -88,6 +91,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     private val ordersController = CartOrderedItemController(this)
     private val billHolder: BillHolder
     private lateinit var bottomSheetBehavior: LockableBottomSheetBehavior<View>
+    private val checkinRewards by lazy { RemoteConfig[RemoteConfig.Constants.ENABLED_REWARDS].asBoolean() }
 
     init {
         View.inflate(context, R.layout.fragment_scheduled_session_cart, this).apply {
@@ -110,7 +114,9 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         }
         epoxyRvCartOrders.setHasFixedSize(false)
         epoxyRvCartOrders.setControllerAndBuildModels(ordersController)
+        enablerewards()
     }
+
 
     fun isExpanded() = bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED
 
@@ -248,6 +254,12 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             tvHeaderAmount.text = Utils.formatCurrencyAmount(context, it)
         })
     }
+
+    private fun enablerewards(){
+        if (!checkinRewards)
+            checkinrewards.visibility = View.GONE
+    }
+
 
     private fun showPromoApply() {
         resetPromoCards()

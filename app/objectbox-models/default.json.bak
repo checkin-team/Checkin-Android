@@ -474,7 +474,7 @@
     },
     {
       "id": "32:7489899660733714038",
-      "lastPropertyId": "14:760664859784518275",
+      "lastPropertyId": "15:2124201120514446109",
       "name": "RestaurantTableModel",
       "properties": [
         {
@@ -507,6 +507,11 @@
           "name": "unseenEventCount",
           "type": 5,
           "flags": 4
+        },
+        {
+          "id": "15:2124201120514446109",
+          "name": "lastEventTimestamp",
+          "type": 10
         }
       ],
       "relations": []
