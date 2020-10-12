@@ -20,4 +20,9 @@
         <key>checkin_support_youtube_channel_id</key>
         <value>UCdQcZz5zv7zJZscHKL5-ZOw</value>
     </entry>
+    <entry>
+        <key>checkin_feature_rewards_enabled</key>
+        <value>false</value>
+    </entry>
+
 </defaultsMap>
