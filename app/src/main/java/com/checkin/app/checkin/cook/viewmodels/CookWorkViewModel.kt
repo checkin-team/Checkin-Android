@@ -50,7 +50,7 @@ class CookWorkViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun updateRemoveTable(sessionPk: Long) {
-        val pos = getTablePositionWithPk(sessionPk)
+        val pos = getTablePositionWithPk(sessionPk).takeIf { it != -1 } ?: return
         getTableWithPosition(pos)?.removeFromDb()
         val result = mTablesData.value?.data?.toMutableList()?.apply {
             removeAt(pos)
