@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.MINUTES
 
 object Constants {
-    const val API_VERSION = "1.3.1"
+    const val API_VERSION = "1.3.3"
     const val API_PROTOCOL = "https://"
     val API_HOST
         get() = if (IS_RELEASE_BUILD()) "api.check-in.in" else "dev.api.check-in.in"
