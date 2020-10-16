@@ -140,7 +140,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
             return;
         for (int i = 0, length = resource.getData().size(); i < length; i++) {
             RestaurantTableModel table = resource.getData().get(i);
-            if (newTable.getQrPk() == RestaurantTableModel.NO_QR_ID ? newTable.getTable().equals(table.getTable()) : table.getQrPk() == newTable.getQrPk()) {
+            if (table.getQrPk() == newTable.getQrPk()) {
                 resource.getData().set(i, newTable);
                 break;
             }
