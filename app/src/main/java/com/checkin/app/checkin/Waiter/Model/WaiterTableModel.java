@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Waiter.Model;
 
+import androidx.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import androidx.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WaiterTableModel {
@@ -12,6 +12,9 @@ public class WaiterTableModel {
 
     @JsonProperty("table")
     private String table;
+
+    @JsonProperty("restaurant")
+    private long restaurantId;
 
     private int eventCount;
 
@@ -51,6 +54,10 @@ public class WaiterTableModel {
         this.eventCount += 1;
     }
 
+    public long getRestaurantId() {
+        return restaurantId;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         try {
@@ -60,5 +67,4 @@ public class WaiterTableModel {
             return false;
         }
     }
-
 }
