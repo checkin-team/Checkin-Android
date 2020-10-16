@@ -140,6 +140,7 @@
         <item>Club</item>
         <item>Lounge</item>
         <item>Micro Brewerie</item>
+        <item>In-room Dining</item>
     </string-array>
 
     <string-array name="menu_meal_slots">

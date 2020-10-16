@@ -92,7 +92,6 @@ public class WaiterWorkViewModel extends BaseViewModel {
             if (input == null || input.getData() == null || input.getStatus() != Status.SUCCESS)
                 return input;
 
-
             List<RestaurantTableModel> result = new ArrayList<>();
             for (int i = 0, length = input.getData().size(); i < length; i++) {
                 RestaurantTableModel tableModel = input.getData().get(i);
@@ -108,7 +107,17 @@ public class WaiterWorkViewModel extends BaseViewModel {
     }
 
     public LiveData<Resource<List<WaiterTableModel>>> getWaiterTables() {
-        return mWaiterTables;
+        return Transformations.map(mWaiterTables, input -> {
+            if (input == null || input.getData() == null || input.getStatus() != Status.SUCCESS)
+                return input;
+
+            List<WaiterTableModel> result = new ArrayList<>();
+            for (int i = 0, length = input.getData().size(); i < length; i++) {
+                WaiterTableModel tableModel = input.getData().get(i);
+                if (tableModel.getRestaurantId() == mShopPk) result.add(tableModel);
+            }
+            return Resource.Companion.cloneResource(input, result);
+        });
     }
 
     public LiveData<Resource<QRResultModel>> getQrResult() {
@@ -140,7 +149,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
             return;
         for (int i = 0, length = resource.getData().size(); i < length; i++) {
             RestaurantTableModel table = resource.getData().get(i);
-            if (newTable.getQrPk() == RestaurantTableModel.NO_QR_ID ? newTable.getTable().equals(table.getTable()) : table.getQrPk() == newTable.getQrPk()) {
+            if (table.getQrPk() == newTable.getQrPk()) {
                 resource.getData().set(i, newTable);
                 break;
             }

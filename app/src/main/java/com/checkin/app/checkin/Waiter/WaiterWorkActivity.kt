@@ -90,10 +90,11 @@ class WaiterWorkActivity : BaseAccountActivity(), WaiterTableInteraction, OnTabl
             val sessionPk: Long
             when (message.type) {
                 MESSAGE_TYPE.WAITER_SESSION_NEW -> {
-                    val tableName = message.rawData!!.sessionTableName
+                    val qrPk = message.rawData?.sessionQRId ?: return
+                    val tableName = message.rawData.sessionTableName
                     eventModel = EventBriefModel.getFromManagerEventModel(message.rawData.sessionEventBrief)
                     val sessionModel = TableSessionModel(message.`object`!!.pk, null, eventModel)
-                    val tableModel = RestaurantTableModel(RestaurantTableModel.NO_QR_ID, tableName, sessionModel)
+                    val tableModel = RestaurantTableModel(qrPk, tableName, sessionModel)
                     if (message.actor!!.type == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         user = message.actor.briefModel
                         sessionModel.host = user
@@ -451,7 +452,7 @@ class WaiterWorkActivity : BaseAccountActivity(), WaiterTableInteraction, OnTabl
             }
             if (pos > -1) {
                 val fragment = mFragmentList[pos]
-                return fragment.viewModel
+                return fragment.runCatching { viewModel }.getOrNull()
             }
             return null
         }

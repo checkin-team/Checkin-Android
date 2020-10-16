@@ -29,6 +29,7 @@ import com.checkin.app.checkin.manager.models.ManagerSessionEventModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerASLiveTablesViewModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.RestaurantTableModel;
@@ -54,7 +55,7 @@ import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SE
 import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
 import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_UPDATE_ORDER;
 
-public class ManagerSessionActivity extends AppCompatActivity implements ManagerSessionOrderFragment.ManagerOrdersInteraction {
+public class ManagerSessionActivity extends BaseActivity implements ManagerSessionOrderFragment.ManagerOrdersInteraction {
     public static final String KEY_SESSION_PK = "manager.session.session_pk";
     public static final String KEY_SHOP_PK = "manager.session.shop_pk";
     public static final String KEY_OPEN_ORDERS = "manager.session.open_orders";

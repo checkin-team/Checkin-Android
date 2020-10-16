@@ -146,7 +146,7 @@ class CookTablesFragment : BaseFragment(), CookTableInteraction {
         intent.putExtra(CookSessionActivity.KEY_SESSION_PK, sessionPk)
                 .putExtra(CookSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
         startActivity(intent)
-        val pos = mViewModel.getTablePositionWithPk(sessionPk)
+        val pos = mViewModel.getTablePositionWithPk(sessionPk).takeIf { it != -1 } ?: return
         tableModel.resetEvents()
         mAdapter.updateSession(pos)
     }

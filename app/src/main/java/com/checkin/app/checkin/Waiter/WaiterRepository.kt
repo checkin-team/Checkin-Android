@@ -232,14 +232,15 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
         }.asLiveData
     }
 
-    fun postOrderListStatus(sessionId: Long, orders: List<OrderStatusModel>): LiveData<Resource<List<OrderStatusModel>>> {
+    fun postOrderListStatus(sessionId: Long, orders: List<OrderStatusModel>?): LiveData<Resource<List<OrderStatusModel>>> {
+        val postOrders = orders ?: emptyList()
         return object : NetworkBoundResource<List<OrderStatusModel>, List<OrderStatusModel>>() {
             override fun shouldUseLocalDb(): Boolean {
                 return false
             }
 
             override fun createCall(): LiveData<ApiResponse<List<OrderStatusModel>>> {
-                return RetrofitLiveData(mWebService.postChangeOrderStatusList(sessionId, orders))
+                return RetrofitLiveData(mWebService.postChangeOrderStatusList(sessionId, postOrders))
             }
 
             override fun saveCallResult(data: List<OrderStatusModel>?) {}

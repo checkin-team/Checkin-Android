@@ -27,16 +27,24 @@ class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessi
     internal lateinit var imRestaurantLogo: ImageView
     @BindView(R.id.tv_home_session_live_active_status)
     internal lateinit var tvStatus: TextView
+
     @BindView(R.id.tv_home_session_live_active_name)
     internal lateinit var tvRestaurantName: TextView
+
     @BindView(R.id.tv_home_session_live_order_new_count)
     internal lateinit var tvNewCount: TextView
+
     @BindView(R.id.tv_home_session_live_order_progress_count)
     internal lateinit var tvProgressCount: TextView
+
     @BindView(R.id.tv_home_session_live_order_done_count)
     internal lateinit var tvDoneCount: TextView
+
     @BindView(R.id.tv_home_session_live_active_promo_name)
     internal lateinit var tvPromoName: TextView
+
+    @BindView(R.id.container_home_session_live_active_promo)
+    internal lateinit var containerAvailablePromo: ViewGroup
 
     private var mData: ActiveLiveSessionDetailModel? = null
 
@@ -66,7 +74,8 @@ class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessi
         Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
         data.offers.getOrNull(0)?.let {
             tvPromoName.text = it.formatName
-        }
+            containerAvailablePromo.visibility = View.VISIBLE
+        } ?: containerAvailablePromo.apply { visibility = View.INVISIBLE }
         tvNewCount.text = data.newOrdersCount.toString()
         tvDoneCount.text = data.doneOrdersCount.toString()
         tvProgressCount.text = data.progressOrdersCount.toString()

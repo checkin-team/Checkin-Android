@@ -80,8 +80,6 @@ data class RestaurantTableModel(
         }
 
     companion object {
-        const val NO_QR_ID: Long = -1
-
         private val tableBox by dbStore<RestaurantTableModel>()
         private val sessionBox by dbStore<TableSessionModel>()
 

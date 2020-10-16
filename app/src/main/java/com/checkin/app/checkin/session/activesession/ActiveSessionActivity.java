@@ -116,7 +116,10 @@ public class ActiveSessionActivity extends BaseActivity implements
             SessionChatModel event;
             switch (message.getType()) {
                 case USER_SESSION_BILL_CHANGE:
-                    ActiveSessionActivity.this.updateBill(message.getRawData().getSessionBillTotal());
+                    Double total = message.getRawData().getSessionBillTotal();
+                    // rare cases where the received bill total is null
+                    if (total == null) return;
+                    ActiveSessionActivity.this.updateBill(total);
                     break;
                 case USER_SESSION_HOST_ASSIGNED:
                     model = message.getObject();
