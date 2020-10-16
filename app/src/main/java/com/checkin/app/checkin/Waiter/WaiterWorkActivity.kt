@@ -451,7 +451,7 @@ class WaiterWorkActivity : BaseAccountActivity(), WaiterTableInteraction, OnTabl
             }
             if (pos > -1) {
                 val fragment = mFragmentList[pos]
-                return fragment.viewModel
+                return fragment.runCatching { viewModel }.getOrNull()
             }
             return null
         }
