@@ -152,7 +152,7 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
                 .setTitle("Enter Remarks")
                 .setView(input)
                 .setPositiveButton("OK") { _, _ ->
-                    cartViewModel.orderItem(item.updateRemarks(input.toString()))
+                    cartViewModel.orderItem(item.updateRemarks(input.text.toString()))
                     input.setText("")
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
