@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.menu.holders
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -16,6 +14,7 @@ import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.utility.DebouncedOnClickListener
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.onDone
 
 @EpoxyModelClass(layout = R.layout.item_as_menu_cart)
 abstract class ActiveSessionMenuCartModelHolder : EpoxyModelWithHolder<ActiveSessionMenuCartModelHolder.Holder>() {
@@ -32,20 +31,28 @@ abstract class ActiveSessionMenuCartModelHolder : EpoxyModelWithHolder<ActiveSes
     class Holder(val listener: MenuCartInteraction) : BaseEpoxyHolder<OrderedItemModel>() {
         @BindView(R.id.tv_menu_cart_item_name)
         internal lateinit var tvItemName: TextView
+
         @BindView(R.id.tv_menu_cart_item_price)
         internal lateinit var tvItemPrice: TextView
+
         @BindView(R.id.tv_menu_cart_item_customized)
         internal lateinit var tvItemCustomized: TextView
+
         @BindView(R.id.et_as_menu_cart_special_instruction)
         internal lateinit var etSpecialInstructions: EditText
+
         @BindView(R.id.tv_menu_item_add)
         internal lateinit var tvMenuItemAdd: TextView
+
         @BindView(R.id.container_menu_item_add_quantity)
         internal lateinit var containerAddQuantity: ViewGroup
+
         @BindView(R.id.tv_menu_item_add_quantity)
         internal lateinit var tvItemQuantity: TextView
+
         @BindView(R.id.im_menu_item_quantity_increment)
         internal lateinit var imQuantityIncrement: ImageView
+
         @BindView(R.id.im_menu_item_quantity_decrement)
         internal lateinit var imQuantityDecrement: ImageView
 
@@ -57,15 +64,10 @@ abstract class ActiveSessionMenuCartModelHolder : EpoxyModelWithHolder<ActiveSes
             imQuantityIncrement.setOnClickListener(DebouncedOnClickListener { listener.onOrderedItemChanged(mData, mData.quantity + 1) })
             imQuantityDecrement.setOnClickListener(DebouncedOnClickListener { listener.onOrderedItemChanged(mData, mData.quantity - 1) })
             showAddQuantity()
-            etSpecialInstructions.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-
-                override fun afterTextChanged(s: Editable) {
-                    listener.onOrderedItemRemark(mData, s.toString())
-                }
-            })
+            etSpecialInstructions.onDone {
+                listener.onOrderedItemRemark(mData, it.toString())
+            }
         }
 
         override fun bindData(data: OrderedItemModel) {
@@ -82,6 +84,9 @@ abstract class ActiveSessionMenuCartModelHolder : EpoxyModelWithHolder<ActiveSes
                     tvItemName.setCompoundDrawablesWithIntrinsicBounds(if (it) R.drawable.ic_veg else R.drawable.ic_non_veg, 0, 0, 0)
                 else tvItemName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             }
+
+            etSpecialInstructions.setText(data.remarks)
+            etSpecialInstructions.setSelection(etSpecialInstructions.text?.length ?: 0)
         }
 
         private fun showAddQuantity() {

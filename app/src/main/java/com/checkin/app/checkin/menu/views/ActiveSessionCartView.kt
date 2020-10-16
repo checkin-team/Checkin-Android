@@ -112,7 +112,7 @@ class ActiveSessionCartView @JvmOverloads constructor(
     }
 
     override fun onOrderedItemRemark(item: OrderedItemModel, s: String) {
-        cartViewModel.orderItem(item.updateRemarks(s))
+        cartViewModel.updateCart(item.updateRemarks(s))
     }
 
     override fun onOrderedItemChanged(item: OrderedItemModel, count: Int) {

@@ -9,13 +9,16 @@ import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.location.LocationManager
 import android.net.Uri
+import android.text.Editable
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
@@ -48,6 +51,26 @@ fun TabLayout.setTabBackground(@ColorInt color: Int) = (0 until tabCount).forEac
 fun ImageView.blackAndWhite() {
     colorFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0.0f) })
 }
+
+fun EditText.onDone(block: (editable: Editable) -> Unit) {
+    // TODO: Design a better way to do it!
+    doAfterTextChanged { block(it ?: return@doAfterTextChanged) }
+//    setOnEditorActionListener { _, actionId, event ->
+//        when (actionId) {
+    // cancel event is missed here
+//            EditorInfo.IME_ACTION_DONE, EditorInfo.IME_ACTION_NEXT, EditorInfo.IME_ACTION_PREVIOUS -> {
+//                block(text)
+//                true
+//            }
+//            else -> false
+//        }
+//    }
+    // focus is changed a lot needlessly (like when calling setText)
+//    setOnFocusChangeListener { _, hasFocus ->
+//        if (!hasFocus) block(text)
+//    }
+}
+
 
 fun Context.toast(msg: String?) = Utils.toast(this, msg)
 fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)
