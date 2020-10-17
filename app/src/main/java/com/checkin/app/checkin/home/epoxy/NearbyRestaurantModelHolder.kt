@@ -10,6 +10,7 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Shop.changetextviewcolor
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
@@ -65,6 +66,7 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
             }
 
             tvRating.text = data.formatRating
+            changetextviewcolor(data.ratings,tvRating)
             tvDistance.text = data.formatDistance
 
             imDistance.setImageResource(if (data.distance > 1.5) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)
