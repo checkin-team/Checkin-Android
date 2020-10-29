@@ -11,17 +11,35 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.TextUtils
+import org.apache.commons.io.IOUtils
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.util.*
 
 // Taken with respect from https://gist.github.com/MeNiks/947b471b762f3b26178ef165a7f5558a
+// Modified to accommodate Android 10 Scoped storage (https://medium.com/@sriramaripirala/android-10-open-failed-eacces-permission-denied-da8b630a89df)
 object RealPathUtil {
 
     fun getRealPath(context: Context, fileUri: Uri): String? {
-        // SDK >= 11 && SDK < 19
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            getRealPathFromURIAPI11to18(context, fileUri)
-        } else {
-            getRealPathFromURIAPI19(context, fileUri)
-        }// SDK > 19 (Android 4.4) and up
+        return when {
+            // SDK >= 11 && SDK < 19
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT -> getRealPathFromURIAPI11to18(context, fileUri)
+            // SDK > 19 (Android 4.4) && SDK < 29 (Android 10)
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.Q -> getRealPathFromURIAPI19To29(context, fileUri)
+            else -> getRealPathFromURIAPI29Up(context, fileUri)
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private fun getRealPathFromURIAPI29Up(context: Context, fileUri: Uri): String? {
+        val parcelFileDescriptor = context.contentResolver.openFileDescriptor(fileUri, "r", null)
+                ?: return null
+        val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+        val scopedCacheFile = File(context.cacheDir, UUID.randomUUID().toString())
+        val outputStream = FileOutputStream(scopedCacheFile)
+        IOUtils.copy(inputStream, outputStream)
+        return scopedCacheFile.absolutePath
     }
 
     @SuppressLint("NewApi")
@@ -51,8 +69,7 @@ object RealPathUtil {
      * @author Niks
      */
     @SuppressLint("NewApi")
-    fun getRealPathFromURIAPI19(context: Context, uri: Uri): String? {
-
+    fun getRealPathFromURIAPI19To29(context: Context, uri: Uri): String? {
         val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
 
         // DocumentProvider
@@ -105,7 +122,6 @@ object RealPathUtil {
             }// MediaProvider
             // DownloadsProvider
         } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
-
             // Return the remote address
             return if (isGooglePhotosUri(uri)) uri.lastPathSegment else getDataColumn(context, uri, null, null)
         } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
