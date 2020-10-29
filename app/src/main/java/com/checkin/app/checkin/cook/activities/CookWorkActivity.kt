@@ -65,7 +65,7 @@ class CookWorkActivity : BaseAccountActivity() {
     private fun setupObservers(shopId: Long) {
         mViewModel.fetchActiveTables(shopId)
         mViewModel.activeTables.observe(this, Observer { input ->
-            if (input.status === Resource.Status.LOADING) startRefreshing()
+            if (input?.status === Resource.Status.LOADING) startRefreshing()
             else stopRefreshing()
         })
     }
