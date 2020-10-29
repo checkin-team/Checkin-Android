@@ -65,6 +65,10 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
                     Resource.Status.ERROR_NOT_FOUND -> handleError()
                 }
             } ?: handleError()
+
+            // HACK: invalidate needed since UI doesn't refresh until keyboard closed
+            epoxyRvItems.invalidate()
+            containerStatus.invalidate()
         })
         cartViewModel.itemOrderedCounts.observe(viewLifecycleOwner, Observer {
             it?.also { itemController.orderedCountMap = it }
@@ -73,6 +77,9 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
     }
 
     private fun handleError() {
+        // set empty list as search results
+        itemController.itemList = emptyList()
+
         pbLoading.visibility = View.GONE
         containerNotFound.visibility = View.VISIBLE
         containerStatus.visibility = View.VISIBLE
