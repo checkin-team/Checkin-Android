@@ -18,8 +18,11 @@ import butterknife.OnClick
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.utility.RealPathUtil.getRealPath
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.log
 import com.checkin.app.checkin.utility.toast
 import com.lyft.android.scissors.CropView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -99,7 +102,8 @@ class SelectCropImageActivity : AppCompatActivity() {
                 finish()
                 return
             }
-            try { /*Setting null value to setImageBitmap to remove OOM Error.*/
+            try {
+                // Setting null value to setImageBitmap to remove OOM Error.
                 if (cropView.imageBitmap != null) cropView.imageBitmap = null
                 val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                 getRealPath(this, uri)?.let {
@@ -110,8 +114,17 @@ class SelectCropImageActivity : AppCompatActivity() {
                     requestImage()
                 }
             } catch (e: IOException) {
-                e.printStackTrace()
+                e.log(TAG, "Unable to set image bitmap")
+                toast(getString(R.string.text_error_network_unknown))
+                finish()
             }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        GlobalScope.launch {
+            cacheDir.deleteRecursively()
         }
     }
 
