@@ -97,9 +97,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    // Apache Commons
-    implementation "org.apache.directory.studio:org.apache.commons.io:2.4"
-
     // Kotlin libraries
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
 

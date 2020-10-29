@@ -11,7 +11,7 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.TextUtils
-import org.apache.commons.io.IOUtils
+import com.google.android.gms.common.util.IOUtils;
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -38,7 +38,7 @@ object RealPathUtil {
         val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
         val scopedCacheFile = File(context.cacheDir, UUID.randomUUID().toString())
         val outputStream = FileOutputStream(scopedCacheFile)
-        IOUtils.copy(inputStream, outputStream)
+        IOUtils.copyStream(inputStream, outputStream)
         return scopedCacheFile.absolutePath
     }
 
