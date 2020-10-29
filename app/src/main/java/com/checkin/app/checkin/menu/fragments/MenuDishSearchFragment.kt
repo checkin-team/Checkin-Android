@@ -31,12 +31,16 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
 
     @BindView(R.id.et_menu_search)
     internal lateinit var etSearch: TextInputEditText
+
     @BindView(R.id.epoxy_rv_menu_search)
     internal lateinit var epoxyRvItems: EpoxyRecyclerView
+
     @BindView(R.id.container_menu_search_status)
     internal lateinit var containerStatus: ViewGroup
+
     @BindView(R.id.container_menu_search_status_not_found)
     internal lateinit var containerNotFound: View
+
     @BindView(R.id.pb_menu_search_loading)
     internal lateinit var pbLoading: ProgressBar
 
@@ -53,14 +57,16 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         epoxyRvItems.setControllerAndBuildModels(itemController)
 
-        viewModel.filteredMenuItems.observe(this, Observer {
-            when (it.status) {
-                Resource.Status.SUCCESS -> if (it.data != null) handleSuccess(it.data)
-                Resource.Status.LOADING -> handleLoading()
-                Resource.Status.ERROR_NOT_FOUND -> handleError()
-            }
+        viewModel.filteredMenuItems.observe(viewLifecycleOwner, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Resource.Status.SUCCESS -> if (resource.data != null) handleSuccess(resource.data)
+                    Resource.Status.LOADING -> handleLoading()
+                    Resource.Status.ERROR_NOT_FOUND -> handleError()
+                }
+            } ?: handleError()
         })
-        cartViewModel.itemOrderedCounts.observe(this, Observer {
+        cartViewModel.itemOrderedCounts.observe(viewLifecycleOwner, Observer {
             it?.also { itemController.orderedCountMap = it }
         })
         etSearch.setText("")
