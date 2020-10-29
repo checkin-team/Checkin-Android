@@ -103,6 +103,6 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
     fun processQrPk(qrPk: Long) {
         val requestJson = Converters.objectMapper.createObjectNode()
         requestJson.put("qr", qrPk)
-        mQrResult.addSource(mManagerRepository.managerInitiateSession(requestJson)) { value: Resource<QRResultModel> -> mQrResult.setValue(value) }
+        mQrResult.addSource(mManagerRepository.managerInitiateSession(requestJson), mQrResult::setValue)
     }
 }

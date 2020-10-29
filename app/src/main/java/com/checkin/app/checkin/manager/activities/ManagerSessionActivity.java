@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -59,7 +58,7 @@ public class ManagerSessionActivity extends BaseActivity implements ManagerSessi
     public static final String KEY_SESSION_PK = "manager.session.session_pk";
     public static final String KEY_SHOP_PK = "manager.session.shop_pk";
     public static final String KEY_OPEN_ORDERS = "manager.session.open_orders";
-    private static final String TAG = ManagerSessionActivity.class.getSimpleName();
+
     @BindView(R.id.manager_session_toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_ms_order_new_count)
@@ -210,11 +209,11 @@ public class ManagerSessionActivity extends BaseActivity implements ManagerSessi
         boolean shouldOpenOrders = getIntent().getBooleanExtra(KEY_OPEN_ORDERS, false);
         if (shouldOpenOrders) setupOrdersListing();
 
-
         mViewModel.getSessionSwitchTable().observe(this, qrResultModelResource -> {
             if (qrResultModelResource == null) return;
             if (qrResultModelResource.getStatus() == Resource.Status.SUCCESS && qrResultModelResource.getData() != null) {
                 mViewModel.fetchSessionBriefData(sessionId);
+                mLiveSessionViewModel.fetchActiveTables(shopId);
             } else {
                 Utils.toast(this, qrResultModelResource.getMessage());
             }
@@ -360,7 +359,7 @@ public class ManagerSessionActivity extends BaseActivity implements ManagerSessi
         switch (item.getItemId()) {
             case R.id.menu_ms_switch_table:
                 if (resource != null && resource.getData() != null && resource.getData().size() > 0)
-                    new ManagerInactiveTableBottomSheetFragment().show(getSupportFragmentManager(), null);
+                    ManagerInactiveTableBottomSheetFragment.Companion.forSwitchTable().show(getSupportFragmentManager(), null);
                 else
                     Utils.toast(this, "No tables are free.");
                 return true;
