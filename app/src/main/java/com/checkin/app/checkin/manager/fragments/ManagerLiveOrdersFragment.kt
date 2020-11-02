@@ -64,7 +64,7 @@ class ManagerLiveOrdersFragment : BaseFragment() {
             }
         })
 
-        viewModel.restaurantService.observe(this, Observer {
+        viewModel.restaurantService.observe(viewLifecycleOwner, Observer {
             it?.let {
                 handleLoadingRefresh(it)
                 networkViewModel.updateStatus(it)
@@ -75,9 +75,9 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         networkViewModel.shouldTryAgain {
             viewModel.fetchRestaurantData(viewModel.shopPk)
         }
-        viewModel.activeSessionEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
-        viewModel.preOrderEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
-        viewModel.qsrEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
+        viewModel.activeSessionEvents.observe(viewLifecycleOwner, Observer { tabAdapter.notifyDataSetChanged() })
+        viewModel.preOrderEvents.observe(viewLifecycleOwner, Observer { tabAdapter.notifyDataSetChanged() })
+        viewModel.qsrEvents.observe(viewLifecycleOwner, Observer { tabAdapter.notifyDataSetChanged() })
 
         // The callback is needed for smooth page change and not accidentally triggering refresh
         vpOrdersFragment.registerOnPageChangeCallback(object : OnPageChangeCallback() {
@@ -94,7 +94,10 @@ class ManagerLiveOrdersFragment : BaseFragment() {
 
     private fun setupData(data: RestaurantServiceModel) {
         val tabs = mutableListOf<RestaurantOrdersFragmentType>()
-        if (data.isQr) tabs.add(if (data.serviceType == RestaurantServiceType.DINEIN) RestaurantOrdersFragmentType.ACTIVE_SESSION else RestaurantOrdersFragmentType.MASTER_QR)
+        if (data.isQr) tabs.add(when (data.serviceType) {
+            RestaurantServiceType.QSR -> RestaurantOrdersFragmentType.MASTER_QR
+            else -> RestaurantOrdersFragmentType.ACTIVE_SESSION
+        })
         if (data.isPreorder) tabs.add(RestaurantOrdersFragmentType.PRE_ORDER)
         tabAdapter.tabs = tabs
         tabAdapter.notifyDataSetChanged()
