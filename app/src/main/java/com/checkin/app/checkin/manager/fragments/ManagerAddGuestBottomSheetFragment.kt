@@ -58,6 +58,12 @@ class ManagerAddGuestBottomSheetFragment : BaseBottomSheetFragment(), GuestListL
 
     @OnClick(R.id.btn_guest_list_checkin)
     fun guestListCheckin() {
+        guestList.forEach {
+            if (!"^(?:(?:\\+|0{0,2})91(\\s*|[\\-])?|[0]?)?([6789]\\d{2}([ -]?)\\d{3}([ -]?)\\d{4})\$".toRegex().matches(it.contact)) {
+                Utils.toast(requireContext(), "The given mobile number is invalid, try again")
+                return
+            }
+        }
         viewModel.processQrPk(qrpk)
     }
 
