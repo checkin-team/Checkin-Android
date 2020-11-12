@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,9 @@ import com.checkin.app.checkin.manager.adapters.ManagerInactiveTableAdapter
 import com.checkin.app.checkin.manager.adapters.ManagerInactiveTableAdapter.ManagerTableInitiate
 import com.checkin.app.checkin.manager.viewmodels.ManagerASLiveTablesViewModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel
+import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
+import com.checkin.app.checkin.restaurant.models.RestaurantServiceType
 import com.checkin.app.checkin.session.models.RestaurantTableModel
 import com.checkin.app.checkin.utility.parentViewModels
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
@@ -26,6 +29,8 @@ class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), Manag
     internal lateinit var rvTable: RecyclerView
 
     private val viewModel: ManagerASLiveTablesViewModel by parentViewModels()
+    private val workViewModel: ManagerWorkViewModel by activityViewModels()
+
     private val mInactiveAdapter: ManagerInactiveTableAdapter = ManagerInactiveTableAdapter(this)
     private var behaviorOnClickTable: Int = BEHAVIOUR_NEW_TABLE
 
@@ -41,17 +46,25 @@ class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), Manag
     }
 
     override fun onClickInactiveTable(tableModel: RestaurantTableModel) {
-        val builder = AlertDialog.Builder(requireContext()).setTitle(tableModel.table)
-                .setMessage("Do you want to initiate the session?")
-                .setPositiveButton("Done") { _, _ ->
-                    when (behaviorOnClickTable) {
-                        BEHAVIOUR_NEW_TABLE -> viewModel.processQrPk(tableModel.qrPk)
-                        BEHAVIOUR_SWITCH_TABLE -> getSharedViewModel<ManagerSessionViewModel>().switchTable(tableModel.qrPk)
+        if (behaviorOnClickTable == BEHAVIOUR_NEW_TABLE && workViewModel.restaurantService.value?.data?.serviceType == RestaurantServiceType.HOTEL) {
+            val split: List<String> = tableModel.table?.split(" ".toRegex())!!
+            val addGuestFragment = ManagerAddGuestBottomSheetFragment.newInstance((if (split.size > 1) split[1] else split[0]), tableModel.qrPk)
+            addGuestFragment.show(childFragmentManager, null)
+        } else {
+            val builder = AlertDialog.Builder(requireContext()).setTitle(tableModel.table)
+                    .setMessage("Do you want to initiate the session?")
+                    .setPositiveButton("Done") { _, _ ->
+                        when (behaviorOnClickTable) {
+                            BEHAVIOUR_NEW_TABLE -> {
+                                viewModel.processQrPk(tableModel.qrPk)
+                            }
+                            BEHAVIOUR_SWITCH_TABLE -> getSharedViewModel<ManagerSessionViewModel>().switchTable(tableModel.qrPk)
+                        }
+                        dismiss()
                     }
-                    dismiss()
-                }
-                .setNegativeButton("Cancel") { _, _ -> dialog?.cancel() }
-        builder.show()
+                    .setNegativeButton("Cancel") { _, _ -> dialog?.cancel() }
+            builder.show()
+        }
     }
 
     companion object {

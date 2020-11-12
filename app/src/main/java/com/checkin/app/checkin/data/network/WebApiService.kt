@@ -276,6 +276,9 @@ interface WebApiService {
     @POST("sessions/manage/{session_id}/contacts/")
     fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: SessionContactModel): Call<ObjectNode>
 
+    @POST("sessions/manage/{session_id}/contacts/")
+    fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: List<GuestDetailsModel>): Call<List<GuestDetailsModel>>
+
     @GET("sessions/manage/{session_id}/contacts/")
     fun getSessionContactList(@Path("session_id") sessionId: Long): Call<List<SessionContactModel>>
 

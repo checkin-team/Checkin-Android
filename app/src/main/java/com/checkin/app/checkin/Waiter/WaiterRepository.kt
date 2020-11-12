@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Waiter
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Waiter.Model.*
 import com.checkin.app.checkin.data.BaseRepository
@@ -12,6 +13,7 @@ import com.checkin.app.checkin.data.network.RetrofitLiveData
 import com.checkin.app.checkin.data.network.WebApiService
 import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.manager.models.GuestDetailsModel
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.session.models.*
 import com.checkin.app.checkin.utility.SingletonHolder
@@ -50,6 +52,22 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
             }
 
             override fun saveCallResult(data: ObjectNode?) {}
+        }.asLiveData
+    }
+
+    fun postSessionContact(sessionId: Long, data: List<GuestDetailsModel>): LiveData<Resource<List<GuestDetailsModel>>> {
+        return object : NetworkBoundResource<List<GuestDetailsModel>, List<GuestDetailsModel>>() {
+            override fun shouldUseLocalDb(): Boolean {
+                return false
+            }
+
+            override fun createCall(): LiveData<ApiResponse<List<GuestDetailsModel>>> {
+                Log.d("HELLO", "This is three")
+                Log.d("HELLO", data.toString())
+                return RetrofitLiveData(mWebService.postSessionContact(sessionId, data))
+            }
+
+            override fun saveCallResult(data: List<GuestDetailsModel>?) {}
         }.asLiveData
     }
 
