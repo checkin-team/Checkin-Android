@@ -38,6 +38,7 @@ import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionV
 import com.checkin.app.checkin.utility.LockableBottomSheetBehavior
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.pass
+import com.checkin.app.checkin.utility.setText
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class ScheduledSessionCartView @JvmOverloads constructor(
@@ -286,10 +287,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             containerTimeSwitcher.visibility = View.VISIBLE
         } else containerTimeSwitcher.visibility = View.GONE
         if (etRemarks.text.toString().isEmpty()) {
-            etRemarks.removeTextChangedListener(this)
-            etRemarks.setText(data.scheduled.remarks ?: "")
-            etRemarks.setSelection(etRemarks.text.length)
-            etRemarks.addTextChangedListener(this)
+            etRemarks.setText(data.scheduled.remarks ?: "", this)
         }
         tvGuestName.text = AccountUtil.getUsername(context)
         if (data.bill.total != null) {
