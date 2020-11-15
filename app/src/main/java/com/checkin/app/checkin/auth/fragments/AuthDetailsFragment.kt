@@ -120,6 +120,6 @@ class AuthDetailsFragment : BaseFragment() {
     companion object {
         val TAG = AuthDetailsFragment::class.simpleName
 
-        private const val defaultFirstName = "Anonymous"
+        private const val defaultFirstName = ""
     }
 }
