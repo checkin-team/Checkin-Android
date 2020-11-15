@@ -2,9 +2,11 @@ package com.checkin.app.checkin.Waiter
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Waiter.Model.*
+import com.checkin.app.checkin.Waiter.models.OrderStatusModel
+import com.checkin.app.checkin.Waiter.models.WaiterEventModel
+import com.checkin.app.checkin.Waiter.models.WaiterStatsModel
+import com.checkin.app.checkin.Waiter.models.WaiterTableModel
 import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.db.dbStore
 import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
@@ -13,7 +15,7 @@ import com.checkin.app.checkin.data.network.RetrofitLiveData
 import com.checkin.app.checkin.data.network.WebApiService
 import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.manager.models.GuestDetailsModel
+import com.checkin.app.checkin.manager.models.GuestContactModel
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.session.models.*
 import com.checkin.app.checkin.utility.SingletonHolder
@@ -41,11 +43,9 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
             override fun saveCallResult(data: List<WaiterTableModel>?) {}
         }.asLiveData
 
-    fun postSessionContact(sessionId: Long, data: SessionContactModel): LiveData<Resource<ObjectNode>> {
+    fun postSessionContact(sessionId: Long, data: GuestContactModel): LiveData<Resource<ObjectNode>> {
         return object : NetworkBoundResource<ObjectNode, ObjectNode>() {
-            override fun shouldUseLocalDb(): Boolean {
-                return false
-            }
+            override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.postSessionContact(sessionId, data))
@@ -55,33 +55,27 @@ class WaiterRepository private constructor(context: Context) : BaseRepository() 
         }.asLiveData
     }
 
-    fun postSessionContact(sessionId: Long, data: List<GuestDetailsModel>): LiveData<Resource<List<GuestDetailsModel>>> {
-        return object : NetworkBoundResource<List<GuestDetailsModel>, List<GuestDetailsModel>>() {
-            override fun shouldUseLocalDb(): Boolean {
-                return false
+    fun postSessionContacts(sessionId: Long, data: List<GuestContactModel>): LiveData<Resource<List<GuestContactModel>>> {
+        return object : NetworkBoundResource<List<GuestContactModel>, List<GuestContactModel>>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<List<GuestContactModel>>> {
+                return RetrofitLiveData(mWebService.postSessionContacts(sessionId, data))
             }
 
-            override fun createCall(): LiveData<ApiResponse<List<GuestDetailsModel>>> {
-                Log.d("HELLO", "This is three")
-                Log.d("HELLO", data.toString())
-                return RetrofitLiveData(mWebService.postSessionContact(sessionId, data))
-            }
-
-            override fun saveCallResult(data: List<GuestDetailsModel>?) {}
+            override fun saveCallResult(data: List<GuestContactModel>?) {}
         }.asLiveData
     }
 
-    fun getSessionContacts(sessionId: Long): LiveData<Resource<List<SessionContactModel>>> {
-        return object : NetworkBoundResource<List<SessionContactModel>, List<SessionContactModel>>() {
-            override fun shouldUseLocalDb(): Boolean {
-                return false
-            }
+    fun getSessionContacts(sessionId: Long): LiveData<Resource<List<GuestContactModel>>> {
+        return object : NetworkBoundResource<List<GuestContactModel>, List<GuestContactModel>>() {
+            override fun shouldUseLocalDb(): Boolean = false
 
-            override fun createCall(): LiveData<ApiResponse<List<SessionContactModel>>> {
+            override fun createCall(): LiveData<ApiResponse<List<GuestContactModel>>> {
                 return RetrofitLiveData(mWebService.getSessionContactList(sessionId))
             }
 
-            override fun saveCallResult(data: List<SessionContactModel>?) {}
+            override fun saveCallResult(data: List<GuestContactModel>?) {}
         }.asLiveData
     }
 

@@ -8,13 +8,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
-import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
+import com.checkin.app.checkin.Waiter.models.OrderStatusModel;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.manager.ManagerRepository;
+import com.checkin.app.checkin.manager.models.GuestContactModel;
 import com.checkin.app.checkin.manager.models.ManagerSessionEventModel;
 import com.checkin.app.checkin.manager.models.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
@@ -42,18 +42,18 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private final SessionRepository mSessionRepository;
     private final WaiterRepository mWaiterRepository;
 
-    private SourceMappedLiveData<Resource<SessionBriefModel>> mBriefData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<GenericDetailModel>> mDetailData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatusData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<SessionContactModel>>> mContactListData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<ManagerSessionInvoiceModel>> mInvoiceData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<ObjectNode>> mSwitchTableData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<SessionBriefModel>> mBriefData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<GenericDetailModel>> mDetailData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatusData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<GuestContactModel>>> mContactListData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<ManagerSessionInvoiceModel>> mInvoiceData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<ObjectNode>> mSwitchTableData = createNetworkLiveData();
 
-    private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
+    private final MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
 
     private boolean discountInINR;
     private long mSessionPk;
@@ -378,11 +378,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void postSessionContact(String email, String phone) {
-        SessionContactModel sessionContactModel = new SessionContactModel();
-        if (email != null)
-            sessionContactModel.setEmail(email);
-        if (phone != null)
-            sessionContactModel.setPhone(phone);
+        GuestContactModel sessionContactModel = new GuestContactModel(phone, "", email);
         getMData().addSource(mWaiterRepository.postSessionContact(mSessionPk, sessionContactModel), getMData()::setValue);
     }
 
@@ -390,7 +386,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mContactListData.addSource(mWaiterRepository.getSessionContacts(mSessionPk), mContactListData::setValue);
     }
 
-    public LiveData<Resource<List<SessionContactModel>>> getSessionContactListData() {
+    public LiveData<Resource<List<GuestContactModel>>> getSessionContactListData() {
         return mContactListData;
     }
 

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Waiter.Model;
+package com.checkin.app.checkin.Waiter.models;
 
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE;

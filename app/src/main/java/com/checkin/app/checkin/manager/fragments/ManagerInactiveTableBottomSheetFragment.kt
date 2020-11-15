@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.manager.fragments
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -48,8 +50,10 @@ class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), Manag
     override fun onClickInactiveTable(tableModel: RestaurantTableModel) {
         if (behaviorOnClickTable == BEHAVIOUR_NEW_TABLE && workViewModel.restaurantService.value?.data?.serviceType == RestaurantServiceType.HOTEL) {
             val split: List<String> = tableModel.table?.split(" ".toRegex())!!
-            val addGuestFragment = ManagerAddGuestBottomSheetFragment.newInstance((if (split.size > 1) split[1] else split[0]), tableModel.qrPk)
-            addGuestFragment.show(childFragmentManager, null)
+            ManagerAddGuestBottomSheetFragment.newInstance((if (split.size > 1) split[1] else split[0]), tableModel.qrPk)
+                    .apply {
+                        setTargetFragment(this@ManagerInactiveTableBottomSheetFragment, RC_GUEST_CONTACT)
+                    }.show(parentFragmentManager, null)
         } else {
             val builder = AlertDialog.Builder(requireContext()).setTitle(tableModel.table)
                     .setMessage("Do you want to initiate the session?")
@@ -67,10 +71,19 @@ class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), Manag
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_GUEST_CONTACT && resultCode == Activity.RESULT_OK) dismiss()
+    }
+
     companion object {
         private const val KEY_BEHAVIOUR_CLICK_TABLE = "tables.click_behaviour"
         private const val BEHAVIOUR_SWITCH_TABLE = 1
         private const val BEHAVIOUR_NEW_TABLE = 0
+
+        private const val RC_GUEST_CONTACT = 123
+
+        const val FRAGMENT_SHOW_TAG = "tables_fragment"
 
         fun forSwitchTable() = ManagerInactiveTableBottomSheetFragment().apply {
             arguments = bundleOf(KEY_BEHAVIOUR_CLICK_TABLE to BEHAVIOUR_SWITCH_TABLE)

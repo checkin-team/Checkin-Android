@@ -1,37 +1,34 @@
 package com.checkin.app.checkin.manager.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Waiter.WaiterRepository
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.manager.models.GuestDetailsModel
+import com.checkin.app.checkin.manager.models.GuestContactModel
 
 class ManagerGuestListViewModel(application: Application) : BaseViewModel(application) {
     private val waiterRepository = WaiterRepository.getInstance(application)
 
-    private val guestListLiveData = createNetworkLiveData<List<GuestDetailsModel>>()
+    private val mGuestLiveData = createNetworkLiveData<List<GuestContactModel>>()
 
-    val guestLiveData: LiveData<Resource<List<GuestDetailsModel>>> = guestListLiveData
+    val guestLiveData: LiveData<Resource<List<GuestContactModel>>> = mGuestLiveData
 
-    val guestList = arrayListOf(GuestDetailsModel("+91", ""))
-    lateinit var tableNumber: String
-    var qrpk: Long = -1
+    val mvGuestContacts = arrayListOf(GuestContactModel("", ""))
+
     var isGuestAdded = false
+        private set
 
-    fun addGuestList(sessionId: Long) {
-        Log.d("HELLO", "This is two")
-        guestListLiveData.addSource(waiterRepository.postSessionContact(sessionId, guestList), guestListLiveData::setValue)
+    fun postGuestList(sessionId: Long) {
+        mGuestLiveData.addSource(waiterRepository.postSessionContacts(sessionId, mvGuestContacts), mGuestLiveData::setValue)
     }
 
     fun setGuestAdded() {
         isGuestAdded = true
     }
 
+    fun addGuest(contact: GuestContactModel) = mvGuestContacts.add(contact)
 
     override fun updateResults() {
-
     }
-
 }

@@ -8,12 +8,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
-import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.models.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.models.WaiterEventModel;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.manager.models.GuestContactModel;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.session.SessionRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
@@ -26,18 +26,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaiterTableViewModel extends BaseViewModel {
-    private WaiterRepository mWaiterRepository;
-    private SessionRepository mSessionRepository;
+    private final WaiterRepository mWaiterRepository;
+    private final SessionRepository mSessionRepository;
 
-    private SourceMappedLiveData<Resource<SessionBriefModel>> mSessionDetail = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<WaiterEventModel>>> mEventData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<GenericDetailModel>> mEventUpdate = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatus = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<SessionContactModel>>> mContactListData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<SessionBriefModel>> mSessionDetail = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<WaiterEventModel>>> mEventData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<GenericDetailModel>> mEventUpdate = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatus = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<GuestContactModel>>> mContactListData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
 
-    private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
+    private final MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
 
     private long mSessionPk;
 
@@ -78,14 +78,14 @@ public class WaiterTableViewModel extends BaseViewModel {
     }
 
     public void postSessionContact(String email, String phone) {
-        getMData().addSource(mWaiterRepository.postSessionContact(mSessionPk, new SessionContactModel(phone, email)), getMData()::setValue);
+        getMData().addSource(mWaiterRepository.postSessionContact(mSessionPk, new GuestContactModel(phone, "", email)), getMData()::setValue);
     }
 
     public void fetchSessionContacts() {
         mContactListData.addSource(mWaiterRepository.getSessionContacts(mSessionPk), mContactListData::setValue);
     }
 
-    public LiveData<Resource<List<SessionContactModel>>> getSessionContactListData() {
+    public LiveData<Resource<List<GuestContactModel>>> getSessionContactListData() {
         return mContactListData;
     }
 

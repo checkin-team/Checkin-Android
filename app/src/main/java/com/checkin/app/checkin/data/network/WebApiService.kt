@@ -13,7 +13,10 @@ import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionFeedbackModel
 import com.checkin.app.checkin.Shop.Private.MemberModel
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
-import com.checkin.app.checkin.Waiter.Model.*
+import com.checkin.app.checkin.Waiter.models.OrderStatusModel
+import com.checkin.app.checkin.Waiter.models.WaiterEventModel
+import com.checkin.app.checkin.Waiter.models.WaiterStatsModel
+import com.checkin.app.checkin.Waiter.models.WaiterTableModel
 import com.checkin.app.checkin.accounts.AccountModel
 import com.checkin.app.checkin.auth.AuthRequestModel
 import com.checkin.app.checkin.auth.AuthResultModel
@@ -274,13 +277,13 @@ interface WebApiService {
     fun getRestaurantFinanceById(@Path("restaurant_id") restaurantId: Long): Call<FinanceModel>
 
     @POST("sessions/manage/{session_id}/contacts/")
-    fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: SessionContactModel): Call<ObjectNode>
+    fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: GuestContactModel): Call<ObjectNode>
 
     @POST("sessions/manage/{session_id}/contacts/")
-    fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: List<GuestDetailsModel>): Call<List<GuestDetailsModel>>
+    fun postSessionContacts(@Path("session_id") sessionId: Long, @Body data: List<GuestContactModel>): Call<List<GuestContactModel>>
 
     @GET("sessions/manage/{session_id}/contacts/")
-    fun getSessionContactList(@Path("session_id") sessionId: Long): Call<List<SessionContactModel>>
+    fun getSessionContactList(@Path("session_id") sessionId: Long): Call<List<GuestContactModel>>
 
     @PUT("restaurants/{restaurant_id}/finance/")
     fun setRestaurantFinanceById(@Body financeModel: FinanceModel, @Path("restaurant_id") restaurantId: Long): Call<GenericDetailModel>

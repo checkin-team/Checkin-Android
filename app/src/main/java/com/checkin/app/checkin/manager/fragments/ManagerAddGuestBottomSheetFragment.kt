@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.manager.fragments
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -12,37 +12,17 @@ import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.manager.epoxy.guestInfoModelWithHolder
-import com.checkin.app.checkin.manager.listeners.GuestListListener
-import com.checkin.app.checkin.manager.models.GuestDetailsModel
+import com.checkin.app.checkin.manager.holders.guestInfoModelWithHolder
+import com.checkin.app.checkin.manager.listeners.GuestContactChangeListener
+import com.checkin.app.checkin.manager.models.GuestContactModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerASLiveTablesViewModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerGuestListViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
-import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.parentViewModels
-import kotlin.random.Random
+import com.checkin.app.checkin.utility.toast
 
-class ManagerAddGuestBottomSheetFragment : BaseBottomSheetFragment(), GuestListListener {
+class ManagerAddGuestBottomSheetFragment : BaseBottomSheetFragment(), GuestContactChangeListener {
     override val rootLayout: Int = R.layout.fragment_manager_add_guest
-
-    private val guestListViewModel: ManagerGuestListViewModel by viewModels()
-    private val viewModel: ManagerASLiveTablesViewModel by parentViewModels()
-
-    private val guestList by lazy {
-        guestListViewModel.guestList
-    }
-
-    private val tableNumber by lazy {
-        guestListViewModel.tableNumber
-    }
-
-    private val qrpk by lazy {
-        guestListViewModel.qrpk
-    }
-
-    private val isGuestAdded by lazy {
-        guestListViewModel.isGuestAdded
-    }
 
     @BindView(R.id.tv_add_guest_room_no)
     internal lateinit var tvAddTableNo: TextView
@@ -50,17 +30,66 @@ class ManagerAddGuestBottomSheetFragment : BaseBottomSheetFragment(), GuestListL
     @BindView(R.id.epoxy_rv_guest_list)
     internal lateinit var epoxyGuestList: EpoxyRecyclerView
 
+    private val guestListViewModel: ManagerGuestListViewModel by viewModels()
+    private val viewModel: ManagerASLiveTablesViewModel by parentViewModels()
+
+    private val guestList: ArrayList<GuestContactModel> by lazy { guestListViewModel.mvGuestContacts }
+    private val tableNumber by lazy { arguments?.getString(KEY_TABLE_NUMBER) ?: "" }
+    private val qrpk by lazy { arguments?.getLong(KEY_QR_PK) ?: -1 }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        epoxyGuestList.withModels {
+            guestList.forEachIndexed { index, model ->
+                guestInfoModelWithHolder {
+                    id(index)
+                    index(index)
+                    model(model)
+                    listener(this@ManagerAddGuestBottomSheetFragment)
+                }
+            }
+        }
+        tvAddTableNo.text = "Room #$tableNumber"
+
+        viewModel.sessionInitiated.observe(viewLifecycleOwner, Observer {
+            it?.let { qrResultModelResource ->
+                if (qrResultModelResource.status === Resource.Status.SUCCESS && qrResultModelResource.data != null) {
+                    val sessionPk = qrResultModelResource.data.sessionPk
+                    // HACK: A flag is being used to check if the guest list was already added
+                    if (guestListViewModel.isGuestAdded) {
+                        return@Observer
+                    }
+                    guestListViewModel.postGuestList(sessionPk)
+                } else if (it.status != Resource.Status.LOADING) {
+                    toast(qrResultModelResource.message)
+                    dismiss()
+                }
+            }
+        })
+
+        guestListViewModel.guestLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it.status == Resource.Status.SUCCESS) {
+                    guestListViewModel.setGuestAdded()
+                    targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, null)
+                    dismiss()
+                } else if (it.status != Resource.Status.LOADING) {
+                    toast(it.message)
+                }
+            }
+        })
+    }
+
     @OnClick(R.id.btn_guest_list_add_guest)
     fun addGuest() {
-        guestList.add(GuestDetailsModel("+91", ""))
+        guestListViewModel.addGuest(GuestContactModel("", ""))
         epoxyGuestList.requestModelBuild()
     }
 
     @OnClick(R.id.btn_guest_list_checkin)
     fun guestListCheckin() {
         guestList.forEach {
-            if (!"^(?:(?:\\+|0{0,2})91(\\s*|[\\-])?|[0]?)?([6789]\\d{2}([ -]?)\\d{3}([ -]?)\\d{4})\$".toRegex().matches(it.contact)) {
-                Utils.toast(requireContext(), "The given mobile number is invalid, try again")
+            if (!"^\\+?1?\\d{9,15}\$".toRegex().matches(it.phone)) {
+                toast("The given mobile number is invalid, try again")
                 return
             }
         }
@@ -70,55 +99,7 @@ class ManagerAddGuestBottomSheetFragment : BaseBottomSheetFragment(), GuestListL
     @OnClick(R.id.btn_guest_list_cancel)
     fun guestListCancel() {
         dismiss()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        epoxyGuestList.withModels {
-            guestList.forEachIndexed { index, model ->
-                guestInfoModelWithHolder {
-                    id(index.toString() + model.name + Random.nextInt(0, 100))
-                    index(index)
-                    model(model)
-                    listener(this@ManagerAddGuestBottomSheetFragment)
-                }
-            }
-        }
-        guestListViewModel.tableNumber = arguments?.getString(KEY_TABLE_NUMBER) ?: ""
-        guestListViewModel.qrpk = arguments?.getLong(KEY_QR_PK) ?: -1
-        tvAddTableNo.text = "Room #$tableNumber"
-
-        viewModel.sessionInitiated.observe(viewLifecycleOwner, Observer {
-            it?.let { qrResultModelResource ->
-                if (qrResultModelResource.status === Resource.Status.SUCCESS && qrResultModelResource.data != null) {
-                    val sessionPk = qrResultModelResource.data.sessionPk
-                    // HACK: A flag is being used to check if the guest list was already added
-                    if (isGuestAdded) {
-                        return@Observer
-                    }
-                    guestListViewModel.addGuestList(sessionPk)
-
-                } else {
-                    Utils.toast(requireContext(), qrResultModelResource.message)
-                }
-            }
-        })
-
-        guestListViewModel.guestLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if (it.status == Resource.Status.SUCCESS) {
-                    guestListViewModel.setGuestAdded()
-                    try {
-                        val parentFragment = parentFragment as ManagerInactiveTableBottomSheetFragment
-                        parentFragment.dismiss()
-                    } catch (e: TypeCastException) {
-                        Log.e(TAG, e.toString(), e)
-                    }
-                    dismiss()
-                } else {
-                    Utils.toast(requireContext(), it.message)
-                }
-            }
-        })
+        targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_CANCELED, null)
     }
 
     override fun updateName(index: Int, name: String) {
@@ -126,16 +107,15 @@ class ManagerAddGuestBottomSheetFragment : BaseBottomSheetFragment(), GuestListL
     }
 
     override fun updateContact(index: Int, number: String) {
-        guestList[index] = guestList[index].copy(contact = number)
+        guestList[index] = guestList[index].copy(phone = number)
     }
 
     companion object {
         private const val KEY_TABLE_NUMBER = "key.table.number"
         private const val KEY_QR_PK = "key.qr.pk"
-        private const val TAG = "ManagerAddGuest"
+
         fun newInstance(tableNumber: String, qrpk: Long) = ManagerAddGuestBottomSheetFragment().apply {
             arguments = bundleOf(KEY_TABLE_NUMBER to tableNumber, KEY_QR_PK to qrpk)
         }
     }
-
 }

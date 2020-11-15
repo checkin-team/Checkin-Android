@@ -10,6 +10,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.location.LocationManager
 import android.net.Uri
 import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -71,6 +72,15 @@ fun EditText.onDone(block: (editable: Editable) -> Unit) {
 //    }
 }
 
+/**
+ * Forcefully sets the text without hitting the given watcher
+ */
+fun EditText.setText(text: CharSequence, watcher: TextWatcher) {
+    removeTextChangedListener(watcher)
+    setText(text)
+    setSelection(text.length)
+    addTextChangedListener(watcher)
+}
 
 fun Context.toast(msg: String?) = Utils.toast(this, msg)
 fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)

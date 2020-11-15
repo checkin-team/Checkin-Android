@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
+import com.checkin.app.checkin.Waiter.models.OrderStatusModel;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.data.resource.Resource;
@@ -33,12 +33,12 @@ public class CookSessionViewModel extends BaseViewModel {
     private final SessionRepository mSessionRepository;
     private final WaiterRepository mWaiterRepository;
 
-    private SourceMappedLiveData<Resource<SessionBriefModel>> mBriefData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatusData = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<SessionBriefModel>> mBriefData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatusData = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
 
-    private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
+    private final MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;

@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.checkin.app.checkin.Waiter.models.WaiterStatsModel;
+import com.checkin.app.checkin.Waiter.models.WaiterTableModel;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.data.resource.Resource;
@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaiterWorkViewModel extends BaseViewModel {
-    private WaiterRepository mWaiterRepository;
+    private final WaiterRepository mWaiterRepository;
 
-    private SourceMappedLiveData<Resource<List<RestaurantTableModel>>> mShopTables = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<List<WaiterTableModel>>> mWaiterTables = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<QRResultModel>> mQrResult = createNetworkLiveData();
-    private SourceMappedLiveData<Resource<WaiterStatsModel>> mWaiterStats = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<RestaurantTableModel>>> mShopTables = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<List<WaiterTableModel>>> mWaiterTables = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<QRResultModel>> mQrResult = createNetworkLiveData();
+    private final SourceMappedLiveData<Resource<WaiterStatsModel>> mWaiterStats = createNetworkLiveData();
 
     private long mShopPk;
 

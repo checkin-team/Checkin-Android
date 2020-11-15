@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel
 import com.checkin.app.checkin.Waiter.WaiterEventAdapter
 import com.checkin.app.checkin.Waiter.WaiterEventAdapter.WaiterEventInteraction
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel
+import com.checkin.app.checkin.Waiter.models.WaiterEventModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel

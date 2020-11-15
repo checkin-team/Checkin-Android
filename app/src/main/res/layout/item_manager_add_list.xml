@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Guest detail 1" />
 
-    <EditText
+    <com.checkin.app.checkin.misc.views.PrefixEditText
         android:id="@+id/et_manager_guest_contact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,7 +26,8 @@
         android:hint="Contact No ."
         android:inputType="phone"
         android:padding="@dimen/spacing_small"
-        android:text="+91"
+        android:maxLength="13"
+        android:text="@string/prefix_country_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_manager_guest_count" />

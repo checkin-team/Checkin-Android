@@ -32,9 +32,9 @@ import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment.Companion.newInstance
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment.WaiterTableInteraction
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel
-import com.checkin.app.checkin.Waiter.Model.WaiterTableModel
 import com.checkin.app.checkin.Waiter.WaiterEndDrawerTableAdapter.OnTableClickListener
+import com.checkin.app.checkin.Waiter.models.WaiterEventModel
+import com.checkin.app.checkin.Waiter.models.WaiterTableModel
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.accounts.BaseAccountActivity
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE

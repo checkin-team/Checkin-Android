@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Waiter.Model;
+package com.checkin.app.checkin.Waiter.models;
 
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

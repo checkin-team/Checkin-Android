@@ -15,12 +15,12 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Waiter.Model.SessionContactModel
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel
 import com.checkin.app.checkin.Waiter.WaiterWorkViewModel
 import com.checkin.app.checkin.data.notifications.MessageObjectModel
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.Resource.Status
+import com.checkin.app.checkin.manager.models.GuestContactModel
 import com.checkin.app.checkin.menu.activities.ShopMenuActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.SessionBriefModel
@@ -144,7 +144,7 @@ class WaiterTableFragment : BaseFragment() {
         }
     }
 
-    private fun setupContactData(sessionContactModel: SessionContactModel) {
+    private fun setupContactData(sessionContactModel: GuestContactModel) {
         val etPhone = mContactAddDialog!!.findViewById<EditText>(R.id.et_contact_phone)
         val etEmail = mContactAddDialog!!.findViewById<EditText>(R.id.et_contact_email)
 
@@ -153,8 +153,7 @@ class WaiterTableFragment : BaseFragment() {
 
         if (email != null)
             etEmail.setText(email)
-        if (phone != null)
-            etPhone.setText(phone)
+        etPhone.setText(phone)
     }
 
     // Most often causes NPE since fragment is over

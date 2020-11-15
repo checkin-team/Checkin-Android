@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Waiter.Model;
+package com.checkin.app.checkin.Waiter.models;
 
 import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

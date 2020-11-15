@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.models.OrderStatusModel;
 import com.checkin.app.checkin.cook.fragments.CookSessionOrderFragment;
 import com.checkin.app.checkin.cook.viewmodels.CookSessionViewModel;
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;

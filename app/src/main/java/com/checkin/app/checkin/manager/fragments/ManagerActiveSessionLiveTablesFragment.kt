@@ -158,7 +158,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
 
     @OnClick(R.id.im_manager_initiate_session)
     fun onClickInitiate() {
-        if (mViewModel.inactiveTables.value?.data.isNotEmpty()) ManagerInactiveTableBottomSheetFragment.forNewTable().show(childFragmentManager, null)
+        if (mViewModel.inactiveTables.value?.data.isNotEmpty()) ManagerInactiveTableBottomSheetFragment.forNewTable().show(childFragmentManager, ManagerInactiveTableBottomSheetFragment.FRAGMENT_SHOW_TAG)
         else Utils.toast(requireContext(), "No table is free.")
     }
 
