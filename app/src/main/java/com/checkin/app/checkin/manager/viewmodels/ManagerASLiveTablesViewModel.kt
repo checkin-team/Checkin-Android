@@ -51,7 +51,7 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
     fun markSessionDone(sessionId: Long) {
         val data = Converters.objectMapper.createObjectNode()
         data.put("payment_mode", "csh")
-        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId), mCheckoutData::setValue)
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mCheckoutData::setValue)
     }
 
     fun fetchActiveTables(restaurantId: Long) {
