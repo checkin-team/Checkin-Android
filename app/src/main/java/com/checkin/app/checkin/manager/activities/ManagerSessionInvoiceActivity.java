@@ -268,7 +268,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
     }
 
     private void updateRequestCheckoutStatus(boolean isRequestedCheckout) {
-        mViewModel.setmIsRequestedCheckout(isRequestedCheckout);
+        mViewModel.setIsRequestedCheckout(isRequestedCheckout);
         if (isRequestedCheckout) {
             llRequestedCheckoutView.setVisibility(View.VISIBLE);
             tvInvoiceChange.setVisibility(View.GONE);
@@ -304,7 +304,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         edInvoiceDiscount.setText(data.formatDiscountPercent());
         mBillHolder.bind(data.getBill());
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
-        mViewModel.setmIsPromoApplied(data.getBill().getPromo() != null);
+        mViewModel.setIsPromoApplied(data.getBill().getPromo() != null);
 
         setUpUi("Discount", false, R.drawable.bordered_text_light_grey, View.VISIBLE, View.GONE);
     }

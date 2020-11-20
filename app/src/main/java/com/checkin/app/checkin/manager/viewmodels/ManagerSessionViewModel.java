@@ -2,12 +2,6 @@ package com.checkin.app.checkin.manager.viewmodels;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.checkin.app.checkin.Waiter.models.OrderStatusModel;
 import com.checkin.app.checkin.data.BaseViewModel;
@@ -28,6 +22,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.CANCELLED;
@@ -420,24 +420,26 @@ public class ManagerSessionViewModel extends BaseViewModel {
         return mSwitchTableData;
     }
 
-    public void setmIsRequestedCheckout(boolean mIsRequestedCheckout) {
-        this.mIsRequestedCheckout = mIsRequestedCheckout;
-    }
-
-    public boolean getmIsRequestedCheckout() {
+    public boolean getIsRequestedCheckout() {
         return mIsRequestedCheckout;
     }
 
-    public void setmIsPromoApplied(boolean mIsPromoApplied) {
-        this.mIsPromoApplied = mIsPromoApplied;
+    public void setIsRequestedCheckout(boolean mIsRequestedCheckout) {
+        this.mIsRequestedCheckout = mIsRequestedCheckout;
     }
 
-    public boolean getmIsPromoApplied() {
+    public boolean getIsPromoApplied() {
         return mIsPromoApplied;
     }
 
+    public void setIsPromoApplied(boolean mIsPromoApplied) {
+        this.mIsPromoApplied = mIsPromoApplied;
+    }
+
     public enum PAYMENT_MODE {
-        CASH("csh"),  CARD("crd"), UPI("upi");
+        CASH("csh"),
+        CARD("crd"),
+        UPI("upi");
 
         public String tag;
 
