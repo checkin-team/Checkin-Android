@@ -1,6 +1,9 @@
 package com.checkin.app.checkin.session.activesession;
 
 import android.content.Context;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +110,24 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
             tvItemName.setText(order.getItem().getName());
             tvQuantity.setText(order.formatQuantityType());
             tvElapsedTime.setText(order.formatElapsedTime());
-            tvPrice.setText(Utils.formatCurrencyAmount(itemView.getContext(), order.getCost()));
+            String OriginalCost = Utils.formatCurrencyAmount(itemView.getContext(), order.getOriginalCost());
+
+            SpannableStringBuilder ssb = new SpannableStringBuilder(OriginalCost);
+
+             // span that will strikethrough the text
+            final StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
+            ssb.setSpan(
+                    strikethroughSpan,
+                    ssb.length() - OriginalCost.length(),
+                    ssb.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            //append on new line
+            ssb.append("\n");
+            String discountcost = Utils.formatCurrencyAmount(itemView.getContext(), order.getCost());
+            ssb.append(discountcost);
+             //set the combined view
+            tvPrice.setText(ssb, TextView.BufferType.EDITABLE);
+
 
             if (order.canCancel()) imCancelOrder.setVisibility(View.VISIBLE);
 

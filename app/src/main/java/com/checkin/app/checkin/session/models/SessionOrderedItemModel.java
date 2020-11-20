@@ -27,6 +27,12 @@ public class SessionOrderedItemModel implements Serializable {
     @JsonProperty("cost")
     private double cost;
 
+    @JsonProperty("original_cost")
+    private double original_cost;
+
+    @JsonProperty("is_cost_tampered")
+    private boolean is_cost_tampered;
+
     @JsonProperty("item_type")
     private String itemType;
 
@@ -88,6 +94,16 @@ public class SessionOrderedItemModel implements Serializable {
 
     public double getCost() {
         return cost;
+    }
+
+    public double getOriginalCost() {
+        if(costTampered()){
+            return  original_cost;
+        }
+        return cost;
+    }
+    public boolean costTampered(){
+        return is_cost_tampered;
     }
 
     public String formatCost() {
