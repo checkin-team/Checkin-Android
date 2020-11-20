@@ -33,14 +33,14 @@ class ManagerRepository private constructor(context: Context) : BaseRepository()
         }.asLiveData
     }
 
-    fun manageSessionCheckout(sessionId: Long): LiveData<Resource<CheckoutStatusModel>> {
+    fun manageSessionCheckout(sessionId: Long, body: ObjectNode): LiveData<Resource<CheckoutStatusModel>> {
         return object : NetworkBoundResource<CheckoutStatusModel, CheckoutStatusModel>() {
             override fun shouldUseLocalDb(): Boolean {
                 return false
             }
 
             override fun createCall(): LiveData<ApiResponse<CheckoutStatusModel>> {
-                return RetrofitLiveData(mWebService.putSessionCheckout(sessionId))
+                return RetrofitLiveData(mWebService.putSessionCheckout(sessionId, body))
             }
         }.asLiveData
     }
