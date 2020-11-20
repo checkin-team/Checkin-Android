@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.manager.fragments;
+package com.checkin.app.checkin.manager.fragments
 
 
 import android.app.AlertDialog
@@ -25,11 +25,11 @@ class ManagerSessionPaymentOptionsBottomSheetFragment : BaseBottomSheetFragment(
     private val viewModel: ManagerSessionViewModel by activityViewModels()
 
     private val isPromoApplied by lazy {
-        viewModel.getmIsPromoApplied()
+        viewModel.isPromoApplied
     }
 
     private val isRequestedCheckout by lazy {
-        viewModel.getmIsRequestedCheckout()
+        viewModel.isRequestedCheckout
     }
 
     @OnClick(R.id.card_manager_session_payment_bhim, R.id.card_manager_session_payment_card, R.id.card_manager_session_payment_cash)
