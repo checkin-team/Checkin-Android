@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.home.epoxy
 
+import android.text.style.StrikethroughSpan
 import android.view.View
 import android.widget.TextView
 import butterknife.BindView
@@ -9,7 +10,10 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
+import com.checkin.app.checkin.utility.Strikethrough
+
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.StrikethroughSpaninvoice
 
 
 @EpoxyModelClass(layout = R.layout.item_invoice_order_without_customizations)
@@ -29,7 +33,17 @@ abstract class InvoiceClosedOrderModelHolder : EpoxyModelWithHolder<InvoiceClose
 
         override fun bindData(data: SessionOrderedItemModel) {
             tvItemName.text = "${data.item.name} x ${data.quantity}"
-            tvItemPrice.text = Utils.formatCurrencyAmount(itemView.context, data.cost)
+           // tvItemPrice.text = Utils.formatCurrencyAmount(itemView.context, data.cost)
+            val originalCost:String  =  Utils.formatCurrencyAmount(itemView.context, data.originalCost)
+            val discountCost :String = Utils.formatCurrencyAmount(itemView.context, data.cost)
+            if(data.costTampered()){
+                tvItemPrice.text = Strikethrough(originalCost, discountCost)
+            }
+            else if(!data.costTampered()){
+                tvItemPrice.text = Utils.formatCurrencyAmount(itemView.context, data.cost)
+
+            }
+
             tvCustomized.visibility = if (data.isCustomized) View.VISIBLE else View.GONE
             data.item.isVegetarian.let {
                 if (it != null)

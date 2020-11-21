@@ -109,6 +109,9 @@ public class SessionOrderedItemModel implements Serializable {
     public String formatCost() {
         return String.valueOf(cost);
     }
+    public String formatOriginalCost() {
+        return String.valueOf(original_cost);
+    }
 
     public String getItemType() {
         return itemType;

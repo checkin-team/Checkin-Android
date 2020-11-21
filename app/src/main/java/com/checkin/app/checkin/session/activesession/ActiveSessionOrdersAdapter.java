@@ -126,7 +126,7 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
             String discountcost = Utils.formatCurrencyAmount(itemView.getContext(), order.getCost());
             ssb.append(discountcost);
              //set the combined view
-            tvPrice.setText(ssb, TextView.BufferType.EDITABLE);
+            tvPrice.setText(ssb);
 
 
             if (order.canCancel()) imCancelOrder.setVisibility(View.VISIBLE);
