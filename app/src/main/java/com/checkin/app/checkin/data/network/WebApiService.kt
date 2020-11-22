@@ -341,7 +341,7 @@ interface WebApiService {
     fun putManageSessionBill(@Path("session_id") sessionId: Long, @Body data: ObjectNode): Call<GenericDetailModel>
 
     @POST("sessions/manage/{session_id}/checkout/")
-    fun putSessionCheckout(@Path("session_id") sessionId: Long, @Body data: ObjectNode): Call<CheckoutStatusModel>
+    fun putSessionCheckout(@Path("session_id") sessionId: Long): Call<CheckoutStatusModel>
 
     @POST("sessions/manage/new/")
     fun postManageInitiateSession(@Body data: ObjectNode): Call<QRResultModel>
