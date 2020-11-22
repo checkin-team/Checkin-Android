@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.text.style.StrikethroughSpan
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 
 internal fun formatDiscountedPrice(oldCost: String, newCost: String): SpannableString {
@@ -24,6 +25,12 @@ internal fun formatDiscountedPrice(oldCost: String, newCost: String): SpannableS
 }
 
 fun SessionOrderedItemModel.formatPriceWithOff(context: Context): CharSequence {
+    val originalCost: String = Utils.formatCurrencyAmount(context, originalCost)
+    val actualCost: String = Utils.formatCurrencyAmount(context, cost)
+    return if (isCostTampered) formatDiscountedPrice(originalCost, actualCost) else actualCost
+}
+
+fun OrderedItemModel.formatPriceWithOff(context: Context): CharSequence {
     val originalCost: String = Utils.formatCurrencyAmount(context, originalCost)
     val actualCost: String = Utils.formatCurrencyAmount(context, cost)
     return if (isCostTampered) formatDiscountedPrice(originalCost, actualCost) else actualCost

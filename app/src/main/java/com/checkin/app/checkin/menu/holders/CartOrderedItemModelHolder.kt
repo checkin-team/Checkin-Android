@@ -12,7 +12,7 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.utility.DebouncedOnClickListener
-import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.formatPriceWithOff
 
 @EpoxyModelClass(layout = R.layout.item_cart_order_item)
 abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItemModelHolder.Holder>() {
@@ -61,7 +61,7 @@ abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItem
             tvItemName.text = data.itemModel.name
             tvCustomize.visibility = if (data.isCustomized()) View.VISIBLE else View.GONE
             tvItemQuantity.text = data.quantity.toString()
-            tvItemPrice.text = Utils.formatCurrencyAmount(context, data.cost)
+            tvItemPrice.text = data.formatPriceWithOff(context)
             data.itemModel.isVegetarian.also {
                 if (it != null) {
                     imItemType.visibility = View.VISIBLE

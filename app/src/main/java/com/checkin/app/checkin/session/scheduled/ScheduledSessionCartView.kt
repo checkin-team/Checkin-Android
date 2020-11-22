@@ -37,6 +37,7 @@ import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
 import com.checkin.app.checkin.utility.LockableBottomSheetBehavior
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.Utils.toast
 import com.checkin.app.checkin.utility.pass
 import com.checkin.app.checkin.utility.setText
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -189,6 +190,9 @@ class ScheduledSessionCartView @JvmOverloads constructor(
                     Resource.Status.SUCCESS -> {
                         viewModel.fetchCartBill()
                     }
+                    Resource.Status.ERROR_INVALID_REQUEST -> {
+                        toast(context, listResource.message)
+                    }
                 }
             }
         })
@@ -230,6 +234,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
                 if (sessionPromoModelResource.status === Resource.Status.SUCCESS && sessionPromoModelResource.data != null) {
                     showPromoDetails(sessionPromoModelResource.data)
                     viewModel.fetchCartBill()
+                    viewModel.fetchCartOrders()
 //                    tryShowTotalSavings()
                 } else if (sessionPromoModelResource.status === Resource.Status.ERROR_NOT_FOUND) {
                     showPromoApply()
@@ -240,7 +245,10 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             }
         })
         scheduledSessionViewModel.promoDeletedData.observe(activity, Observer {
-            if (it?.status == Resource.Status.SUCCESS) viewModel.fetchCartBill()
+            if (it?.status == Resource.Status.SUCCESS) {
+                viewModel.fetchCartBill()
+                viewModel.fetchCartOrders()
+            }
         })
         viewModel.totalOrderedCount.observe(activity, Observer {
             if (it > 0) {

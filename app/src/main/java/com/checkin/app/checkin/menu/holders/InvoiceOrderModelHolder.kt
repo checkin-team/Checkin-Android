@@ -9,7 +9,7 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
-import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.formatPriceWithOff
 
 @EpoxyModelClass(layout = R.layout.item_invoice_order_without_customizations)
 abstract class InvoiceOrderModelHolder : EpoxyModelWithHolder<InvoiceOrderModelHolder.Holder>() {
@@ -28,7 +28,7 @@ abstract class InvoiceOrderModelHolder : EpoxyModelWithHolder<InvoiceOrderModelH
 
         override fun bindData(data: SessionOrderedItemModel) {
             tvItemName.text = "${data.item.name} x ${data.quantity} (${data.itemType})"
-            tvItemPrice.text = Utils.formatCurrencyAmount(itemView.context, data.cost)
+            tvItemPrice.text = data.formatPriceWithOff(context)
             tvCustomized.visibility = if (data.isCustomized) View.VISIBLE else View.GONE
             data.item.isVegetarian.let {
                 if (it != null)

@@ -62,11 +62,7 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
                     mOrderedItems.value = resource.data.orderedItems.map {
                         val menuItem = AppDatabase.getMenuItemModel().get(it.item.pk)
                                 ?: return@addSource
-                        OrderedItemModel(
-                                it.longPk, menuItem, it.cost, it.quantity, it.typeIndex,
-                                it.customizations.flatMap { it.customizationFields }.distinct(),
-                                it.remarks, it.ordered
-                        )
+                        OrderedItemModel(it, menuItem)
                     }
                     cartDetailData.value = resource
                     if (mCartStatusData.value?.data == null) {

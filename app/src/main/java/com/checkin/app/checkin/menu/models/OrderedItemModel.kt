@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.menu.models
 
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.checkin.app.checkin.utility.Constants.DEFAULT_ORDER_CANCEL_DURATION
 import com.fasterxml.jackson.annotation.*
 import java.util.*
@@ -13,11 +14,19 @@ data class OrderedItemModel(
         @JsonProperty("type_index") val typeIndex: Int,
         @JsonProperty("customizations") val selectedFields: List<ItemCustomizationFieldModel> = emptyList(),
         val remarks: String? = null,
-        val ordered: Date? = null
+        val ordered: Date? = null,
+        @JsonProperty("original_cost") val originalCost: Double = cost,
+        @JsonProperty("is_cost_tampered") val isCostTampered: Boolean = false
 ) {
     constructor(item: MenuItemModel, quantity: Int, typeIndex: Int) : this(0, item, item.typeCosts[typeIndex] * quantity, quantity, typeIndex)
 
     constructor(item: MenuItemModel, quantity: Int) : this(item, quantity, 0)
+
+    constructor(orderItem: SessionOrderedItemModel, menuItem: MenuItemModel) : this(
+            orderItem.longPk, menuItem, orderItem.cost, orderItem.quantity, orderItem.typeIndex,
+            orderItem.customizations.flatMap { it.customizationFields }.distinct(),
+            orderItem.remarks, orderItem.ordered, orderItem.originalCost, orderItem.isCostTampered
+    )
 
     @JsonGetter
     fun customizations(): List<Long> = selectedFields.map { it.pk }
