@@ -2,6 +2,13 @@ package com.checkin.app.checkin.manager.viewmodels;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.checkin.app.checkin.Waiter.models.OrderStatusModel;
 import com.checkin.app.checkin.data.BaseViewModel;
@@ -23,19 +30,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.CANCELLED;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.COOKED;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
-
 
 public class ManagerSessionViewModel extends BaseViewModel {
     private final ManagerRepository mManagerRepository;
@@ -58,7 +58,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private boolean discountInINR;
     private long mSessionPk;
     private long mShopPk;
-    private PAYMENT_MODE mPaymentMode = PAYMENT_MODE.CASH;
+    private ShopModel.PAYMENT_MODE mPaymentMode = ShopModel.PAYMENT_MODE.CASH;
     private boolean mIsRequestedCheckout;
     private boolean mIsPromoApplied;
 
@@ -342,7 +342,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mShopPk = shopId;
     }
 
-    public void setPaymentMode(PAYMENT_MODE mode) {
+    public void setPaymentMode(ShopModel.PAYMENT_MODE mode) {
         mPaymentMode = mode;
     }
 
@@ -434,17 +434,5 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void setIsPromoApplied(boolean mIsPromoApplied) {
         this.mIsPromoApplied = mIsPromoApplied;
-    }
-
-    public enum PAYMENT_MODE {
-        CASH("csh"),
-        CARD("crd"),
-        UPI("upi");
-
-        public String tag;
-
-        PAYMENT_MODE(String tag) {
-            this.tag = tag;
-        }
     }
 }

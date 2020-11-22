@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Shop.ShopModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
@@ -35,9 +36,9 @@ class ManagerSessionPaymentOptionsBottomSheetFragment : BaseBottomSheetFragment(
     @OnClick(R.id.card_manager_session_payment_bhim, R.id.card_manager_session_payment_card, R.id.card_manager_session_payment_cash)
     fun submitButton(v: View) {
         when (v.id) {
-            R.id.card_manager_session_payment_bhim -> viewModel.setPaymentMode(ManagerSessionViewModel.PAYMENT_MODE.UPI)
-            R.id.card_manager_session_payment_card -> viewModel.setPaymentMode(ManagerSessionViewModel.PAYMENT_MODE.CARD)
-            R.id.card_manager_session_payment_cash -> viewModel.setPaymentMode(ManagerSessionViewModel.PAYMENT_MODE.CASH)
+            R.id.card_manager_session_payment_bhim -> viewModel.setPaymentMode(ShopModel.PAYMENT_MODE.UPI)
+            R.id.card_manager_session_payment_card -> viewModel.setPaymentMode(ShopModel.PAYMENT_MODE.CARD)
+            R.id.card_manager_session_payment_cash -> viewModel.setPaymentMode(ShopModel.PAYMENT_MODE.CASH)
         }
 
         val builder = AlertDialog.Builder(requireContext()).setTitle("Are you sure you want to close session?")
