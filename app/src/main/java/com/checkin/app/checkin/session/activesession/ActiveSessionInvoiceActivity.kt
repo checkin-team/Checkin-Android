@@ -45,36 +45,51 @@ import com.checkin.app.checkin.user.activities.SuccessfulTransactionActivity
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.pass
+import com.checkin.app.checkin.utility.toast
 
 class ActiveSessionInvoiceActivity : BaseActivity() {
     @BindView(R.id.rv_invoice_ordered_items)
     internal lateinit var rvOrderedItems: RecyclerView
+
     @BindView(R.id.im_invoice_waiter)
     internal lateinit var imWaiterPic: ImageView
+
     @BindView(R.id.tv_invoice_tip)
     internal lateinit var tvInvoiceTip: TextView
+
     @BindView(R.id.tv_invoice_total)
     internal lateinit var tvInvoiceTotal: TextView
+
     @BindView(R.id.tv_as_payment_mode)
     internal lateinit var tvPaymentMode: TextView
+
     @BindView(R.id.ed_invoice_tip)
     internal lateinit var edInvoiceTip: EditText
+
     @BindView(R.id.im_invoice_remove_promo_code)
     internal lateinit var removePromoCode: ImageView
+
     @BindView(R.id.tv_as_promo_applied_details)
     internal lateinit var tvAppliedPromoDetails: TextView
+
     @BindView(R.id.tv_as_promo_invalid_status)
     internal lateinit var tvPromoInvalidStatus: TextView
+
     @BindView(R.id.container_remove_promo_code)
     internal lateinit var containerRemovePromo: ViewGroup
+
     @BindView(R.id.container_promo_code_apply)
     internal lateinit var containerApplyPromo: ViewGroup
+
     @BindView(R.id.container_invoice_tip_waiter)
     internal lateinit var containerTipWaiter: ViewGroup
+
     @BindView(R.id.btn_invoice_request_checkout)
     internal lateinit var btnRequestCheckout: Button
+
     @BindView(R.id.container_as_session_benefits)
     internal lateinit var containerSessionBenefits: ViewGroup
+
     @BindView(R.id.tv_as_session_benefits)
     internal lateinit var tvSessionBenefits: TextView
 
@@ -179,7 +194,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
                     setupData(resource.data)
                     tryShowTotalSavings()
                     sessionId = resource.data.pk
-            }
+                }
 
                 if (resource.status !== Resource.Status.LOADING)
                     stopRefreshing()
@@ -192,7 +207,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
                     Utils.toast(this, statusModelResource.data.message)
                     if (statusModelResource.data.isCheckout)
                         Utils.navigateBackToHome(applicationContext)
-                else {
+                    else {
                         mViewModel.updateRequestCheckout(true)
                         selectedMode = ShopModel.PAYMENT_MODE.getByTag(statusModelResource.data.paymentMode)
                         when (selectedMode) {
@@ -200,8 +215,8 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
                             ShopModel.PAYMENT_MODE.CASH -> finish()
                             else -> {
                             }
+                        }
                     }
-                }
                 } else if (statusModelResource.status !== Resource.Status.LOADING) {
                     Utils.toast(this@ActiveSessionInvoiceActivity, statusModelResource.message)
                     hideProgressBar()
@@ -218,14 +233,14 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
             it?.let { isRequestedCheckout ->
                 edInvoiceTip.isEnabled = (!isRequestedCheckout)
 
-            if (isRequestedCheckout) {
-                edInvoiceTip.background = resources.getDrawable(R.drawable.bordered_text_light_grey)
-                edInvoiceTip.setPadding(15, 0, 0, 0)
-                btnRequestCheckout.setText(R.string.session_inform_requested_checkout)
-                showPromoInvalid(R.string.label_session_offer_not_allowed_session_requested_checkout)
-            } else {
-                setPaymentModeUpdates()
-            }
+                if (isRequestedCheckout) {
+                    edInvoiceTip.background = resources.getDrawable(R.drawable.bordered_text_light_grey)
+                    edInvoiceTip.setPadding(15, 0, 0, 0)
+                    btnRequestCheckout.setText(R.string.session_inform_requested_checkout)
+                    showPromoInvalid(R.string.label_session_offer_not_allowed_session_requested_checkout)
+                } else {
+                    setPaymentModeUpdates()
+                }
             }
         })
 
@@ -234,12 +249,12 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
                 if (resource.status === Resource.Status.SUCCESS) {
                     showPromoApply()
                     tryShowTotalSavings()
-            }
+                }
                 if (pendingPromoRemove) {
                     pendingPromoRemove = false
                     onRequestCheckout(false)
                 }
-                Utils.toast(this, resource.message)
+                toast(resource.message)
             }
         })
 
@@ -247,10 +262,10 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
             it?.let { sessionPromoModelResource ->
                 if (sessionPromoModelResource.status === Resource.Status.SUCCESS && sessionPromoModelResource.data != null) {
                     showPromoDetails(sessionPromoModelResource.data)
-                    tryShowTotalSavings()
+//                    tryShowTotalSavings()
                 } else if (sessionPromoModelResource.status === Resource.Status.ERROR_NOT_FOUND) {
                     showPromoApply()
-            }
+                }
             }
         })
 
@@ -262,7 +277,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
                     showPromoInvalid(R.string.label_session_offer_not_allowed_phone_not_registered)
                 } else if (listResource.status !== Resource.Status.LOADING) {
                     Utils.toast(this, listResource.message)
-            }
+                }
             }
         })
     }
@@ -273,16 +288,10 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
     }
 
     private fun tryShowTotalSavings() {
-        var savings = 0.0
         val invoiceModelResource = mViewModel.sessionInvoice.value
-        if (invoiceModelResource?.data != null) {
-            savings = invoiceModelResource.data.bill.totalSaving
-        } else {
-            val promoModelResource = mViewModel.sessionAppliedPromo.value
-            if (promoModelResource?.data != null) {
-                savings = promoModelResource.data.offerAmount!!
-            }
-        }
+        val promoModelResource = mViewModel.sessionAppliedPromo.value
+        val savings = invoiceModelResource?.data?.bill?.totalSaving
+                ?: promoModelResource?.data?.offerAmount ?: 0.0
         if (savings > 0)
             showSessionBenefit(String.format(getString(R.string.format_session_benefits_savings), savings))
         else
@@ -334,7 +343,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
                     mPaymentPayTm!!.initializePayment(paytmModelResource.data, this)
                 } else if (paytmModelResource.status !== Resource.Status.LOADING) {
                     Utils.toast(this, paytmModelResource.message)
-            }
+                }
             }
         })
 
@@ -350,7 +359,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
                 if (objectNodeResource.status !== Resource.Status.LOADING) {
                     Utils.toast(this, objectNodeResource.message)
                     hideProgressBar()
-            }
+                }
             }
         })
 
