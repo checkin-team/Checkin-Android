@@ -58,9 +58,6 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private boolean discountInINR;
     private long mSessionPk;
     private long mShopPk;
-    private PAYMENT_MODE mPaymentMode = PAYMENT_MODE.CASH;
-    private boolean mIsRequestedCheckout;
-    private boolean mIsPromoApplied;
 
     public ManagerSessionViewModel(@NonNull Application application) {
         super(application);
@@ -71,8 +68,8 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void putSessionCheckout() {
         ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
-        data.put("payment_mode", mPaymentMode.tag);
-        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk, data), mCheckoutData::setValue);
+        data.put("payment_mode", "csh");
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk), mCheckoutData::setValue);
     }
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
@@ -115,7 +112,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void requestSessionCheckout() {
         ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
-        data.put("payment_mode", mPaymentMode.tag);
+        data.put("payment_mode", "csh");
         mCheckoutData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mCheckoutData::setValue);
     }
 
@@ -342,10 +339,6 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mShopPk = shopId;
     }
 
-    public void setPaymentMode(PAYMENT_MODE mode) {
-        mPaymentMode = mode;
-    }
-
     public void markEventDone(long eventPk) {
         mDetailData.addSource(mWaiterRepository.markEventDone(eventPk), mDetailData::setValue);
     }
@@ -418,31 +411,5 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public LiveData<Resource<ObjectNode>> getSessionSwitchTable() {
         return mSwitchTableData;
-    }
-
-    public void setmIsRequestedCheckout(boolean mIsRequestedCheckout) {
-        this.mIsRequestedCheckout = mIsRequestedCheckout;
-    }
-
-    public boolean getmIsRequestedCheckout() {
-        return mIsRequestedCheckout;
-    }
-
-    public void setmIsPromoApplied(boolean mIsPromoApplied) {
-        this.mIsPromoApplied = mIsPromoApplied;
-    }
-
-    public boolean getmIsPromoApplied() {
-        return mIsPromoApplied;
-    }
-
-    public enum PAYMENT_MODE {
-        CASH("csh"),  CARD("crd"), UPI("upi");
-
-        public String tag;
-
-        PAYMENT_MODE(String tag) {
-            this.tag = tag;
-        }
     }
 }

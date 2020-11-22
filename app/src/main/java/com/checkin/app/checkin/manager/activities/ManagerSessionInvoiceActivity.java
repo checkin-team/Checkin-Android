@@ -14,13 +14,20 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
 import com.checkin.app.checkin.data.notifications.MessageObjectModel;
 import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.manager.fragments.ManagerSessionPaymentOptionsBottomSheetFragment;
 import com.checkin.app.checkin.manager.models.GuestContactModel;
 import com.checkin.app.checkin.manager.models.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel;
@@ -31,13 +38,6 @@ import com.checkin.app.checkin.session.models.SessionBillModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 import com.checkin.app.checkin.utility.Utils;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -77,6 +77,9 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
 
+    private boolean isRequestedCheckout;
+    private boolean isPromoApplied;
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -98,7 +101,6 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         }
     };
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,9 +112,10 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         long keySession = intent.getLongExtra(KEY_SESSION, 0L);
         String tableName = intent.getStringExtra(TABLE_NAME);
 
+        updateRequestCheckoutStatus(intent.getBooleanExtra(IS_REQUESTED_CHECKOUT, false));
+
         mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
 
-        updateRequestCheckoutStatus(intent.getBooleanExtra(IS_REQUESTED_CHECKOUT, false));
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -268,7 +271,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
     }
 
     private void updateRequestCheckoutStatus(boolean isRequestedCheckout) {
-        mViewModel.setmIsRequestedCheckout(isRequestedCheckout);
+        this.isRequestedCheckout = isRequestedCheckout;
         if (isRequestedCheckout) {
             llRequestedCheckoutView.setVisibility(View.VISIBLE);
             tvInvoiceChange.setVisibility(View.GONE);
@@ -279,10 +282,16 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
     }
 
     private void alertDialogForCloseSession() {
-        ManagerSessionPaymentOptionsBottomSheetFragment bottomSheetFragment = ManagerSessionPaymentOptionsBottomSheetFragment.Companion.newInstance();
-        bottomSheetFragment.show(getSupportFragmentManager(), null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Are you sure you want to close session?")
+                .setNegativeButton("No", (dialog, which) -> dialog.cancel());
+        if (!isPromoApplied || isRequestedCheckout)
+            builder.setPositiveButton("Close session", (dialog, which) -> mViewModel.putSessionCheckout());
+        else
+            builder.setPositiveButton("Notify waiter", ((dialogInterface, i) -> mViewModel.requestSessionCheckout()));
+        if (!isPromoApplied && !isRequestedCheckout)
+            builder.setNeutralButton("Notify waiter", ((dialogInterface, i) -> mViewModel.requestSessionCheckout()));
+        builder.show();
     }
-
 
     private void updateDiscount() {
         double percent = 0d;
@@ -304,7 +313,8 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         edInvoiceDiscount.setText(data.formatDiscountPercent());
         mBillHolder.bind(data.getBill());
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
-        mViewModel.setmIsPromoApplied(data.getBill().getPromo() != null);
+
+        isPromoApplied = data.getBill().getPromo() != null;
 
         setUpUi("Discount", false, R.drawable.bordered_text_light_grey, View.VISIBLE, View.GONE);
     }

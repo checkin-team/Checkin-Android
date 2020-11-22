@@ -246,7 +246,7 @@ public class ShopModel {
     }
 
     public enum PAYMENT_MODE {
-        CASH("csh"), PAYTM("ptm"), CARD("crd"), UPI("upi");
+        CASH("csh"), PAYTM("ptm"), CARD("crd");
 
         public String tag;
 
@@ -274,10 +274,8 @@ public class ShopModel {
 
     public static String getPaymentMode(PAYMENT_MODE paymentMode) {
         switch (paymentMode) {
-            case CARD:
-                return "via Card";
-            case UPI:
-                return "via Upi";
+            case CASH:
+                return "via Cash";
             case PAYTM:
                 return "";
             default:
@@ -288,13 +286,10 @@ public class ShopModel {
     @DrawableRes
     public static int getPaymentModeIcon(PAYMENT_MODE paymentMode) {
         switch (paymentMode) {
-            case CARD:
-                return R.drawable.ic_card;
-            case UPI:
-                return R.drawable.ic_payment_upi;
+            case CASH:
+                return R.drawable.ic_cash_grey;
             case PAYTM:
                 return R.drawable.ic_paytm_logo;
-            case CASH:
             default:
                 return R.drawable.ic_cash_grey;
         }
