@@ -45,11 +45,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_large"
         app:cardElevation="0dp"
-        app:layout_constraintEnd_toStartOf="@id/card_manager_session_payment_bhim"
+        app:layout_constraintEnd_toStartOf="@+id/card_manager_session_payment_bhim"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_manager_session_payment_mode">
+        app:layout_constraintTop_toBottomOf="@+id/tv_manager_session_payment_mode">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="100dp"
@@ -64,13 +64,13 @@
                 android:layout_marginBottom="8dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_card"
-                app:layout_constraintBottom_toTopOf="@id/tv_manager_session_payment_card"
+                app:layout_constraintBottom_toTopOf="@+id/textView5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_manager_session_payment_card"
+                android:id="@+id/textView5"
                 android:textColor="@color/brownish_grey"
                 android:fontFamily="@font/opensans_bold"
                 android:layout_width="wrap_content"
@@ -87,11 +87,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardElevation="0dp"
-        app:layout_constraintEnd_toStartOf="@id/card_manager_session_payment_cash"
+        app:layout_constraintEnd_toStartOf="@+id/card_manager_session_payment_cash"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toEndOf="@id/card_manager_session_payment_card"
-        app:layout_constraintTop_toTopOf="@id/card_manager_session_payment_card">
+        app:layout_constraintStart_toEndOf="@+id/card_manager_session_payment_card"
+        app:layout_constraintTop_toTopOf="@+id/card_manager_session_payment_card">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="100dp"
@@ -106,13 +106,13 @@
                 android:layout_marginBottom="8dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_payment_upi"
-                app:layout_constraintBottom_toTopOf="@id/tv_manager_session_payment_bhim"
+                app:layout_constraintBottom_toTopOf="@+id/textView7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_manager_session_payment_bhim"
+                android:id="@+id/textView7"
                 android:textColor="@color/brownish_grey"
                 android:fontFamily="@font/opensans_bold"
                 android:layout_width="wrap_content"
@@ -132,8 +132,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toEndOf="@id/card_manager_session_payment_bhim"
-        app:layout_constraintTop_toTopOf="@id/card_manager_session_payment_card">
+        app:layout_constraintStart_toEndOf="@+id/card_manager_session_payment_bhim"
+        app:layout_constraintTop_toTopOf="@+id/card_manager_session_payment_card">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="100dp"
@@ -147,13 +147,13 @@
                 android:layout_height="31dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_cash"
-                app:layout_constraintBottom_toTopOf="@id/tv_manager_session_payment_cash"
+                app:layout_constraintBottom_toTopOf="@+id/textView8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_manager_session_payment_cash"
+                android:id="@+id/textView8"
                 android:textColor="@color/brownish_grey"
                 android:fontFamily="@font/opensans_bold"
                 android:layout_width="wrap_content"
