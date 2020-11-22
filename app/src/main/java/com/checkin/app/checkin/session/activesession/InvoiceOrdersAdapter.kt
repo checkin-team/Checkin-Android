@@ -1,8 +1,5 @@
 package com.checkin.app.checkin.session.activesession
 
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +10,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
-
-import com.checkin.app.checkin.utility.StrikethroughSpaninvoice
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.strikeThrough
 
 class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemModel>?, private val mClickListener: OrderedItemClick?) : RecyclerView.Adapter<InvoiceOrdersAdapter.ViewHolder>() {
 
@@ -58,13 +54,13 @@ class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemMod
                     tvName.setCompoundDrawablesWithIntrinsicBounds(if (it) R.drawable.ic_veg else R.drawable.ic_non_veg, 0, 0, 0)
                 else tvName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             }
-            val originalCost: String =Utils.getCurrencyFormat(itemView.context).format(orderedItem.formatOriginalCost())
-            val discountcost: String = Utils.formatCurrencyAmount(itemView.context,orderedItem.formatCost())
+            val originalCost: String =Utils.formatCurrencyAmount(itemView.context,orderedItem.formatOriginalCost())
+            val actualcost: String = Utils.formatCurrencyAmount(itemView.context,orderedItem.formatCost())
             if(orderedItem.costTampered()){
-                tvPrice.text = StrikethroughSpaninvoice(originalCost, discountcost)
+                tvPrice.text = strikeThrough(originalCost, actualcost)
             }
-           else if(!orderedItem.costTampered()){
-                 tvPrice.text = Utils.getCurrencyFormat(itemView.context).format(orderedItem.formatCost())
+           else {
+                 tvPrice.text = actualcost
 
             }
         }
