@@ -13,8 +13,6 @@ import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.isNotEmpty
 
 class CommonOrderDetailFragment : BaseOrderDetailFragment() {
-
-
     val viewModel: ScheduledSessionDetailViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

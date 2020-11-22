@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.checkin.app.checkin.Waiter.models.OrderStatusModel;
 import com.checkin.app.checkin.data.BaseViewModel;
@@ -36,7 +37,6 @@ import static com.checkin.app.checkin.session.activesession.chat.SessionChatMode
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
 
-
 public class ManagerSessionViewModel extends BaseViewModel {
     private final ManagerRepository mManagerRepository;
     private final SessionRepository mSessionRepository;
@@ -58,6 +58,9 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private boolean discountInINR;
     private long mSessionPk;
     private long mShopPk;
+    private ShopModel.PAYMENT_MODE mPaymentMode = ShopModel.PAYMENT_MODE.CASH;
+    private boolean mIsRequestedCheckout;
+    private boolean mIsPromoApplied;
 
     public ManagerSessionViewModel(@NonNull Application application) {
         super(application);
@@ -68,8 +71,8 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void putSessionCheckout() {
         ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
-        data.put("payment_mode", "csh");
-        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk), mCheckoutData::setValue);
+        data.put("payment_mode", mPaymentMode.tag);
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk, data), mCheckoutData::setValue);
     }
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
@@ -112,7 +115,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void requestSessionCheckout() {
         ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
-        data.put("payment_mode", "csh");
+        data.put("payment_mode", mPaymentMode.tag);
         mCheckoutData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mCheckoutData::setValue);
     }
 
@@ -339,6 +342,10 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mShopPk = shopId;
     }
 
+    public void setPaymentMode(ShopModel.PAYMENT_MODE mode) {
+        mPaymentMode = mode;
+    }
+
     public void markEventDone(long eventPk) {
         mDetailData.addSource(mWaiterRepository.markEventDone(eventPk), mDetailData::setValue);
     }
@@ -411,5 +418,21 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public LiveData<Resource<ObjectNode>> getSessionSwitchTable() {
         return mSwitchTableData;
+    }
+
+    public boolean getIsRequestedCheckout() {
+        return mIsRequestedCheckout;
+    }
+
+    public void setIsRequestedCheckout(boolean mIsRequestedCheckout) {
+        this.mIsRequestedCheckout = mIsRequestedCheckout;
+    }
+
+    public boolean getIsPromoApplied() {
+        return mIsPromoApplied;
+    }
+
+    public void setIsPromoApplied(boolean mIsPromoApplied) {
+        this.mIsPromoApplied = mIsPromoApplied;
     }
 }

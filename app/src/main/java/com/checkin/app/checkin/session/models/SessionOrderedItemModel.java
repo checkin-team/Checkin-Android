@@ -27,6 +27,12 @@ public class SessionOrderedItemModel implements Serializable {
     @JsonProperty("cost")
     private double cost;
 
+    @JsonProperty("original_cost")
+    private double originalCost;
+
+    @JsonProperty("is_cost_tampered")
+    private boolean isCostTampered;
+
     @JsonProperty("item_type")
     private String itemType;
 
@@ -60,7 +66,7 @@ public class SessionOrderedItemModel implements Serializable {
     }
 
     public long getLongPk() {
-        return (long) pk;
+        return pk;
     }
 
     public void setPk(int pk) {
@@ -90,8 +96,12 @@ public class SessionOrderedItemModel implements Serializable {
         return cost;
     }
 
-    public String formatCost() {
-        return String.valueOf(cost);
+    public double getOriginalCost() {
+        return originalCost;
+    }
+
+    public boolean isCostTampered() {
+        return isCostTampered;
     }
 
     public String getItemType() {

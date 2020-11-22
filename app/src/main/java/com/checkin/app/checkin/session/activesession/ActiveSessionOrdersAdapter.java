@@ -108,7 +108,6 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
             tvQuantity.setText(order.formatQuantityType());
             tvElapsedTime.setText(order.formatElapsedTime());
             tvPrice.setText(Utils.formatCurrencyAmount(itemView.getContext(), order.getCost()));
-
             if (order.canCancel()) imCancelOrder.setVisibility(View.VISIBLE);
 
             if (order.getRemarks() != null) {

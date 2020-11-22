@@ -141,7 +141,7 @@ class ActiveSessionInvoiceViewModel(application: Application) : BaseViewModel(ap
             if (input.status === Resource.Status.SUCCESS && input.data != null)
                 updateOfferInInvoice(input.data.code, input.data.offerAmount)
             else if (input.status === Resource.Status.ERROR_NOT_FOUND)
-                updateOfferInInvoice(null, null)
+                updateOfferInInvoice(null, 0.0)
             input
         }
 
@@ -150,7 +150,7 @@ class ActiveSessionInvoiceViewModel(application: Application) : BaseViewModel(ap
         if (listResource?.data == null) return
         val sessionBillModel = listResource.data.bill
         sessionBillModel.promo = code
-        sessionBillModel.offers = offerAmount
+        if (offerAmount != null) sessionBillModel.offers = offerAmount
         mInvoiceData.value = cloneResource(listResource, listResource.data)
     }
 

@@ -158,7 +158,6 @@ public class MenuItemModel implements Serializable {
     public void setTypeCost(List<Double> typeCost) {
         this.typeCosts = typeCost;
     }
-
     public String getImage() {
         return image;
     }

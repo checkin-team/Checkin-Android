@@ -10,7 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
-import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.formatPriceWithOff
 
 class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemModel>?, private val mClickListener: OrderedItemClick?) : RecyclerView.Adapter<InvoiceOrdersAdapter.ViewHolder>() {
 
@@ -32,8 +32,10 @@ class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemMod
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.tv_ordered_item_name)
         lateinit var tvName: TextView
+
         @BindView(R.id.tv_ordered_item_price)
         lateinit var tvPrice: TextView
+
         @BindView(R.id.im_ms_ordered_item_cancel)
         lateinit var imCancelOrder: ImageView
         private var mOrderedItem: SessionOrderedItemModel? = null
@@ -53,7 +55,7 @@ class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemMod
                     tvName.setCompoundDrawablesWithIntrinsicBounds(if (it) R.drawable.ic_veg else R.drawable.ic_non_veg, 0, 0, 0)
                 else tvName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             }
-            tvPrice.text = Utils.getCurrencyFormat(itemView.context).format(orderedItem.formatCost())
+            tvPrice.text = orderedItem.formatPriceWithOff(itemView.context)
         }
     }
 

@@ -14,6 +14,7 @@ import com.checkin.app.checkin.menu.models.ItemCustomizationGroupModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.formatPriceWithOff
 
 @EpoxyModelClass(layout = R.layout.item_invoice_order_with_customizations)
 abstract class InvoiceOrderWithCustomizationModelHolder : EpoxyModelWithHolder<InvoiceOrderWithCustomizationModelHolder.Holder>() {
@@ -40,7 +41,7 @@ abstract class InvoiceOrderWithCustomizationModelHolder : EpoxyModelWithHolder<I
 
         override fun bindData(data: SessionOrderedItemModel) {
             tvItemName.text = "${data.item.name} x ${data.quantity} (${data.itemType})"
-            tvItemPrice.text = Utils.formatCurrencyAmount(itemView.context, data.cost)
+            tvItemPrice.text = data.formatPriceWithOff(context)
             data.item.isVegetarian.let {
                 if (it != null)
                     tvItemName.setCompoundDrawablesWithIntrinsicBounds(if (it) R.drawable.ic_veg else R.drawable.ic_non_veg, 0, 0, 0)
