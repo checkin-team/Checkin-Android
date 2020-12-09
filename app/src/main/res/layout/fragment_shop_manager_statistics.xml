@@ -190,7 +190,7 @@
             android:layout_marginEnd="@dimen/spacing_small"
             android:text="TRENDING ITEMS IN LAST 30  DAYS" />
         
-        <androidx.recyclerview.widget.RecyclerView
+        <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/rv_manager_stats_trending_orders"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

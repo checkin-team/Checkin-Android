@@ -25,6 +25,12 @@ public class ManagerStatsModel {
     @JsonProperty("trending_orders")
     private List<TrendingOrder> trendingOrders;
 
+    @JsonProperty("poor_items")
+    private List<PoorItems> poorItems;
+
+    @JsonProperty("trending_groups")
+    private List<TrendingGroups> trendingGroups;
+
     public double getDayRevenue() {
         return revenue.day;
     }
@@ -62,6 +68,37 @@ public class ManagerStatsModel {
     }
 
     public static class TrendingOrder {
+        @JsonProperty("item")
+        private MenuItemBriefModel item;
+
+        @JsonProperty("revenue_contribution")
+        private double revenueContribution;
+
+        public MenuItemBriefModel getItem() {
+            return item;
+        }
+
+        public double getRevenueContribution() {
+            return revenueContribution * 100;
+        }
+    }
+    public static class PoorItems {
+        @JsonProperty("item")
+        private MenuItemBriefModel item;
+
+        @JsonProperty("revenue_contribution")
+        private double revenueContribution;
+
+        public MenuItemBriefModel getItem() {
+            return item;
+        }
+
+        public double getRevenueContribution() {
+            return revenueContribution * 100;
+        }
+    }
+
+    public static class TrendingGroups {
         @JsonProperty("item")
         private MenuItemBriefModel item;
 
