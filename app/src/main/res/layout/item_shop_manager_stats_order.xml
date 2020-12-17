@@ -16,6 +16,7 @@
     <TextView
         android:id="@+id/tv_manager_stats_trending_order_name"
         style="@style/GreyTextStyle"
+        android:fontFamily="@font/josefinsans_bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_normal"
@@ -26,6 +27,7 @@
         android:id="@+id/tv_manager_stats_trending_order_revenue"
         style="@style/PinkishGreySmallTextStyle"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/josefinsans_bold"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_manager_stats_trending_order_name"
         android:layout_alignStart="@id/tv_manager_stats_trending_order_name"

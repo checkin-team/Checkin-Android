@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_extra_tiny">
+
+    <TextView
+        android:id="@+id/title_manager_stats_heading"
+        android:fontFamily="@font/josefinsans_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/RedHeadingStyle"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:textSize="@dimen/font_small"
+        android:text="Trendingitem"/>
+
+
+</RelativeLayout>
