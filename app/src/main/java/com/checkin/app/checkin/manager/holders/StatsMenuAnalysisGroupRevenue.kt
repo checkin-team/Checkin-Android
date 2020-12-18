@@ -14,10 +14,10 @@ import java.util.*
 @EpoxyModelClass(layout = R.layout.item_menu_analysis_group_revenue)
 abstract class StatsMenuAnalysisGroupRevenue : EpoxyModelWithHolder<StatsMenuAnalysisGroupRevenue.Holder>() {
     @EpoxyAttribute
-    internal lateinit var data: ManagerStatsModel.GroupRevenue
+    lateinit var data: ManagerStatsModel.GroupRevenue
 
     @EpoxyAttribute
-    internal var index: Int = 0
+    var index: Int = 0
 
     override fun bind(holder: Holder) = holder.bindData(index to data)
 

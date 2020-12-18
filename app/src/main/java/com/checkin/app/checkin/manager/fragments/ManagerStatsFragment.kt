@@ -112,6 +112,7 @@ class ManagerStatsFragment : BaseFragment() {
                 handleLoadingRefresh(input)
                 if (input.status === Resource.Status.SUCCESS && input.data != null) {
                     setupData(input.data)
+                    epoxyRvMenuAnalysis.requestModelBuild()
                 }
             }
         })

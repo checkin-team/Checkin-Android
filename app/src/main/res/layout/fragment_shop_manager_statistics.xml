@@ -13,15 +13,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingBottom="@dimen/spacing_small">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/title_manager_stats"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginTop="@dimen/spacing_normal"
                 android:fontFamily="@font/josefinsans_bold"
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
@@ -290,17 +288,24 @@
                 app:layout_constraintStart_toStartOf="@id/heading_manager_stats_revenuereport"
                 app:layout_constraintTop_toBottomOf="@id/cv_manager_analysis" />
 
-            <com.airbnb.epoxy.EpoxyRecyclerView
-                android:id="@+id/epoxy_rv_manager_stats_menu_analysis"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_manager_menuanalysis"
+                style="@style/WhiteCardStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_tiny"
-                android:background="@drawable/bordered_card_white"
+                android:layout_marginBottom="@dimen/spacing_small"
                 android:padding="@dimen/spacing_small"
                 app:layout_constraintEnd_toEndOf="@id/heading_manager_stats_menuanalysis"
                 app:layout_constraintStart_toStartOf="@id/heading_manager_stats_menuanalysis"
-                app:layout_constraintTop_toBottomOf="@id/heading_manager_stats_menuanalysis" />
+                app:layout_constraintTop_toBottomOf="@id/heading_manager_stats_menuanalysis">
 
+                <com.airbnb.epoxy.EpoxyRecyclerView
+                    android:id="@+id/epoxy_rv_manager_stats_menu_analysis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never" />
+            </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -16,7 +16,7 @@ import java.util.*
 @EpoxyModelClass(layout = R.layout.item_menu_analysis_item_revenue)
 abstract class StatsMenuAnalysisItemRevenue : EpoxyModelWithHolder<StatsMenuAnalysisItemRevenue.Holder>() {
     @EpoxyAttribute
-    internal lateinit var data: ManagerStatsModel.ItemRevenue
+    lateinit var data: ManagerStatsModel.ItemRevenue
 
     override fun bind(holder: Holder) = holder.bindData(data)
 
