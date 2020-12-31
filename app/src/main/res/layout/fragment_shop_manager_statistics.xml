@@ -1,201 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sr_manager_stats"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="@dimen/spacing_small"
-        android:paddingBottom="@dimen/spacing_small">
-        
-        <TextView
-            android:id="@+id/title_manager_stats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_tiny"
-            android:paddingStart="@dimen/spacing_small"
-            android:paddingEnd="@dimen/spacing_small"
-            android:text="@string/shop_manager_table_statics_title_description"
-            android:textSize="@dimen/font_extra_small" />
-        
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_shop_manager_table_statics"
-            style="@style/WhiteCardStyle"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title_manager_stats"
-            android:layout_marginStart="@dimen/spacing_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:layout_marginEnd="@dimen/spacing_large">
-            
-            <LinearLayout
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title_manager_stats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:fontFamily="@font/josefinsans_bold"
+                android:paddingStart="@dimen/spacing_large"
+                android:paddingEnd="@dimen/spacing_large"
+                android:text="@string/subtitle_shop_manager_stats"
+                android:textSize="@dimen/font_extra_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/heading_manager_stats_revenuereport"
+                style="@style/AquaBlueSmallTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_extra_small"
-                android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_extra_small">
-                
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:fontFamily="@font/josefinsans_bold"
+                android:text="Revenue Report"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_manager_stats" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_manager_revenue_report"
+                style="@style/WhiteCardStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                app:layout_constraintEnd_toEndOf="@id/heading_manager_stats_revenuereport"
+                app:layout_constraintStart_toStartOf="@id/heading_manager_stats_revenuereport"
+                app:layout_constraintTop_toBottomOf="@id/heading_manager_stats_revenuereport">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_extra_small">
+
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_extra_small">
-                        
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Today's Revenue"
-                            android:textSize="@dimen/font_extra_small" />
-                        
-                        <TextView
-                            android:id="@+id/tv_manager_stats_revenue_day"
-                            style="@style/RedHeadingStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_extra_small">
+
+                            <TextView
+                                style="@style/GreyExtraSmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefinsans_bold"
+                                android:text="Live Cart Value" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_revenue_live"
+                                style="@style/RedHeadingStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_extra_tiny"
+                                tools:text="2,120" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_orders_live"
+                                style="@style/GreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_tiny"
+                                tools:text="8 orders" />
+
+                        </LinearLayout>
+
+                        <View style="@style/DividerVertical" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_extra_tiny"
-                            tools:text="2,120" />
-                        
-                        <TextView
-                            android:id="@+id/tv_manager_stats_orders_day"
-                            style="@style/GreySmallTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_tiny"
-                            tools:text="8 orders" />
-                    
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_extra_small">
+
+                            <TextView
+                                style="@style/GreyExtraSmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefinsans_bold"
+                                android:text="Today's Revenue" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_revenue_today"
+                                style="@style/RedHeadingStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_extra_tiny"
+                                tools:text="2,120" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_orders_today"
+                                style="@style/GreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_tiny"
+                                tools:text="8 orders" />
+                        </LinearLayout>
+
                     </LinearLayout>
-                    
-                    <View style="@style/DividerVertical" />
-                    
+
+                    <View style="@style/DividerHorizontal" />
+
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_extra_small">
-                        
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_normal"
-                            android:text="Week's Revenue"
-                            android:textSize="@dimen/font_extra_small" />
-                        
-                        <TextView
-                            android:id="@+id/tv_manager_stats_revenue_week"
-                            style="@style/RedHeadingStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_extra_small">
+
+                            <TextView
+                                style="@style/GreyExtraSmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefinsans_bold"
+                                android:text="Yesterday's Revenue" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_revenue_yesterday"
+                                style="@style/RedHeadingStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_extra_tiny"
+                                tools:text="2,120" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_orders_yesterday"
+                                style="@style/GreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_tiny"
+                                tools:text="8 orders" />
+
+                        </LinearLayout>
+
+                        <View style="@style/DividerVertical" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_normal"
-                            android:layout_marginTop="@dimen/spacing_extra_tiny"
-                            tools:text="14,120" />
-                        
-                        <TextView
-                            android:id="@+id/tv_manager_stats_orders_week"
-                            style="@style/GreySmallTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_normal"
-                            android:layout_marginTop="@dimen/spacing_tiny"
-                            tools:text="48 orders" />
-                    
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_extra_small">
+
+                            <TextView
+                                style="@style/GreyExtraSmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/josefinsans_bold"
+                                android:text="Week's Revenue" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_revenue_week"
+                                style="@style/RedHeadingStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_extra_tiny"
+                                tools:text="2,120" />
+
+                            <TextView
+                                android:id="@+id/tv_manager_stats_orders_week"
+                                style="@style/GreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_tiny"
+                                tools:text="8 orders" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
-                
+
                 </LinearLayout>
-                
-                <View style="@style/DividerHorizontal" />
-                
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/heading_manager_stats_analysis"
+                style="@style/AquaBlueSmallTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:fontFamily="@font/josefinsans_bold"
+                android:text="Analysis"
+                app:layout_constraintEnd_toEndOf="@id/heading_manager_stats_revenuereport"
+                app:layout_constraintStart_toStartOf="@id/heading_manager_stats_revenuereport"
+                app:layout_constraintTop_toBottomOf="@id/cv_manager_revenue_report" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_manager_analysis"
+                style="@style/WhiteCardStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                app:layout_constraintEnd_toEndOf="@id/heading_manager_stats_analysis"
+                app:layout_constraintStart_toStartOf="@id/heading_manager_stats_analysis"
+                app:layout_constraintTop_toBottomOf="@id/heading_manager_stats_analysis">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_small">
+
+                    <TextView
+                        android:id="@+id/tv_manager_analysis_serving_time"
+                        style="@style/GreyExtraSmallTextStyle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_extra_small">
-                        
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Average Session Time"
-                            android:textSize="@dimen/font_extra_small" />
-                        
-                        <TextView
-                            android:id="@+id/tv_manager_stats_session_time"
-                            style="@style/RedHeadingStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_extra_tiny"
-                            tools:text="23.02 Min" />
-                    
-                    </LinearLayout>
-                    
-                    <View style="@style/DividerVertical" />
-                    
-                    <LinearLayout
-                        android:layout_width="0dp"
+                        android:drawableStart="@drawable/ic_clock_filled"
+                        android:drawablePadding="@dimen/spacing_normal"
+                        android:fontFamily="@font/josefinsans"
+                        tools:text="4 minutes Serving Time" />
+
+                    <TextView
+                        android:id="@+id/tv_manager_analysis_acceptance_time"
+                        style="@style/GreyExtraSmallTextStyle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_extra_small">
-                        
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_normal"
-                            android:text="Average Serving Time"
-                            android:textSize="@dimen/font_extra_small" />
-                        
-                        <TextView
-                            android:id="@+id/tv_manager_stats_serving_time"
-                            style="@style/RedHeadingStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_normal"
-                            android:layout_marginTop="@dimen/spacing_extra_tiny"
-                            tools:text="15.16 Min" />
-                    
-                    </LinearLayout>
-                
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        android:drawableStart="@drawable/ic_clock_filled"
+                        android:drawablePadding="@dimen/spacing_normal"
+                        android:fontFamily="@font/josefinsans"
+                        tools:text="4 minutes Order Accepting Time" />
+
+                    <TextView
+                        android:id="@+id/tv_manager_analysis_session_time"
+                        style="@style/GreyExtraSmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        android:drawableStart="@drawable/ic_clock_filled"
+                        android:drawablePadding="@dimen/spacing_normal"
+                        android:fontFamily="@font/josefinsans"
+                        tools:text="4 minutes Session Time" />
+
                 </LinearLayout>
-            
-            </LinearLayout>
-        
-        </androidx.cardview.widget.CardView>
-        
-        <TextView
-            android:id="@+id/title_manager_stats_trending"
-            style="@style/RedSmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cv_shop_manager_table_statics"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:text="TRENDING ITEMS IN LAST 30  DAYS" />
-        
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_manager_stats_trending_orders"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/title_manager_stats_trending"
-            android:layout_marginTop="@dimen/spacing_small" />
-    
-    </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/heading_manager_stats_menuanalysis"
+                style="@style/AquaBlueSmallTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:fontFamily="@font/josefinsans_bold"
+                android:text="Menu Analysis"
+                app:layout_constraintEnd_toEndOf="@id/heading_manager_stats_revenuereport"
+                app:layout_constraintStart_toStartOf="@id/heading_manager_stats_revenuereport"
+                app:layout_constraintTop_toBottomOf="@id/cv_manager_analysis" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_manager_menuanalysis"
+                style="@style/WhiteCardStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintEnd_toEndOf="@id/heading_manager_stats_menuanalysis"
+                app:layout_constraintStart_toStartOf="@id/heading_manager_stats_menuanalysis"
+                app:layout_constraintTop_toBottomOf="@id/heading_manager_stats_menuanalysis">
+
+                <com.airbnb.epoxy.EpoxyRecyclerView
+                    android:id="@+id/epoxy_rv_manager_stats_menu_analysis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

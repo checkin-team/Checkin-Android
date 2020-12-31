@@ -187,7 +187,7 @@
     <string name="confirm">Confirm</string>
     <string name="reject">Reject</string>
     <string name="label_done">Done</string>
-    <string name="shop_manager_table_statics_title_description">Understand ongoing the food trend of your customer. And get an insight into sales for the day.</string>
+    <string name="subtitle_shop_manager_stats">Understand the ongoing food trend of your customer. And get an insight into sales for the day.</string>
     <string name="title_rated">Rated</string>
     <string name="title_follow">Follow</string>
     <string name="title_uploaded_by">Uploaded by</string>
