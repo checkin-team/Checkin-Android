@@ -21,12 +21,12 @@ import butterknife.ButterKnife;
 
 public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsOrderAdapter.ShopManagerTableStaticsHolder> {
 
-    private List<ManagerStatsModel.ItemRevenue> mData;
+    private List<ManagerStatsModel.ItemRevenueModel> mData;
 
     public ManagerStatsOrderAdapter() {
     }
 
-    public void setData(List<ManagerStatsModel.ItemRevenue> itemRevenue) {
+    public void setData(List<ManagerStatsModel.ItemRevenueModel> itemRevenue) {
         this.mData = itemRevenue;
         notifyDataSetChanged();
     }
@@ -62,7 +62,7 @@ public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsO
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(ManagerStatsModel.ItemRevenue data) {
+        public void bindData(ManagerStatsModel.ItemRevenueModel data) {
             MenuItemBriefModel item = data.getItem();
             double revenueGenerated = data.getRevenueContribution();
             if (item != null) {

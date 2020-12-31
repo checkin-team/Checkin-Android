@@ -14,14 +14,14 @@ import java.util.*
 @EpoxyModelClass(layout = R.layout.item_menu_analysis_group_revenue)
 abstract class StatsMenuAnalysisGroupRevenue : EpoxyModelWithHolder<StatsMenuAnalysisGroupRevenue.Holder>() {
     @EpoxyAttribute
-    lateinit var data: ManagerStatsModel.GroupRevenue
+    lateinit var data: ManagerStatsModel.GroupRevenueModel
 
     @EpoxyAttribute
     var index: Int = 0
 
     override fun bind(holder: Holder) = holder.bindData(index to data)
 
-    class Holder : BaseEpoxyHolder<Pair<Int, ManagerStatsModel.GroupRevenue>>() {
+    class Holder : BaseEpoxyHolder<Pair<Int, ManagerStatsModel.GroupRevenueModel>>() {
         @BindView(R.id.tv_menu_analysis_group_index)
         internal lateinit var tvGroupIndex: TextView
 
@@ -31,7 +31,7 @@ abstract class StatsMenuAnalysisGroupRevenue : EpoxyModelWithHolder<StatsMenuAna
         @BindView(R.id.tv_menu_analysis_group_revenue)
         internal lateinit var tvRevenue: TextView
 
-        override fun bindData(input: Pair<Int, ManagerStatsModel.GroupRevenue>) {
+        override fun bindData(input: Pair<Int, ManagerStatsModel.GroupRevenueModel>) {
             val data = input.second
             tvGroupIndex.text = input.first.toString()
             tvItemName.text = data.group

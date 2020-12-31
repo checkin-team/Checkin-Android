@@ -28,7 +28,7 @@ public class ShopInsightRevenueModel {
     private long avgServingTime;
 
     @JsonProperty("trending_orders")
-    private List<ManagerStatsModel.ItemRevenue> itemRevenues;
+    private List<ManagerStatsModel.ItemRevenueModel> itemRevenues;
 
     @JsonProperty("floating_cash")
     private double floatingCash;
@@ -63,7 +63,7 @@ public class ShopInsightRevenueModel {
         return avgServingTime;
     }
 
-    public List<ManagerStatsModel.ItemRevenue> getItemRevenues() {
+    public List<ManagerStatsModel.ItemRevenueModel> getItemRevenues() {
         return itemRevenues;
     }
 

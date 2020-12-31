@@ -16,11 +16,11 @@ import java.util.*
 @EpoxyModelClass(layout = R.layout.item_menu_analysis_item_revenue)
 abstract class StatsMenuAnalysisItemRevenue : EpoxyModelWithHolder<StatsMenuAnalysisItemRevenue.Holder>() {
     @EpoxyAttribute
-    lateinit var data: ManagerStatsModel.ItemRevenue
+    lateinit var data: ManagerStatsModel.ItemRevenueModel
 
     override fun bind(holder: Holder) = holder.bindData(data)
 
-    class Holder : BaseEpoxyHolder<ManagerStatsModel.ItemRevenue>() {
+    class Holder : BaseEpoxyHolder<ManagerStatsModel.ItemRevenueModel>() {
         @BindView(R.id.iv_manager_stats_trending_order_veg)
         internal lateinit var imItemStatus: ImageView
 
@@ -30,7 +30,7 @@ abstract class StatsMenuAnalysisItemRevenue : EpoxyModelWithHolder<StatsMenuAnal
         @BindView(R.id.tv_manager_stats_trending_order_revenue)
         internal lateinit var tvRevenue: TextView
 
-        override fun bindData(data: ManagerStatsModel.ItemRevenue) {
+        override fun bindData(data: ManagerStatsModel.ItemRevenueModel) {
             val item: MenuItemBriefModel = data.item
             if (item.isVegetarian) imItemStatus.setImageResource(R.drawable.ic_veg)
             else imItemStatus.setImageResource(R.drawable.ic_non_veg)
