@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.objectbox'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 apply from: '../versions.gradle'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
@@ -40,7 +40,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                        "objectbox.myObjectBoxPackage": "com.checkin.app.checkin"
+                        "objectbox.myObjectBoxPackage": "com.checkin.app.checkin",
+                        "objectbox.incremental" : "true",
+                        "enableParallelEpoxyProcessing" : "true"
                 ]
             }
         }
@@ -168,12 +170,10 @@ dependencies {
             "com.google.firebase:firebase-common-ktx:19.3.0",
             "com.google.firebase:firebase-auth:19.2.0",
             "com.google.firebase:firebase-messaging:20.1.0",
-            "com.google.firebase:firebase-analytics:17.2.2",
-            "com.google.firebase:firebase-config-ktx:19.1.0"
+            "com.google.firebase:firebase-analytics:17.5.0",
+            "com.google.firebase:firebase-config-ktx:19.1.0",
+            "com.google.firebase:firebase-crashlytics:17.2.1"
     )
-
-    // Fabric Crashlytics
-    implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
     // Facebook SDK
     implementation(
@@ -209,7 +209,8 @@ dependencies {
     kapt "com.airbnb.android:epoxy-processor:$versions.epoxy"
 
     // Lottie
-    implementation "com.airbnb.android:lottie:$versions.lottie"
+//    UNUSED RIGHT NOW
+//    implementation "com.airbnb.android:lottie:$versions.lottie"
 
     // ObjectBox components
     implementation "io.objectbox:objectbox-android:$versions.objectBox"

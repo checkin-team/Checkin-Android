@@ -3,13 +3,11 @@ package com.checkin.app.checkin.data.network
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.ProblemModel.ERROR_CODE
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.activities.UpdateAppActivity
 import com.checkin.app.checkin.utility.Utils
-import com.crashlytics.android.Crashlytics
 
 /**
  * Created by shivanshs9 on 27/5/19.
@@ -20,7 +18,7 @@ object ProblemHandler {
         val problemModel = resource.problem
         if (problemModel != null) {
             if (problemModel.getErrorCode() === ERROR_CODE.DEPRECATED_VERSION || problemModel.getErrorCode() === ERROR_CODE.INVALID_VERSION) {
-                Crashlytics.log(Log.ERROR, TAG, "Error Code: " + problemModel.getErrorCode())
+                Utils.crashlytics.log(String.format("E/%s: Error Code: %s", TAG, problemModel.getErrorCode()))
                 context.startActivity(Intent.makeRestartActivityTask(ComponentName(context, UpdateAppActivity::class.java)))
                 return true
             }

@@ -2,11 +2,10 @@ package com.checkin.app.checkin.misc.paytm;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.utility.Constants;
-import com.crashlytics.android.Crashlytics;
+import com.checkin.app.checkin.utility.Utils;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
@@ -31,7 +30,7 @@ public abstract class PaytmPayment {
             @Override
             public void clientAuthenticationFailed(String inErrorMessage) {
                 onPaytmError(inErrorMessage);
-                Crashlytics.log(Log.ERROR, TAG, inErrorMessage);
+                Utils.crashlytics.log(String.format("E/%s: %s", TAG, inErrorMessage));
             }
 
             @Override

@@ -165,6 +165,8 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthOtpFragme
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken)
 
             startService(Intent(applicationContext, DeviceTokenService::class.java))
+
+            Utils.crashlytics.setUserId("U-${data.userId}")
         }
 
         if (!data.isProfileReady) askUserDetails()

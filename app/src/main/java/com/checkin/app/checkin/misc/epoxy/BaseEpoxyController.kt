@@ -2,14 +2,13 @@ package com.checkin.app.checkin.misc.epoxy
 
 import android.util.Log
 import com.airbnb.epoxy.EpoxyController
-import com.crashlytics.android.Crashlytics
+import com.checkin.app.checkin.utility.Utils
 
 abstract class BaseEpoxyController : EpoxyController() {
     override fun onExceptionSwallowed(exception: RuntimeException) {
         super.onExceptionSwallowed(exception)
         Log.e(TAG, exception.message, exception)
-        Crashlytics.log(Log.ERROR, TAG, exception.message)
-        Crashlytics.logException(exception)
+        Utils.logErrors(TAG, exception)
     }
 
     companion object {
