@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_small">
+
+    <TextView
+        android:id="@+id/tv_menu_analysis_group_index"
+        style="@style/WhiteTextStyle"
+        android:layout_width="@dimen/size_small_icon"
+        android:layout_height="@dimen/size_small_icon"
+        android:background="@drawable/shape_oval_red"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_normal"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/tv_menu_analysis_group_name"
+        style="@style/GreyTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_toEndOf="@id/tv_menu_analysis_group_index"
+        android:fontFamily="@font/josefinsans_bold"
+        tools:text="Pizza" />
+
+    <TextView
+        android:id="@+id/tv_menu_analysis_group_revenue"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_menu_analysis_group_name"
+        android:layout_alignStart="@id/tv_menu_analysis_group_name"
+        android:layout_marginTop="@dimen/spacing_extra_tiny"
+        android:fontFamily="@font/josefinsans_bold"
+        tools:text="19.2 % revenue contribution" />
+
+</RelativeLayout>

@@ -262,13 +262,13 @@ interface WebApiService {
     fun deleteRestaurantMember(@Path("shop_id") shopId: Long, @Path("user_id") userId: Long): Call<ObjectNode>
 
     @GET("sessions/restaurants/{restaurant_id}/")
-    fun getRestaurantSessionsById(@Path("restaurant_id") restaurantId: Long, @Query("checked_in_after") checkedOutAfter: String?, @Query("checked_in_before") checkedOutBefore: String?): Call<List<RestaurantSessionModel>>
+    fun getRestaurantSessionsById(@Path("restaurant_id") restaurantId: Long, @Query("checked_out_after") checkedOutAfter: String?, @Query("checked_out_before") checkedOutBefore: String?): Call<List<RestaurantSessionModel>>
 
     @GET("sessions/restaurants/{restaurant_id}/scheduled/")
     fun getScheduledSessionsById(@Path("restaurant_id") restaurantId: Long): Call<List<ShopScheduledSessionModel>>
 
     @GET("restaurants/{restaurant_id}/stats/admin")
-    fun getRestaurantAdminStats(@Path("restaurant_id") restaurantId: Long, @Query("checked_in_after") checkedOutAfter: String?, @Query("checked_in_before") checkedOutBefore: String?): Call<RestaurantAdminStatsModel>
+    fun getRestaurantAdminStats(@Path("restaurant_id") restaurantId: Long, @Query("checked_out_after") checkedOutAfter: String?, @Query("checked_out_before") checkedOutBefore: String?): Call<RestaurantAdminStatsModel>
 
     @GET("sessions/manage/{session_id}/detail/")
     fun getShopSessionDetailById(@Path("session_id") sessionId: Long): Call<ShopSessionDetailModel>

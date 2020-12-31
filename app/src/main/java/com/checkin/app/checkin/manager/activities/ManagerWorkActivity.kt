@@ -116,9 +116,11 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
 
     private fun setupObservers(shopId: Long) {
         mViewModel.fetchRestaurantData(shopId)
+        Utils.getCurrentFormattedDateInvoice().also { currDate ->
+            mShopViewModel.filterFrom(currDate, doFetch = false)
+            mShopViewModel.filterTo(currDate, doFetch = false)
+        }
         mShopViewModel.fetchShopSessions(shopId)
-        mShopViewModel.filterFrom(Utils.getCurrentFormattedDateInvoice())
-        mShopViewModel.filterTo(Utils.getCurrentFormattedDateInvoice())
     }
 
     override fun setLiveOrdersActivation(isActivated: Boolean) {

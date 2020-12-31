@@ -83,7 +83,7 @@ public class ShopInsightRevenueFragment extends BaseFragment {
                 mPagerAdapter.setData(revenueModel);
                 tvFloatingCash.setText(Utils.formatCurrencyAmount(requireContext(), revenueModel.getFloatingCash()));
                 tvCancellationRate.setText(revenueModel.getCancellationRate());
-                mAdapter.setData(revenueModel.getTrendingOrders());
+                mAdapter.setData(revenueModel.getItemRevenues());
             }
         });
     }

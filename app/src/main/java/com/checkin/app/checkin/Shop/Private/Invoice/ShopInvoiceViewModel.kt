@@ -17,58 +17,53 @@ class ShopInvoiceViewModel(application: Application) : BaseViewModel(application
     private var mPrevStatsResults: LiveData<Resource<RestaurantAdminStatsModel>>? = null
     private val mStatsResults = createNetworkLiveData<RestaurantAdminStatsModel>()
 
-    val restaurantSessions: LiveData<Resource<List<RestaurantSessionModel>>>
-        get() = mResults
-
-    val restaurantStats: LiveData<Resource<RestaurantAdminStatsModel>>
-        get() = mStatsResults
+    val restaurantSessions: LiveData<Resource<List<RestaurantSessionModel>>> = mResults
+    val restaurantStats: LiveData<Resource<RestaurantAdminStatsModel>> = mStatsResults
 
     var doFetchStats: Boolean = false
 
-    fun fetchShopSessions(restaurantId: Long) {
+    fun fetchShopSessions(restaurantId: Long = mShopPk) {
         this.mShopPk = restaurantId
-        mPrevResults = mShopInvoiceRepository.getRestaurantSessions(restaurantId)
-        mResults.addSource(mPrevResults!!) { mResults.value = it }
+        if (mPrevResults != null)
+            mResults.removeSource(mPrevResults!!)
+        mPrevResults = if (fromDate == null && toDate == null) mShopInvoiceRepository.getRestaurantSessions(restaurantId)
+        else mShopInvoiceRepository.getRestaurantSessions(restaurantId, fromDate, toDate)
+        mResults.addSource(mPrevResults!!, mResults::setValue)
     }
 
     fun fetchShopStats(restaurantId: Long) {
         this.mShopPk = restaurantId
         mPrevStatsResults = mShopInvoiceRepository.getRestaurantAdminStats(restaurantId)
-        mStatsResults.addSource(mPrevStatsResults!!) { mStatsResults.value = it }
-    }
-
-    fun setShopPk(restaurantId: Long) {
-        this.mShopPk = restaurantId
-    }
-
-    private fun filterRestaurantSessions(fromDate: String?, toDate: String?) {
-        if (mPrevResults != null)
-            mResults.removeSource(mPrevResults!!)
-        mPrevResults = mShopInvoiceRepository.getRestaurantSessions(mShopPk, fromDate, toDate)
-        mResults.addSource(mPrevResults!!) { mResults.value = it }
+        mStatsResults.addSource(mPrevStatsResults!!, mStatsResults::setValue)
     }
 
     private fun filterRestaurantStats(fromDate: String?, toDate: String?) {
         if (mPrevStatsResults != null)
             mStatsResults.removeSource(mPrevStatsResults!!)
         mPrevStatsResults = mShopInvoiceRepository.getRestaurantAdminStats(mShopPk, fromDate, toDate)
-        mStatsResults.addSource(mPrevStatsResults!!) { mStatsResults.value = it }
+        mStatsResults.addSource(mPrevStatsResults!!, mStatsResults::setValue)
     }
 
-    fun filterFrom(fromDate: String) {
+    @JvmOverloads
+    fun filterFrom(fromDate: String, doFetch: Boolean = true) {
         this.fromDate = fromDate
-        filterRestaurantSessions(fromDate, toDate)
-        if (doFetchStats) filterRestaurantStats(fromDate, toDate)
+        if (doFetch) {
+            fetchShopSessions()
+            if (doFetchStats) filterRestaurantStats(fromDate, toDate)
+        }
     }
 
-    fun filterTo(toDate: String) {
+    @JvmOverloads
+    fun filterTo(toDate: String, doFetch: Boolean = true) {
         this.toDate = toDate
-        filterRestaurantSessions(fromDate, toDate)
-        if (doFetchStats) filterRestaurantStats(fromDate, toDate)
+        if (doFetch) {
+            fetchShopSessions()
+            if (doFetchStats) filterRestaurantStats(fromDate, toDate)
+        }
     }
 
     override fun updateResults() {
-        fetchShopSessions(mShopPk)
+        fetchShopSessions()
         if (doFetchStats) fetchShopStats(mShopPk)
     }
 }

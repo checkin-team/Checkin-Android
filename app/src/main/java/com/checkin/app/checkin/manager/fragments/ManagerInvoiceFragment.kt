@@ -24,11 +24,11 @@ class ManagerInvoiceFragment : BaseFragment(), ShopInvoiceInteraction {
     @BindView(R.id.rv_shop_invoice_sessions)
     internal lateinit var rvSessions: RecyclerView
 
-
     private val mAdapter: ShopInvoiceSessionAdapter by lazy {
         ShopInvoiceSessionAdapter(this)
     }
     private val mViewModel: ShopInvoiceViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRefreshScreen(R.id.sr_manager_invoice)
         setupUi()
@@ -49,9 +49,11 @@ class ManagerInvoiceFragment : BaseFragment(), ShopInvoiceInteraction {
 
     override fun updateScreen() {
         super.updateScreen()
-        mViewModel.filterFrom(Utils.getCurrentFormattedDateInvoice())
-        mViewModel.filterTo(Utils.getCurrentFormattedDateInvoice())
-        mViewModel.updateResults()
+        Utils.getCurrentFormattedDateInvoice().also { currDate ->
+            mViewModel.filterFrom(currDate, doFetch = false)
+            mViewModel.filterTo(currDate, doFetch = false)
+        }
+        mViewModel.fetchShopSessions()
     }
 
     override fun onClickSession(data: RestaurantSessionModel?) {

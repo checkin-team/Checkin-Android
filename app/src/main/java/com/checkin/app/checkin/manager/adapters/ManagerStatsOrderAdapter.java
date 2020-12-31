@@ -21,20 +21,20 @@ import butterknife.ButterKnife;
 
 public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsOrderAdapter.ShopManagerTableStaticsHolder> {
 
-    private List<ManagerStatsModel.TrendingOrder> mData;
+    private List<ManagerStatsModel.ItemRevenue> mData;
 
     public ManagerStatsOrderAdapter() {
     }
 
-    public void setData(List<ManagerStatsModel.TrendingOrder> trendingOrder) {
-        this.mData = trendingOrder;
+    public void setData(List<ManagerStatsModel.ItemRevenue> itemRevenue) {
+        this.mData = itemRevenue;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ShopManagerTableStaticsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_manager_stats_order, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu_analysis_item_revenue, parent, false);
         return new ShopManagerTableStaticsHolder(view);
     }
 
@@ -62,7 +62,7 @@ public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsO
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(ManagerStatsModel.TrendingOrder data) {
+        public void bindData(ManagerStatsModel.ItemRevenue data) {
             MenuItemBriefModel item = data.getItem();
             double revenueGenerated = data.getRevenueContribution();
             if (item != null) {
