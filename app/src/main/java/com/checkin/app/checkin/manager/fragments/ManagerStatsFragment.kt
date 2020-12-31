@@ -70,7 +70,7 @@ class ManagerStatsFragment : BaseFragment() {
                 }
                 it.forEachIndexed { idx, data ->
                     statsMenuAnalysisItemRevenue {
-                        id(idx)
+                        id("trending_items.$idx")
                         data(data)
                     }
                 }
@@ -84,7 +84,7 @@ class ManagerStatsFragment : BaseFragment() {
                 }
                 it.forEachIndexed { idx, data ->
                     statsMenuAnalysisItemRevenue {
-                        id(idx)
+                        id("poor_items.$idx")
                         data(data)
                     }
                 }
@@ -98,7 +98,7 @@ class ManagerStatsFragment : BaseFragment() {
                 }
                 it.forEachIndexed { idx, data ->
                     statsMenuAnalysisGroupRevenue {
-                        id(idx)
+                        id("trending_groups.$idx")
                         index(idx + 1)
                         data(data)
                     }
