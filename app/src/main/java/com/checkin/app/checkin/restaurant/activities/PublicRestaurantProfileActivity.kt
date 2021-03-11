@@ -24,6 +24,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Shop.changetextviewcolor
 import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
 import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog
 import com.checkin.app.checkin.auth.fragments.PhoneEditDialog
@@ -408,6 +409,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             } else "-"
         } ?: "-"
         tvRating.text = restaurantModel.formatRating()
+        changetextviewcolor(restaurantModel.rating, tvRating)
         tvDistance.text = restaurantModel.formatDistance
         restaurantModel.restaurantOffers?.let {
             tvReferrals.visibility = View.VISIBLE
