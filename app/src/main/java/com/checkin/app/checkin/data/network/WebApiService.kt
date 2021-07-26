@@ -420,7 +420,6 @@ interface WebApiService {
 
     @POST("menus/restaurants/{restaurant_id}/manage/items/")
     fun postChangeMenuAvailability(@Path("restaurant_id") restaurantId: Long, @Body msOrderStatus: List<InventoryAvailabilityModel>): Call<List<InventoryAvailabilityModel>>
-
     // endregion
 
     // region PAYMENT

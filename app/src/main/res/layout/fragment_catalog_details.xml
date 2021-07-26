@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_normal"
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayout_manager_catalogue_menu_name"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:hint="Menu Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manager_catalogue_menu_name"
+                style="@style/CatalogOutlinedInput"
+                android:inputType="text"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayout_manager_catalogue_GST_number"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginTop="52dp"
+            android:hint="GST Number (optional)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etLayout_manager_catalogue_menu_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_catalog_GST_number"
+                style="@style/CatalogOutlinedInput"
+                android:inputType="number"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/finance_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="etLayout_catalog_CGST, etLayout_catalog_SGST, etLayout_catalog_IGST"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayout_catalog_CGST"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:hint="CGST"
+            app:expandedHintEnabled="false"
+            app:layout_constraintBottom_toBottomOf="@+id/etLayout_catalog_SGST"
+            app:layout_constraintEnd_toStartOf="@+id/etLayout_catalog_SGST"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etLayout_manager_catalogue_GST_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manager_catalogue_CGST"
+                style="@style/CatalogOutlinedInput"
+                android:drawableEnd="@drawable/ic_percent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayout_catalog_SGST"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:hint="SGST"
+            app:expandedHintEnabled="false"
+            app:layout_constraintBottom_toBottomOf="@+id/etLayout_catalog_IGST"
+            app:layout_constraintEnd_toStartOf="@+id/etLayout_catalog_IGST"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/etLayout_catalog_CGST"
+            app:layout_constraintTop_toBottomOf="@+id/etLayout_manager_catalogue_GST_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manager_catalogue_SGST"
+                style="@style/CatalogOutlinedInput"
+                android:drawableEnd="@drawable/ic_percent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayout_catalog_IGST"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:hint="IGST"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/etLayout_catalog_SGST"
+            app:layout_constraintTop_toBottomOf="@+id/etLayout_manager_catalogue_GST_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manager_catalogue_IGST"
+                style="@style/CatalogOutlinedInput"
+                android:drawableEnd="@drawable/ic_percent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayout_catalog_service_charge"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:hint="Service Charge"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/etLayout_catalog_VAT_charge"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrier3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manager_catalogue_service_charge"
+                style="@style/CatalogOutlinedInput"
+                android:drawableEnd="@drawable/ic_percent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayout_catalog_VAT_charge"
+            style="@style/CatalogOutlinedInputLayout"
+            android:hint="VAT Charge"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/etLayout_catalog_service_charge"
+            app:layout_constraintTop_toBottomOf="@+id/barrier3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manager_catalogue_VAT_charge"
+                style="@style/CatalogOutlinedInput"
+                android:drawableEnd="@drawable/ic_percent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/CatalogRedRoundedButton"
+            android:text="Create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etLayout_catalog_service_charge">
+
+            <com.google.android.material.chip.Chip
+                style="@style/CustomChipChoice"
+                android:text="Cash" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/CustomChipChoice"
+                android:text="Card" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/CustomChipChoice"
+                android:text="UPI" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Financials"
+            android:textColor="@color/primary_red"
+            android:textSize="9sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@+id/etLayout_manager_catalogue_GST_number"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="etLayout_catalog_CGST,etLayout_catalog_SGST,etLayout_catalog_IGST"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="196dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
