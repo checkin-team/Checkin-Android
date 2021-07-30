@@ -1,129 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white_two"
-    android:padding="@dimen/spacing_normal"
-    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etLayger_catalo"
-        style="@style/CatalogOutlinedInputLayout"
-        android:hint="Add On Group Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <data>
+        <variable
+            name="customization_model"
+            type="com.checkin.app.checkin.manager.models.ItemCustomizationModel" />
+    </data>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_manaatalogme"
-            style="@style/CatalogOutlinedInput"
-            android:inputType="text"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etLayger_cao"
-        style="@style/CatalogOutlinedInputLayout"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:hint="Minimum Selection"
-        app:expandedHintEnabled="false"
-        app:layout_constraintBottom_toBottomOf="@+id/etLayger_cat"
-        app:layout_constraintEnd_toStartOf="@+id/etLayger_cat"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_manaalogme"
-            style="@style/CatalogOutlinedInput"
-            android:hint="0"
-            android:inputType="number"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etLayger_cat"
-        style="@style/CatalogOutlinedInputLayout"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:hint="Maximum Selection"
-        app:expandedHintEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/etLayger_cao"
-        app:layout_constraintTop_toBottomOf="@id/etLayger_catalo">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_manaataloe"
-            style="@style/CatalogOutlinedInput"
-            android:hint="0"
-            android:inputType="number"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:fontFamily="@font/josefinsans_regular"
-        android:text="Add first option to your Add On."
-        android:textColor="@color/primary_red"
-        android:textSize="7sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLayger_cao" />
+        android:background="@color/white_two"
+        android:padding="@dimen/spacing_normal"
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etLayger_ao"
-        style="@style/CatalogOutlinedInputLayout"
-        android:hint="Field Name"
-        android:layout_marginEnd="@dimen/spacing_small"
-        app:layout_constraintBottom_toBottomOf="@+id/etLayger_at"
-        app:layout_constraintEnd_toStartOf="@+id/etLayger_at"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayger_catalo"
+            style="@style/CatalogOutlinedInputLayout"
+            android:hint="Add On Group Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_manaaogme"
-            style="@style/CatalogOutlinedInput"
-            android:inputType="text"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manaatalogme"
+                style="@style/CatalogOutlinedInput"
+                android:text="@={customization_model.customizationGroupModel.name}"
+                android:inputType="text"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etLayger_at"
-        style="@style/CatalogOutlinedInputLayout"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:hint="Price"
-        app:expandedHintEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/etLayger_ao"
-        app:layout_constraintTop_toBottomOf="@+id/textView10">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayger_cao"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:hint="Minimum Selection"
+            app:expandedHintEnabled="false"
+            app:layout_constraintBottom_toBottomOf="@+id/etLayger_cat"
+            app:layout_constraintEnd_toStartOf="@+id/etLayger_cat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_manaaaloe"
-            style="@style/CatalogOutlinedInput"
-            android:hint="0"
-            android:inputType="numberDecimal"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manaalogme"
+                style="@style/CatalogOutlinedInput"
+                android:text="@={``+customization_model.customizationGroupModel.minSelect}"
+                android:hint="0"
+                android:inputType="number"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:drawableLeft="@drawable/ic_noun_add_red"
-        android:drawablePadding="@dimen/spacing_tiny"
-        android:fontFamily="@font/josefinsans_semibold"
-        android:textColor="@color/primary_red"
-        android:textSize="6.5sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLayger_ao"
-        tools:text="Add more fields" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayger_cat"
+            style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:hint="Maximum Selection"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/etLayger_cao"
+            app:layout_constraintTop_toBottomOf="@id/etLayger_catalo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_manaataloe"
+                style="@style/CatalogOutlinedInput"
+                android:text="@={``+customization_model.customizationGroupModel.maxSelect}"
+                android:hint="0"
+                android:inputType="number"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Add first option to your Add On."
+            android:textColor="@color/primary_red"
+            android:textSize="7sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etLayger_cao" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_fields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_customization_field"
+            tools:itemCount="1"
+            android:layout_marginEnd="1dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@+id/etLayger_cat"
+            app:layout_constraintStart_toStartOf="@+id/etLayger_cao"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <TextView
+            android:id="@+id/tv_add_more_fields"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:drawableLeft="@drawable/ic_noun_add_red"
+            android:drawablePadding="@dimen/spacing_tiny"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:textColor="@color/primary_red"
+            android:textSize="6.5sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_fields"
+            android:text="Add more fields" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

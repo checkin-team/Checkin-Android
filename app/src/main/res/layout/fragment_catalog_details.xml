@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manager_catalogue_menu_name"
+                android:id="@+id/et_menu_name"
                 style="@style/CatalogOutlinedInput"
                 android:inputType="text"
                 android:singleLine="true" />
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toBottomOf="@id/etLayout_manager_catalogue_menu_name">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_catalog_GST_number"
+                android:id="@+id/et_GST_number"
                 style="@style/CatalogOutlinedInput"
                 android:inputType="number"
                 android:singleLine="true" />
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="etLayout_catalog_CGST, etLayout_catalog_SGST, etLayout_catalog_IGST"/>
+            app:constraint_referenced_ids="etLayout_catalog_CGST, etLayout_catalog_SGST, etLayout_catalog_IGST" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etLayout_manager_catalogue_GST_number">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manager_catalogue_CGST"
+                android:id="@+id/et_CGST"
                 style="@style/CatalogOutlinedInput"
                 android:drawableEnd="@drawable/ic_percent"
                 android:hint="0.0"
@@ -91,7 +91,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etLayout_manager_catalogue_GST_number">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manager_catalogue_SGST"
+                android:id="@+id/et_SGST"
                 style="@style/CatalogOutlinedInput"
                 android:drawableEnd="@drawable/ic_percent"
                 android:hint="0.0"
@@ -111,7 +111,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etLayout_manager_catalogue_GST_number">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manager_catalogue_IGST"
+                android:id="@+id/et_IGST"
                 style="@style/CatalogOutlinedInput"
                 android:drawableEnd="@drawable/ic_percent"
                 android:hint="0.0"
@@ -122,9 +122,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etLayout_catalog_service_charge"
             style="@style/CatalogOutlinedInputLayout"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:layout_marginEnd="@dimen/spacing_small"
             android:hint="Service Charge"
-            android:layout_marginTop="@dimen/spacing_normal"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/etLayout_catalog_VAT_charge"
             app:layout_constraintHorizontal_bias="0.5"
@@ -132,7 +132,7 @@
             app:layout_constraintTop_toBottomOf="@+id/barrier3">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manager_catalogue_service_charge"
+                android:id="@+id/et_service_charge"
                 style="@style/CatalogOutlinedInput"
                 android:drawableEnd="@drawable/ic_percent"
                 android:hint="0.0"
@@ -143,8 +143,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etLayout_catalog_VAT_charge"
             style="@style/CatalogOutlinedInputLayout"
-            android:hint="VAT Charge"
             android:layout_marginTop="@dimen/spacing_normal"
+            android:hint="VAT Charge"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -152,7 +152,7 @@
             app:layout_constraintTop_toBottomOf="@+id/barrier3">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manager_catalogue_VAT_charge"
+                android:id="@+id/et_VAT_charge"
                 style="@style/CatalogOutlinedInput"
                 android:drawableEnd="@drawable/ic_percent"
                 android:hint="0.0"
@@ -161,7 +161,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_create_menu"
             style="@style/CatalogRedRoundedButton"
             android:text="Create"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -179,14 +179,17 @@
             app:layout_constraintTop_toBottomOf="@id/etLayout_catalog_service_charge">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip_cash"
                 style="@style/CustomChipChoice"
                 android:text="Cash" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip_card"
                 style="@style/CustomChipChoice"
                 android:text="Card" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip_UPI"
                 style="@style/CustomChipChoice"
                 android:text="UPI" />
 

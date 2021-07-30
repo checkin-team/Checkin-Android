@@ -18,13 +18,13 @@
             android:layout_height="273dp"
             android:layout_marginBottom="46dp"
             android:src="@drawable/ic_undraw_personal_settings_re_i_6_w_4"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintBottom_toTopOf="@+id/btn_begin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_begin"
             style="@style/CatalogRedRoundedButton"
             android:layout_marginBottom="27dp"
             android:text="Let's Begin"

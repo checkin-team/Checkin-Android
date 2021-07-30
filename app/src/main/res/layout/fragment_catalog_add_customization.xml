@@ -13,9 +13,10 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView2"
+            android:id="@+id/rv_customization"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,23 +32,24 @@
             android:paddingEnd="@dimen/spacing_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView2">
+            app:layout_constraintTop_toBottomOf="@id/rv_customization">
 
             <TextView
+                android:id="@+id/tv_add_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_noun_add_green"
                 android:drawablePadding="@dimen/spacing_tiny"
                 android:fontFamily="@font/josefinsans_regular"
                 android:text="More Add On group"
                 android:textColor="@color/greenish_teal"
                 android:textSize="12sp"
-                android:textStyle="normal"
-                android:layout_gravity="center_vertical"/>
+                android:textStyle="normal" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_save_customization"
             style="@style/CatalogRedRoundedButton"
             android:layout_marginBottom="@dimen/spacing_normal"
             android:text="Save Customization"

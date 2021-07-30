@@ -18,13 +18,13 @@
             android:layout_height="196dp"
             android:layout_marginBottom="170dp"
             android:src="@drawable/ic_undraw_happy_announcement_ac_67"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintBottom_toTopOf="@+id/btn_create_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_create_menu"
             style="@style/CatalogRedRoundedButton"
             android:layout_width="70dp"
             android:text="Add Item"

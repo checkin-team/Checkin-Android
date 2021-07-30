@@ -22,6 +22,8 @@ import com.checkin.app.checkin.auth.AuthRequestModel
 import com.checkin.app.checkin.auth.AuthResultModel
 import com.checkin.app.checkin.home.model.*
 import com.checkin.app.checkin.manager.models.*
+import com.checkin.app.checkin.manager.models.MenuGroupModel
+import com.checkin.app.checkin.manager.models.CatalogMenuModel
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.misc.paytm.PaytmModel
@@ -420,6 +422,21 @@ interface WebApiService {
 
     @POST("menus/restaurants/{restaurant_id}/manage/items/")
     fun postChangeMenuAvailability(@Path("restaurant_id") restaurantId: Long, @Body msOrderStatus: List<InventoryAvailabilityModel>): Call<List<InventoryAvailabilityModel>>
+
+    @POST("/menus/restaurants/{restaurant_id}/")
+    fun postRestaurantMenu(@Path("restaurant_id") restaurantId: Long, @Body menu: CatalogMenuModel): Call<CatalogMenuModel>
+
+    @POST("/menus/groups/restaurants/{restaurant_id}/")
+    fun postMenuGroup(@Path("restaurant_id") restaurantId: Long, @Body menuGroup: MenuGroupModel): Call<MenuGroupModel>
+
+    @GET("/menus/items/groups/{group_id}/")
+    fun getGroupMenuItem(@Path("group_id") groupId: Long): Call<GroupMenuItemModel>
+
+    @POST("/menus/items/groups/{group_id}/")
+    fun postGroupMenuItem(@Path("group_id") groupId: Long, @Body groupMenuItem: GroupMenuItemModel): Call<GroupMenuItemModel>
+
+    @GET("menus/groups/restaurants/{restaurant_id}")
+    fun getMenuGroups(@Path("restaurant_id") restaurantId: Long): Call<List<MenuGroupModel>>
     // endregion
 
     // region PAYMENT

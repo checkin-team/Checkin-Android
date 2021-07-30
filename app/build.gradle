@@ -210,6 +210,7 @@ dependencies {
     // Epoxy
     implementation "com.airbnb.android:epoxy:$versions.epoxy"
     kapt "com.airbnb.android:epoxy-processor:$versions.epoxy"
+    implementation "com.airbnb.android:epoxy-databinding:$versions.epoxy"
 
     // Lottie
 //    UNUSED RIGHT NOW

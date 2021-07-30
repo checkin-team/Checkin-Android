@@ -1,50 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
-            name="variant"
-            type="com.checkin.app.checkin.manager.models.ItemVariantModel" />
+            name="field_model"
+            type="com.checkin.app.checkin.manager.models.CustomizationFieldModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_normal">
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etLayger_catalo"
+            android:id="@+id/etLayger_ao"
             style="@style/CatalogOutlinedInputLayout"
-            android:hint="Item Type/Size"
-            android:layout_marginRight="@dimen/spacing_large"
-            app:layout_constraintEnd_toStartOf="@+id/etLaer_catalo"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:hint="Field Name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/etLayger_at"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manaatalogme"
+                android:id="@+id/et_manaaogme"
                 style="@style/CatalogOutlinedInput"
+                android:text="@={field_model.name}"
                 android:inputType="text"
-                android:text="@={variant.type}"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etLaer_catalo"
+            android:id="@+id/etLayger_at"
             style="@style/CatalogOutlinedInputLayout"
-            android:hint="Price (Rs.)"
+            android:hint="Price"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/etLayger_catalo"
+            app:layout_constraintStart_toEndOf="@+id/etLayger_ao"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manaalogme"
+                android:id="@+id/et_manaaaloe"
                 style="@style/CatalogOutlinedInput"
-                android:text="@={variant.price}"
+                android:text="@={field_model.cost}"
+                android:hint="0"
                 android:inputType="numberDecimal"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>

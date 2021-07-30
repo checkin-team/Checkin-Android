@@ -23,33 +23,39 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_manager_catalogue_menu_name"
+                android:id="@+id/et_group_name"
                 style="@style/CatalogOutlinedInput"
                 android:inputType="text"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
+            android:id="@+id/cg_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_normal"
+            app:singleSelection="true"
+            app:selectionRequired="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etLayout_manager_catalogue_menu_name">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip_drink"
                 style="@style/CustomChipChoice"
+                android:checked="true"
                 android:text="Drinks" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip_food"
                 style="@style/CustomChipChoice"
                 android:text="Food" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chip_dessert"
                 style="@style/CustomChipChoice"
-                android:text="Desert" />
+                android:text="Dessert" />
 
         </com.google.android.material.chip.ChipGroup>
 
@@ -63,15 +69,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroup">
+            app:layout_constraintTop_toBottomOf="@+id/cg_category">
 
             <AutoCompleteTextView
+                android:id="@+id/menu_group_type"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="@dimen/spacing_extra_small"
                 android:paddingBottom="@dimen/spacing_extra_small"
                 android:inputType="none"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:editable="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
