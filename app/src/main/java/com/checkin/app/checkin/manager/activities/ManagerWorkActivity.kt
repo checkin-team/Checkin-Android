@@ -2,6 +2,7 @@ package com.checkin.app.checkin.manager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SwitchCompat
@@ -70,9 +71,9 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         pagerAdapter.setupWithTab(tabLayout, pagerManager)
         pagerManager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
-                if (actionBar != null) {
-                    tvActionBarTitle.text = pagerAdapter.getPageTitle(position)
-                }
+                if (position == 3) swLiveOrdersToggle.visibility = View.GONE
+                else swLiveOrdersToggle.visibility = View.VISIBLE
+                tvActionBarTitle.text = pagerAdapter.getPageTitle(position)
             }
         })
         swLiveOrdersToggle.setOnCheckedChangeListener { _, isChecked ->
@@ -150,13 +151,15 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             0 -> R.drawable.ic_orders_list_toggle
             1 -> R.drawable.ic_stats_toggle
             2 -> R.drawable.ic_invoice_toggle
+            3 -> R.drawable.ic_catalog_toggle
             else -> 0
         }
 
         override fun getItem(position: Int): Fragment = when (position) {
             0 -> if (isActivated) mTableFragment else mActiveTableFragment
             1 -> ManagerStatsFragment.newInstance()
-            else -> ManagerInvoiceFragment.newInstance()
+            2 -> ManagerInvoiceFragment.newInstance()
+            else -> CatalogAddFragment.newInstance()
         }
 
         override fun getItemPosition(obj: Any): Int = if (oldValActivated != isActivated) {
@@ -164,12 +167,13 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             PagerAdapter.POSITION_NONE
         } else PagerAdapter.POSITION_UNCHANGED
 
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = 4
 
         override fun getPageTitle(position: Int): CharSequence? = when (position) {
             0 -> "Live Orders"
             1 -> "Insight"
             2 -> "Invoice"
+            3 -> "Catalog"
             else -> null
         }
 

@@ -186,6 +186,11 @@
             android:label="Insight"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".manager.activities.CatalogActivity"
+            android:label=""
+            android:theme="@style/AppTheme" />
+
         <service android:name=".data.notifications.AppMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

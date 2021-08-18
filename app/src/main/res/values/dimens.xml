@@ -271,4 +271,5 @@
     <dimen name="width_button_verify_pay">250dp</dimen>
     <dimen name="height_button_verify_pay">40dp</dimen>
     <dimen name="auth_profile_size">90dp</dimen>
+    <dimen name="rounded_rectangle_button_red_radius">19dp</dimen>
 </resources>
